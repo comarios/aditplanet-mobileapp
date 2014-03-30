@@ -1,6 +1,6 @@
 package com.aditplanet.main;
 
-import com.aditplanet.tabswipe.adapter.TabsPagerAdapter;
+import com.aditplanet.adapters.TabsPagerAdapter;
 
 import com.aditplanet.R;
 import android.app.ActionBar;

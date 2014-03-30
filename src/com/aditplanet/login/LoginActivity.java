@@ -1,6 +1,10 @@
 package com.aditplanet.login;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -13,6 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.aditplanet.R;
 import com.aditplanet.main.MainActivity;
+import com.aditplanet.model.Coupons;
+import com.aditplanet.model.CouponsManager;
+import com.aditplanet.web.client.RemoteParser;
 import com.aditplanet.web.client.WebClient;
 import com.loopj.android.http.*;
 
@@ -36,27 +43,6 @@ public class LoginActivity extends Activity {
 				// Perform authentication check - use aditplanet auth API
 				authentication(username.getText().toString(), password
 						.getText().toString());
-//				RequestParams params = new RequestParams();
-//				params.put("m_name", username.getText().toString());
-//				params.put("m_pass", password.getText().toString());
-//				
-//				AsyncHttpClient client = new AsyncHttpClient();
-//				client.get("http://aditplanet.com/merchants_api.php", params, new AsyncHttpResponseHandler() {
-//				    @Override
-//				    public void onSuccess(String response) {
-//				        System.out.println(response);
-//				    }
-//				});
-				//
-				// if (isAuthenticate(username.getText().toString(), password
-				// .getText().toString())) {
-				// Intent intent = new Intent(getApplicationContext(),
-				// MainActivity.class);
-				// startActivity(intent);
-				//
-				// } else {
-				// //Show error message
-				// }
 			}
 
 		});
@@ -73,18 +59,47 @@ public class LoginActivity extends Activity {
 	private void authentication(String username, String password) {
 
 		RequestParams params = new RequestParams();
-		params.put("m_name", username);
-		params.put("m_pass", password);
+//		params.put("m_name", username);
+//		params.put("m_pass", password);
 
+		params.put("m_name", "S1");
+		params.put("m_pass", "S1");
 		WebClient.get("merchants_api.php", params, new AsyncHttpResponseHandler() {
 			@Override
 			public void onSuccess(String coupons) {
 				// Pull out the first event on the public timeline
-				// JSONObject firstEvent = timeline.get(0);
+				 try {
+					JSONObject json = new JSONObject(coupons);
+					
+					if(RemoteParser.isAuth(json)){
+						List<Coupons> couponsList = RemoteParser.getCoupons(json);		
+						CouponsManager.getInstance().setCoupons(couponsList);
+						
+						for (Coupons cp : couponsList){
+							System.out.println(cp);
+						}
+//						for(int i = 0; i < couponsList.size(); i++){
+//							//System.out.println("code: " + couponsList.get(i).getCode() + ", details: " + couponsList.get(i).getCoupon_details());
+//						
+//						}
+					}else{
+						//Show error message
+					}
+					
+					
+//					for (int i = 0; i < json.length(); ++i){
+//						Object coupon = json.get(i+"");
+//						System.out.println("RES:" + i +", " + coupon);
+//						System.out.println();
+//					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				// String tweetText = firstEvent.getString("text");
-				System.out.println("here");
+				//System.out.println("here");
 				// Do something with the response
-				System.out.println(coupons);
+				//System.out.println(coupons);
 				authSuccess();
 			}
 			
