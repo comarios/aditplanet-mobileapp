@@ -9,6 +9,8 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -76,4 +78,8 @@ public class MainActivity extends FragmentActivity implements
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 	}
 
+	public void btnValidateByCouponCode(View view) {
+
+		Toast.makeText(getApplicationContext(), "Send request to server!", Toast.LENGTH_LONG).show();
+	}
 }

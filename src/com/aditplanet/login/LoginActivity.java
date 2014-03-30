@@ -19,12 +19,15 @@ import com.aditplanet.R;
 import com.aditplanet.main.MainActivity;
 import com.aditplanet.model.Coupons;
 import com.aditplanet.model.CouponsManager;
+import com.aditplanet.utils.Messages;
 import com.aditplanet.web.client.RemoteParser;
 import com.aditplanet.web.client.WebClient;
 import com.loopj.android.http.*;
 
 public class LoginActivity extends Activity {
 
+	private Messages messages;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,6 +36,9 @@ public class LoginActivity extends Activity {
 		Button btnLogin = (Button) findViewById(R.id.btnLogin);
 		final EditText username = (EditText) findViewById(R.id.txtUsername);
 		final EditText password = (EditText) findViewById(R.id.txtPassword);
+		
+		messages = new Messages(this);
+		
 		btnLogin.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -59,11 +65,11 @@ public class LoginActivity extends Activity {
 	private void authentication(String username, String password) {
 
 		RequestParams params = new RequestParams();
-//		params.put("m_name", username);
-//		params.put("m_pass", password);
+		params.put("m_name", username);
+		params.put("m_pass", password);
 
-		params.put("m_name", "S1");
-		params.put("m_pass", "S1");
+//		params.put("m_name", "S1");
+//		params.put("m_pass", "S1");
 		WebClient.get("merchants_api.php", params, new AsyncHttpResponseHandler() {
 			@Override
 			public void onSuccess(String coupons) {
@@ -78,12 +84,14 @@ public class LoginActivity extends Activity {
 						for (Coupons cp : couponsList){
 							System.out.println(cp);
 						}
+						authSuccess();
 //						for(int i = 0; i < couponsList.size(); i++){
 //							//System.out.println("code: " + couponsList.get(i).getCode() + ", details: " + couponsList.get(i).getCoupon_details());
 //						
 //						}
 					}else{
 						//Show error message
+						messages.showAuthError();
 					}
 					
 					
@@ -100,12 +108,13 @@ public class LoginActivity extends Activity {
 				//System.out.println("here");
 				// Do something with the response
 				//System.out.println(coupons);
-				authSuccess();
+				
 			}
 			
 			@Override
 		    public void onFailure(Throwable error, String content) {
 		        System.out.println(error.getMessage());
+		        //TODO: Add message for network failure
 		    }
 		});
 	}

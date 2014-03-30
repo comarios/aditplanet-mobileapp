@@ -9,8 +9,7 @@
     <string name="action_refresh">Refresh</string>
     <string name="action_help">Help</string>
     <string name="action_check_updates">Check Updates</string>
+    <string name="coupon_code">Enter Coupon Code</string>
+    <string name="btnTextForValidateByCouponCode">Validate</string>
 
-     <string name="Fragment1">This is Fragment 1</string>
-    <string name="Fragment2">This is Fragment 2</string>
-    <string name="Fragment3">This is Fragment 3</string>
 </resources>

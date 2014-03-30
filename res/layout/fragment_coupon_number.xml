@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#fa6a6a" >
-    
-    <TextView android:layout_width="fill_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/txtCouponCode"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
         android:gravity="center"
-        android:text="Design Top Rated Screen"
-        android:textSize="20dp"
-        android:layout_centerInParent="true"/>
-    
+        android:hint="@string/coupon_code"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/btnValidateByCouponCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtCouponCode"
+        android:layout_alignRight="@+id/txtCouponCode"
+        android:layout_below="@+id/txtCouponCode"
+        android:layout_marginTop="60dp"
+        android:onClick="btnValidateByCouponCode"
+        android:text="@string/btnTextForValidateByCouponCode"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:width="100dp" />
 
 </RelativeLayout>
