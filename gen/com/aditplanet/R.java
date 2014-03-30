@@ -36,26 +36,24 @@ public final class R {
         public static final int qr_icon=0x7f020005;
     }
     public static final class id {
-        public static final int action_help=0x7f090009;
-        public static final int action_refresh=0x7f090008;
-        public static final int action_search=0x7f090007;
-        public static final int action_settings=0x7f09000a;
-        public static final int btnLogin=0x7f090005;
-        public static final int btnValidate=0x7f090001;
-        public static final int fragment_container=0x7f090006;
-        public static final int header=0x7f090002;
-        public static final int txtCouponNumber=0x7f090000;
-        public static final int txtPassword=0x7f090004;
-        public static final int txtUsername=0x7f090003;
+        public static final int action_help=0x7f090007;
+        public static final int action_refresh=0x7f090006;
+        public static final int action_search=0x7f090005;
+        public static final int action_settings=0x7f090008;
+        public static final int btnLogin=0x7f090004;
+        public static final int header=0x7f090001;
+        public static final int pager=0x7f090000;
+        public static final int txtPassword=0x7f090003;
+        public static final int txtUsername=0x7f090002;
     }
     public static final class layout {
-        public static final int footer_repeat=0x7f030000;
-        public static final int fragmenttab1=0x7f030001;
-        public static final int fragmenttab2=0x7f030002;
-        public static final int fragmenttab3=0x7f030003;
-        public static final int header_gradient=0x7f030004;
-        public static final int login=0x7f030005;
-        public static final int main=0x7f030006;
+        public static final int activity_main=0x7f030000;
+        public static final int footer_repeat=0x7f030001;
+        public static final int fragment_coupon_number=0x7f030002;
+        public static final int fragment_my_coupons=0x7f030003;
+        public static final int fragment_qrcode=0x7f030004;
+        public static final int header_gradient=0x7f030005;
+        public static final int login=0x7f030006;
     }
     public static final class menu {
         public static final int activity_main_actions=0x7f080000;
@@ -78,19 +76,11 @@ public final class R {
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-
-
-
-
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
-
-
-
-
         
 
         Base application theme for API 11+. This theme completely replaces
@@ -109,7 +99,5 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f070001;
-        public static final int actionBarTabBarStyle=0x7f070002;
-        public static final int actionBarTabStyle=0x7f070003;
     }
 }
