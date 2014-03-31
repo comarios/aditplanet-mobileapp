@@ -26,4 +26,8 @@ public class CouponsManager {
 	public List<Coupons> getCoupons() {
 		return coupons;
 	}
+	
+	public Coupons getCouponsByIndex(int idx){
+		return coupons.get(idx);
+	}
 }

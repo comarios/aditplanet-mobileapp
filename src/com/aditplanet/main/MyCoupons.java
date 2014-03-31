@@ -8,11 +8,13 @@ import com.aditplanet.adapters.LazyAdapter;
 import com.aditplanet.model.Coupons;
 import com.aditplanet.model.CouponsManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class MyCoupons extends Fragment {
@@ -29,6 +31,29 @@ public class MyCoupons extends Fragment {
 		
 		listView = (ListView) rootView.findViewById(R.id.list);
 		setDataToAdapter();
+		
+		/**
+		 * Inner class responsible to listens possible touch on list view.
+		 */
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+			{
+				
+				//TODO: Fix the view_coupons_details.xml and the code below
+				Coupons coupons = CouponsManager.getInstance().getCouponsByIndex(arg2);
+
+				Intent viewProfile = new Intent(getActivity(), ViewCouponDetails.class);
+				viewProfile.putExtra("profile_name", coupons.getCode());
+				viewProfile.putExtra("profile_desc", coupons.getCoupon_details());
+				viewProfile.putExtra("no_of_ap", coupons.getMerchant());
+				viewProfile.putExtra("no_of_samples", coupons.getValid_date());
+
+				startActivity(viewProfile);
+			}
+		});
+		
 		return rootView;
 	}
 

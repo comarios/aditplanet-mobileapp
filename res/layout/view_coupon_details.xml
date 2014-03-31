@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- ListRow Left sied Thumbnail image -->
+
+    <RelativeLayout
+        android:id="@+id/top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dip"
+        android:padding="3dip" >
+
+        <TextView
+            android:id="@+id/show_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:typeface="sans" />
+
+        <ImageView
+            android:id="@+id/info_image"
+            android:layout_width="30dip"
+            android:layout_height="30dip"
+            android:layout_alignLeft="@+id/show_profile_name"
+            android:contentDescription="@string/app_name"
+            android:paddingTop="5dip"
+            android:src="@drawable/info" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/show_profile_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/show_number_of_access_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/show_number_of_samples"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="" />
+</LinearLayout>

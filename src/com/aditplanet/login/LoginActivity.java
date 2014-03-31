@@ -85,36 +85,21 @@ public class LoginActivity extends Activity {
 							System.out.println(cp);
 						}
 						authSuccess();
-//						for(int i = 0; i < couponsList.size(); i++){
-//							//System.out.println("code: " + couponsList.get(i).getCode() + ", details: " + couponsList.get(i).getCoupon_details());
-//						
-//						}
 					}else{
-						//Show error message
+						//Show authentication error message
 						messages.showAuthError();
 					}
-					
-					
-//					for (int i = 0; i < json.length(); ++i){
-//						Object coupon = json.get(i+"");
-//						System.out.println("RES:" + i +", " + coupon);
-//						System.out.println();
-//					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				// String tweetText = firstEvent.getString("text");
-				//System.out.println("here");
-				// Do something with the response
-				//System.out.println(coupons);
-				
 			}
 			
 			@Override
 		    public void onFailure(Throwable error, String content) {
 		        System.out.println(error.getMessage());
 		        //TODO: Add message for network failure
+		        messages.showNetworkError();
 		    }
 		});
 	}
@@ -122,9 +107,5 @@ public class LoginActivity extends Activity {
 	private void authSuccess() {
 		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 		startActivity(intent);
-	}
-
-	private void authFailure() {
-
 	}
 }
