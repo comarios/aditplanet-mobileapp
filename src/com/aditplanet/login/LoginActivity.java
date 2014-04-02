@@ -19,6 +19,7 @@ import com.aditplanet.R;
 import com.aditplanet.main.MainActivity;
 import com.aditplanet.model.Coupons;
 import com.aditplanet.model.CouponsManager;
+import com.aditplanet.model.User;
 import com.aditplanet.utils.Messages;
 import com.aditplanet.web.client.RemoteParser;
 import com.aditplanet.web.client.WebClient;
@@ -62,7 +63,7 @@ public class LoginActivity extends Activity {
 		return true;
 	}
 
-	private void authentication(String username, String password) {
+	private void authentication(final String username, final String password) {
 
 		RequestParams params = new RequestParams();
 		params.put("m_name", username);
@@ -81,9 +82,14 @@ public class LoginActivity extends Activity {
 						List<Coupons> couponsList = RemoteParser.getCoupons(json);		
 						CouponsManager.getInstance().setCoupons(couponsList);
 						
-						for (Coupons cp : couponsList){
-							System.out.println(cp);
-						}
+						
+						//Store User details 
+						User user = new User(username, password);
+						CouponsManager.getInstance().setUser(user);
+						
+//						for (Coupons cp : couponsList){
+//							System.out.println(cp);
+//						}
 						authSuccess();
 					}else{
 						//Show authentication error message

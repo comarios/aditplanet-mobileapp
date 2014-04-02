@@ -29,38 +29,39 @@ public final class R {
     }
     public static final class drawable {
         public static final int dots=0x7f020000;
-        public static final int help=0x7f020001;
-        public static final int ic_action_help=0x7f020002;
-        public static final int ic_action_location_found=0x7f020003;
-        public static final int ic_action_refresh=0x7f020004;
-        public static final int ic_action_search=0x7f020005;
-        public static final int ic_launcher=0x7f020006;
-        public static final int info=0x7f020007;
-        public static final int qr_icon=0x7f020008;
+        public static final int error=0x7f020001;
+        public static final int help=0x7f020002;
+        public static final int ic_action_help=0x7f020003;
+        public static final int ic_action_location_found=0x7f020004;
+        public static final int ic_action_refresh=0x7f020005;
+        public static final int ic_action_search=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
+        public static final int info=0x7f020008;
+        public static final int logo=0x7f020009;
+        public static final int qr_icon=0x7f02000a;
     }
     public static final class id {
-        public static final int action_help=0x7f090014;
-        public static final int action_refresh=0x7f090013;
-        public static final int action_search=0x7f090012;
-        public static final int action_settings=0x7f090015;
-        public static final int btnLogin=0x7f09000b;
+        public static final int action_help=0x7f090013;
+        public static final int action_refresh=0x7f090012;
+        public static final int action_search=0x7f090011;
+        public static final int action_settings=0x7f090014;
+        public static final int btnLogin=0x7f09000a;
         public static final int btnValidateByCouponCode=0x7f090002;
         public static final int coupon_code=0x7f090006;
         public static final int coupon_details=0x7f090007;
-        public static final int header=0x7f090008;
-        public static final int info_image=0x7f09000e;
+        public static final int info_image=0x7f09000d;
         public static final int list=0x7f090003;
         public static final int list_image=0x7f090005;
         public static final int pager=0x7f090000;
-        public static final int show_number_of_access_points=0x7f090010;
-        public static final int show_number_of_samples=0x7f090011;
-        public static final int show_profile_details=0x7f09000f;
-        public static final int show_profile_name=0x7f09000d;
+        public static final int show_number_of_access_points=0x7f09000f;
+        public static final int show_number_of_samples=0x7f090010;
+        public static final int show_profile_details=0x7f09000e;
+        public static final int show_profile_name=0x7f09000c;
         public static final int thumbnail=0x7f090004;
-        public static final int top=0x7f09000c;
+        public static final int top=0x7f09000b;
         public static final int txtCouponCode=0x7f090001;
-        public static final int txtPassword=0x7f09000a;
-        public static final int txtUsername=0x7f090009;
+        public static final int txtPassword=0x7f090009;
+        public static final int txtUsername=0x7f090008;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -88,6 +89,10 @@ public final class R {
         public static final int btnTextForValidateByCouponCode=0x7f060009;
         public static final int coupon_code=0x7f060008;
         public static final int hello_world=0x7f060002;
+        public static final int password=0x7f06000c;
+        public static final int password_hint=0x7f06000d;
+        public static final int user_id=0x7f06000a;
+        public static final int user_id_hint=0x7f06000b;
     }
     public static final class style {
         /** 

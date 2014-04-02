@@ -7,6 +7,7 @@ public class CouponsManager {
 
 	private static CouponsManager instance = null;
 	private List<Coupons> coupons = null;
+	private User user;
 
 	protected CouponsManager() {
 		// Exists only to defeat instantiation.
@@ -26,8 +27,16 @@ public class CouponsManager {
 	public List<Coupons> getCoupons() {
 		return coupons;
 	}
-	
-	public Coupons getCouponsByIndex(int idx){
+
+	public Coupons getCouponsByIndex(int idx) {
 		return coupons.get(idx);
+	}
+
+	public void setUser(User _user) {
+		user = _user;
+	}
+
+	public User getUser() {
+		return user;
 	}
 }

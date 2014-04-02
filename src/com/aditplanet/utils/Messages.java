@@ -6,6 +6,8 @@ import com.aditplanet.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.text.Html;
+import android.widget.TextView;
 import android.widget.Toast;
 /**
  * This class is used globally to print messages like pop-up messages or toast messages.
@@ -40,7 +42,7 @@ public class Messages
 	
 
 	public static void showAuthError(){
-		Messages.popup_msg(authError, "Authentication Error", R.drawable.info);
+		Messages.popup_msg(authError, "Authentication Error", R.drawable.error);
 	}
 	/**
 	 * Pop-up message.
@@ -54,9 +56,9 @@ public class Messages
 	 */
 	public static void popup_msg(String msg, String title, int imageID)
 	{
-		AlertDialog.Builder alert_box = new AlertDialog.Builder(mainActivity);
+		AlertDialog.Builder alert_box = new AlertDialog.Builder(mainActivity);		
 		alert_box.setTitle(title);
-		alert_box.setMessage(msg);
+		alert_box.setMessage(Html.fromHtml("<small>"+msg+"</small>"));
 		alert_box.setIcon(imageID);
 
 		alert_box.setNeutralButton("Hide", new DialogInterface.OnClickListener() {
