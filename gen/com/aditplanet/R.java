@@ -41,27 +41,30 @@ public final class R {
         public static final int qr_icon=0x7f02000a;
     }
     public static final class id {
-        public static final int action_help=0x7f090013;
-        public static final int action_refresh=0x7f090012;
-        public static final int action_search=0x7f090011;
-        public static final int action_settings=0x7f090014;
-        public static final int btnLogin=0x7f09000a;
+        public static final int ScanButton=0x7f090006;
+        public static final int action_help=0x7f090016;
+        public static final int action_refresh=0x7f090015;
+        public static final int action_search=0x7f090014;
+        public static final int action_settings=0x7f090017;
+        public static final int btnLogin=0x7f09000d;
         public static final int btnValidateByCouponCode=0x7f090002;
-        public static final int coupon_code=0x7f090006;
-        public static final int coupon_details=0x7f090007;
-        public static final int info_image=0x7f09000d;
+        public static final int cameraPreview=0x7f090004;
+        public static final int coupon_code=0x7f090009;
+        public static final int coupon_details=0x7f09000a;
+        public static final int info_image=0x7f090010;
         public static final int list=0x7f090003;
-        public static final int list_image=0x7f090005;
+        public static final int list_image=0x7f090008;
         public static final int pager=0x7f090000;
-        public static final int show_number_of_access_points=0x7f09000f;
-        public static final int show_number_of_samples=0x7f090010;
-        public static final int show_profile_details=0x7f09000e;
-        public static final int show_profile_name=0x7f09000c;
-        public static final int thumbnail=0x7f090004;
-        public static final int top=0x7f09000b;
+        public static final int scanText=0x7f090005;
+        public static final int show_number_of_access_points=0x7f090012;
+        public static final int show_number_of_samples=0x7f090013;
+        public static final int show_profile_details=0x7f090011;
+        public static final int show_profile_name=0x7f09000f;
+        public static final int thumbnail=0x7f090007;
+        public static final int top=0x7f09000e;
         public static final int txtCouponCode=0x7f090001;
-        public static final int txtPassword=0x7f090009;
-        public static final int txtUsername=0x7f090008;
+        public static final int txtPassword=0x7f09000c;
+        public static final int txtUsername=0x7f09000b;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
