@@ -1,32 +1,27 @@
 package com.aditplanet.main;
 
-import java.util.List;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.aditplanet.adapters.TabsPagerAdapter;
-import com.aditplanet.model.Coupons;
-import com.aditplanet.model.CouponsManager;
-import com.aditplanet.model.User;
-import com.aditplanet.utils.Messages;
-import com.aditplanet.utils.NotificationService;
-import com.aditplanet.web.client.RemoteParser;
-import com.aditplanet.web.client.WebClient;
-
-import com.aditplanet.R;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
+
+import com.aditplanet.R;
+import com.aditplanet.adapters.TabsPagerAdapter;
+import com.aditplanet.model.CouponsManager;
+import com.aditplanet.model.User;
+import com.aditplanet.utils.Messages;
+import com.aditplanet.utils.NotificationService;
+import com.aditplanet.web.client.WebClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -38,7 +33,9 @@ public class MainActivity extends FragmentActivity implements
 	private Messages messages;
 	// Tab titles
 	private String[] tabs = { "Coupon Number", "QR Code", "My Coupons" };
-
+	private final int VALIDATE_BY_QRCODE = 1;
+	public static final String FRAGMENT_UPDATE = "com.aditplanet.main.MainActivity.FRAGMENT_UPDATE";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -111,9 +108,8 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		// on tab selected
-		// show respected fragment view
-		
-		configureCameraElements((tab.getPosition() == 1));
+		// show respected fragment view	
+		configureCameraElements((tab.getPosition() == VALIDATE_BY_QRCODE));
 		
 		viewPager.setCurrentItem(tab.getPosition());
 	}
@@ -131,17 +127,19 @@ public class MainActivity extends FragmentActivity implements
 	
 	private void configureCameraElements(boolean cameraTabSelected)
 	{
+		Intent intent = new Intent(FRAGMENT_UPDATE);
+		
 		if(!cameraTabSelected)
 		{
 			//Send notification to ValidateByQRCode in order to release camera objects.
-			
+			intent.putExtra("releaseCamera", true);
 		}
 		else
 		{
-			System.out.println("Send notification.");
-			//Initialise camera objects.
-			NotificationService.postNotification("obs", "Notifications is working");
+			System.out.println("Send notification.");	
+			intent.putExtra("releaseCamera", false);		
 		}
+		sendBroadcast(intent);
 	}
 	
 	private void validationByCouponCode(String couponCode){
