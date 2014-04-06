@@ -10,6 +10,7 @@ import com.aditplanet.model.Coupons;
 import com.aditplanet.model.CouponsManager;
 import com.aditplanet.model.User;
 import com.aditplanet.utils.Messages;
+import com.aditplanet.utils.NotificationService;
 import com.aditplanet.web.client.RemoteParser;
 import com.aditplanet.web.client.WebClient;
 
@@ -68,17 +69,39 @@ public class MainActivity extends FragmentActivity implements
 			public void onPageSelected(int position) {
 				// on changing the page
 				// make respected tab selected
+				
+				
 				actionBar.setSelectedNavigationItem(position);
 			}
 
 			@Override
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				
 			}
 
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
+				
 			}
+			
+			
 		});
+	}
+	
+	public void onPause()
+	{
+		System.out.println("Main Activity : onPause");
+		
+		super.onPause();
+		
+	}
+	
+	public void onResume()
+	{
+		super.onResume();
+		
+		System.out.println("Main Activity : onResume");
+
 	}
 
 	@Override
@@ -89,6 +112,9 @@ public class MainActivity extends FragmentActivity implements
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		// on tab selected
 		// show respected fragment view
+		
+		configureCameraElements((tab.getPosition() == 1));
+		
 		viewPager.setCurrentItem(tab.getPosition());
 	}
 
@@ -101,6 +127,21 @@ public class MainActivity extends FragmentActivity implements
 		validationByCouponCode(couponCode.getText().toString());
 		
 		//Toast.makeText(getApplicationContext(), "Send request to server!", Toast.LENGTH_LONG).show();
+	}
+	
+	private void configureCameraElements(boolean cameraTabSelected)
+	{
+		if(!cameraTabSelected)
+		{
+			//Send notification to ValidateByQRCode in order to release camera objects.
+			
+		}
+		else
+		{
+			System.out.println("Send notification.");
+			//Initialise camera objects.
+			NotificationService.postNotification("obs", "Notifications is working");
+		}
 	}
 	
 	private void validationByCouponCode(String couponCode){
@@ -130,7 +171,7 @@ public class MainActivity extends FragmentActivity implements
 		    public void onFailure(Throwable error, String content) {
 		        System.out.println(error.getMessage());
 		        //TODO: Add message for network failure
-		        messages.showNetworkError();
+		        Messages.showNetworkError();
 		    }
 		});
 		

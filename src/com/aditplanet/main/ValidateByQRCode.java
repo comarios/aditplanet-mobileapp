@@ -1,5 +1,8 @@
 package com.aditplanet.main;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import net.sourceforge.zbar.Config;
 import net.sourceforge.zbar.Image;
 import net.sourceforge.zbar.ImageScanner;
@@ -8,6 +11,7 @@ import net.sourceforge.zbar.SymbolSet;
 
 import com.aditplanet.R;
 import com.aditplanet.qrcode.CameraPreview;
+import com.aditplanet.utils.NotificationService;
 
 import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
@@ -27,7 +31,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TableLayout.LayoutParams;
 
-public class ValidateByQRCode extends Fragment {
+public class ValidateByQRCode extends Fragment implements Observer {
 
 	private Camera mCamera;
 	private CameraPreview mPreview;
@@ -56,6 +60,9 @@ public class ValidateByQRCode extends Fragment {
 		// that requires the parent Activity to be initialized or the
 		// Fragment's view to be fully inflated.
 		System.out.println("Here onActivityCreated");
+		setUpNotifications();
+		//Set up notifications.
+		
 	}
 
 	@Override
@@ -150,7 +157,24 @@ public class ValidateByQRCode extends Fragment {
 
 		releaseCamera();
 	}
+	
+	private void setUpCameraElements()
+	{
+		
+	}
+	
+	private void releaseCameraElements()
+	{
+		
+	}
 
+	private void setUpNotifications()
+	{
+	
+		
+		NotificationService.addObserver("obs", this);
+	}
+	
 	/** A safe way to get an instance of the Camera object. */
 	public static Camera getCameraInstance() {
 		Camera c = null;
@@ -208,4 +232,10 @@ public class ValidateByQRCode extends Fragment {
 			autoFocusHandler.postDelayed(doAutoFocus, 1000);
 		}
 	};
+
+	@Override
+	public void update(Observable observable, Object data) {
+		// TODO Auto-generated method stub
+		System.out.println("Camera tab selected from observer: "+observable +" "+ data);
+	}
 }

@@ -76,6 +76,7 @@ public class LoginActivity extends Activity {
 			public void onSuccess(String coupons) {
 				// Pull out the first event on the public timeline
 				 try {
+					 
 					JSONObject json = new JSONObject(coupons);
 					
 					if(RemoteParser.isAuth(json)){

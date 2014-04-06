@@ -66,7 +66,8 @@ public class MyCoupons extends Fragment {
 		HashMap<String, String> map = new HashMap<String, String>();
 
 
-
+//		System.out.prinln(coupons);
+		
 		//Add elements to map.
 		for (Coupons cp : coupons)
 		{

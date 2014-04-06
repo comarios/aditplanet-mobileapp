@@ -7,11 +7,16 @@ import com.aditplanet.main.ValidateByCouponNumber;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.ListView;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
 	public TabsPagerAdapter(FragmentManager fm) {
 		super(fm);
+		
+		
 	}
 
 	@Override
@@ -32,10 +37,14 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 		return null;
 	}
 
+	
+	
 	@Override
 	public int getCount() {
 		// get item count - equal to number of tabs
 		return 3;
 	}
+	
+ 
 
 }
