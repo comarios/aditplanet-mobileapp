@@ -4,25 +4,22 @@ import com.aditplanet.R;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.view.MenuItem;
 import android.widget.TextView;
 
-public class ViewCouponDetails extends Activity{
+public class ViewCouponDetails extends Activity {
 
-	/** Text view for showing profile name */
-	private TextView profileName;
-	
-	/** Text view for showing profile description */
-	private TextView profile;
-	
-	/** Text view for showing number of access points */
-	private TextView numberOfAP;
-	
-	/** Text view for showing number of samples*/
-	private TextView numberOfSamples;
+	private TextView couponCode;
+	private TextView couponDetails;
+	private TextView couponMerchant;
+	private TextView couponValidStatus;
+	private TextView couponValidDate;
+	private TextView couponValidStartDate;
+	private TextView couponValidEndDate;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.view_coupon_details);
 		Bundle extras = getIntent().getExtras();
@@ -30,18 +27,45 @@ public class ViewCouponDetails extends Activity{
 
 		}
 
-		//Set-up text views.
-		profileName = (TextView) findViewById(R.id.show_profile_name);
-		profile = (TextView) findViewById(R.id.show_profile_details);
-		numberOfAP = (TextView) findViewById(R.id.show_number_of_access_points);
-		numberOfSamples = (TextView) findViewById(R.id.show_number_of_samples);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+
+		// Set-up text views.
+		couponCode = (TextView) findViewById(R.id.details_couponCode);
+		couponDetails = (TextView) findViewById(R.id.details_couponDetails);
+		couponMerchant = (TextView) findViewById(R.id.details_couponMerchant);
+		couponValidStatus = (TextView) findViewById(R.id.details_couponValidStatus);
+		couponValidDate = (TextView) findViewById(R.id.details_couponValidDate);
+		couponValidStartDate = (TextView) findViewById(R.id.details_couponValidStartDate);
+		couponValidEndDate = (TextView) findViewById(R.id.details_couponValidEndDate);
+
+		// Show information.
+		couponCode.setText(extras.getString("couponCode"));
+		couponDetails.setText(extras.getString("couponDetails"));
+		couponMerchant.setText(extras.getString("couponMerchant"));
+		couponValidStatus.setText(extras.getString("couponValidStatus"));
+		couponValidDate.setText(extras.getString("couponValidDate"));
+		couponValidStartDate.setText(extras.getString("couponValidStartDate"));
+		couponValidEndDate.setText(extras.getString("couponValidEndDate"));
 		
+		System.out.println("sent: couponCode" + extras.getString("couponCode"));
+		System.out.println("sent: couponDetails" + extras.getString("couponDetails"));
+		System.out.println("sent: couponMerchant" + extras.getString("couponMerchant"));
+		System.out.println("sent: couponValidStatus" + extras.getString("couponValidStatus"));
+		System.out.println("sent: couponValidDate" + extras.getString("couponValidDate"));
+		System.out.println("sent: couponValidStartDate" + extras.getString("couponValidStartDate"));
+		System.out.println("sent: couponValidEndDate" + extras.getString("couponValidEndDate"));
+
 		
-		//Show information.
-		profileName.setText(extras.getString("profile_name"));
-		profile.setText(extras.getString("profile_desc"));
-		numberOfAP.setText(extras.getString("no_of_ap"));
-		numberOfSamples.setText(extras.getString("no_of_samples"));
-		
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			NavUtils.navigateUpFromSameTask(this);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 }

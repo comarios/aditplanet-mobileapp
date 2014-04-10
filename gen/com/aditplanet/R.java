@@ -39,29 +39,32 @@ public final class R {
         public static final int info=0x7f020008;
         public static final int logo=0x7f020009;
         public static final int qr_icon=0x7f02000a;
+        public static final int qr_wrapper=0x7f02000b;
     }
     public static final class id {
         public static final int ScanButton=0x7f090006;
-        public static final int action_help=0x7f090016;
-        public static final int action_refresh=0x7f090015;
-        public static final int action_search=0x7f090014;
-        public static final int action_settings=0x7f090017;
+        public static final int action_help=0x7f090018;
+        public static final int action_refresh=0x7f090017;
+        public static final int action_search=0x7f090016;
+        public static final int action_settings=0x7f090019;
         public static final int btnLogin=0x7f09000d;
         public static final int btnValidateByCouponCode=0x7f090002;
         public static final int cameraPreview=0x7f090004;
         public static final int coupon_code=0x7f090009;
         public static final int coupon_details=0x7f09000a;
-        public static final int info_image=0x7f090010;
+        public static final int details_couponCode=0x7f09000f;
+        public static final int details_couponDetails=0x7f090010;
+        public static final int details_couponImage=0x7f09000e;
+        public static final int details_couponMerchant=0x7f090011;
+        public static final int details_couponValidDate=0x7f090013;
+        public static final int details_couponValidEndDate=0x7f090015;
+        public static final int details_couponValidStartDate=0x7f090014;
+        public static final int details_couponValidStatus=0x7f090012;
         public static final int list=0x7f090003;
         public static final int list_image=0x7f090008;
         public static final int pager=0x7f090000;
         public static final int scanText=0x7f090005;
-        public static final int show_number_of_access_points=0x7f090012;
-        public static final int show_number_of_samples=0x7f090013;
-        public static final int show_profile_details=0x7f090011;
-        public static final int show_profile_name=0x7f09000f;
         public static final int thumbnail=0x7f090007;
-        public static final int top=0x7f09000e;
         public static final int txtCouponCode=0x7f090001;
         public static final int txtPassword=0x7f09000c;
         public static final int txtUsername=0x7f09000b;
@@ -101,11 +104,13 @@ public final class R {
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
+
         
 
         Base application theme for API 11+. This theme completely replaces
@@ -124,5 +129,19 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f070001;
+        /** 
+      This style kills the design 
+
+    <style name="actionBarTabBarStyle" parent="android:style/Widget.Holo.Light.ActionBar.TabBar">
+        <item name="android:padding">0dp</item>
+        <item name="android:height">3dp</item>
+    </style>
+
+    <style name="actionBarTabStyle" parent="android:style/Widget.Holo.Light.Tab">
+        <item name="android:height">3dp</item>
+    </style>
+    
+         */
+        public static final int Divider=0x7f070002;
     }
 }

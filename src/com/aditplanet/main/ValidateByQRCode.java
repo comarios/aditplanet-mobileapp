@@ -5,6 +5,8 @@ import net.sourceforge.zbar.Image;
 import net.sourceforge.zbar.ImageScanner;
 import net.sourceforge.zbar.Symbol;
 import net.sourceforge.zbar.SymbolSet;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aditplanet.R;
@@ -36,9 +39,10 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 	private FragmentServiceReceiver fragmentService;
 	private IntentFilter fragmentFilter;
 
+	ImageView qrWrapper;
 	TextView scanText;
 	Button scanButton;
-
+	
 	ImageScanner scanner;
 
 	FrameLayout preview;
@@ -113,7 +117,7 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		
 		View rootView = inflater.inflate(R.layout.fragment_qrcode, container,
 				false);
 		getActivity().setRequestedOrientation(
@@ -132,22 +136,29 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 		this.preview = (FrameLayout) rootView.findViewById(R.id.cameraPreview);
 		this.preview.addView(mPreview);
 
+		
+		qrWrapper = new ImageView(rootView.getContext());
+		qrWrapper.setImageDrawable(rootView.getResources()
+				.getDrawable(R.drawable.qr_wrapper));
+
+		this.preview.addView(qrWrapper);
+		
 		scanText = (TextView) rootView.findViewById(R.id.scanText);
 
-		scanButton = (Button) rootView.findViewById(R.id.ScanButton);
-
-		scanButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				if (barcodeScanned) {
-					barcodeScanned = false;
-					scanText.setText("Scanning...");
-					mCamera.setPreviewCallback(previewCb);
-					mCamera.startPreview();
-					previewing = true;
-					mCamera.autoFocus(autoFocusCB);
-				}
-			}
-		});
+//		scanButton = (Button) rootView.findViewById(R.id.ScanButton);
+//
+//		scanButton.setOnClickListener(new OnClickListener() {
+//			public void onClick(View v) {
+//				if (barcodeScanned) {
+//					barcodeScanned = false;
+//					scanText.setText("Scanning...");
+//					mCamera.setPreviewCallback(previewCb);
+//					mCamera.startPreview();
+//					previewing = true;
+//					mCamera.autoFocus(autoFocusCB);
+//				}
+//			}
+//		});
 
 		return rootView;
 	}
@@ -247,9 +258,12 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 
 			Boolean releaseCamera = intent.getBooleanExtra("releaseCamera",
 					false);
-//			if(releaseCamera){
-//				releaseCamera();
-//			}
+			if(!releaseCamera){
+			
+			}
+			// if(releaseCamera){
+			// releaseCamera();
+			// }
 			System.out.println("on receive:" + releaseCamera);
 		}
 	}

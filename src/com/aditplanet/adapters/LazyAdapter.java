@@ -37,7 +37,7 @@ public class LazyAdapter extends BaseAdapter
 	/** Main activity. */
 	//private Activity activity;
 	
-	/** Layout in flater. */
+	/** Layout inflater. */
 	private static LayoutInflater inflater = null;
 	
 	/** List that contains map.
