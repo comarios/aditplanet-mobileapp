@@ -11,6 +11,7 @@ public class CouponsManager {
 
 	protected CouponsManager() {
 		// Exists only to defeat instantiation.
+		this.coupons = new ArrayList<Coupons>();
 	}
 
 	public static CouponsManager getInstance() {
@@ -38,5 +39,9 @@ public class CouponsManager {
 
 	public User getUser() {
 		return user;
+	}
+
+	public boolean isCouponsListEmpty() {
+		return coupons.size() == 0 ? true : false;
 	}
 }

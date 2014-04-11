@@ -36,8 +36,8 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 	private Camera mCamera;
 	private CameraPreview mPreview;
 	private Handler autoFocusHandler;
-	private FragmentServiceReceiver fragmentService;
-	private IntentFilter fragmentFilter;
+//	private FragmentServiceReceiver fragmentService;
+//	private IntentFilter fragmentFilter;
 
 	ImageView qrWrapper;
 	TextView scanText;
@@ -52,66 +52,6 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 
 	static {
 		System.loadLibrary("iconv");
-	}
-
-	// Called once the parent Activity and the Fragment's UI have
-	// been created.
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		// Complete the Fragment initialization particularly anything
-		// that requires the parent Activity to be initialized or the
-		// Fragment's view to be fully inflated.
-		System.out.println("Here onActivityCreated");
-		fragmentService = new FragmentServiceReceiver();
-		fragmentFilter = new IntentFilter(MainActivity.FRAGMENT_UPDATE);
-
-		getActivity().registerReceiver(fragmentService, fragmentFilter);
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-		System.out.println("Here onStart");
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		System.out.println("Here onResume");
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle savedInstanceState) {
-
-		super.onSaveInstanceState(savedInstanceState);
-		System.out.println("Here onSaveInstanceState");
-	}
-
-	@Override
-	public void onStop() {
-		super.onStop();
-		System.out.println("Here onStop");
-	}
-
-	@Override
-	public void onDestroyView() {
-
-		super.onDestroyView();
-		System.out.println("Here onDestroyView");
-	}
-
-	@Override
-	public void onDestroy() {
-
-		super.onDestroy();
-		System.out.println("Here onDestroy");
-	}
-
-	@Override
-	public void onDetach() {
-		super.onDetach();
-		System.out.println("Here onDetach");
 	}
 
 	@Override
@@ -136,7 +76,6 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 		this.preview = (FrameLayout) rootView.findViewById(R.id.cameraPreview);
 		this.preview.addView(mPreview);
 
-		
 		qrWrapper = new ImageView(rootView.getContext());
 		qrWrapper.setImageDrawable(rootView.getResources()
 				.getDrawable(R.drawable.qr_wrapper));
@@ -145,20 +84,20 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 		
 		scanText = (TextView) rootView.findViewById(R.id.scanText);
 
-//		scanButton = (Button) rootView.findViewById(R.id.ScanButton);
-//
-//		scanButton.setOnClickListener(new OnClickListener() {
-//			public void onClick(View v) {
-//				if (barcodeScanned) {
-//					barcodeScanned = false;
-//					scanText.setText("Scanning...");
-//					mCamera.setPreviewCallback(previewCb);
-//					mCamera.startPreview();
-//					previewing = true;
-//					mCamera.autoFocus(autoFocusCB);
-//				}
-//			}
-//		});
+		scanButton = (Button) rootView.findViewById(R.id.ScanButton);
+
+		scanButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				if (barcodeScanned) {
+					barcodeScanned = false;
+					scanText.setText("Scanning...");
+					mCamera.setPreviewCallback(previewCb);
+					mCamera.startPreview();
+					previewing = true;
+					mCamera.autoFocus(autoFocusCB);
+				}
+			}
+		});
 
 		return rootView;
 	}
@@ -168,13 +107,13 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 		releaseCamera();
 	}
 
-	private void setUpCameraElements() {
-
-	}
-
-	private void releaseCameraElements() {
-
-	}
+//	private void setUpCameraElements() {
+//
+//	}
+//
+//	private void releaseCameraElements() {
+//
+//	}
 
 	// private void setUpNotifications()
 	// {
@@ -251,20 +190,20 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 	 * Inner Class BroadCastReceiver, used for communication between fragments
 	 * 
 	 */
-	public class FragmentServiceReceiver extends BroadcastReceiver {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			// TODO Auto-generated method stub
-
-			Boolean releaseCamera = intent.getBooleanExtra("releaseCamera",
-					false);
-			if(!releaseCamera){
-			
-			}
-			// if(releaseCamera){
-			// releaseCamera();
-			// }
-			System.out.println("on receive:" + releaseCamera);
-		}
-	}
+//	public class FragmentServiceReceiver extends BroadcastReceiver {
+//		@Override
+//		public void onReceive(Context context, Intent intent) {
+//			// TODO Auto-generated method stub
+//
+//			Boolean releaseCamera = intent.getBooleanExtra("releaseCamera",
+//					false);
+//			if(!releaseCamera){
+//			
+//			}
+//			// if(releaseCamera){
+//			// releaseCamera();
+//			// }
+//			System.out.println("on receive:" + releaseCamera);
+//		}
+//	}
 }

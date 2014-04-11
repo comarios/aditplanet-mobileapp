@@ -2,7 +2,6 @@ package com.aditplanet.utils;
 
 
 import com.aditplanet.R;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;

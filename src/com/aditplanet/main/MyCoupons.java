@@ -43,23 +43,24 @@ public class MyCoupons extends Fragment {
 					long arg3) {
 
 				// TODO: Fix the view_coupons_details.xml and the code below
-				Coupons coupons = CouponsManager.getInstance()
-						.getCouponsByIndex(arg2);
+//				Coupons coupons = CouponsManager.getInstance()
+//						.getCouponsByIndex(arg2);
 
 				Intent viewCoupon = new Intent(getActivity(),
 						ViewCouponDetails.class);
-				viewCoupon.putExtra("couponCode", coupons.getCode());
-				viewCoupon.putExtra("couponDetails",
-						coupons.getCoupon_details());
-				viewCoupon.putExtra("couponMerchant", coupons.getMerchant());
-				viewCoupon.putExtra("couponValidStatus",
-						coupons.getValid_status());
-				viewCoupon.putExtra("couponValidDate", coupons.getValid_date());
-				viewCoupon.putExtra("couponValidStartDate",
-						coupons.getValid_start_date());
-				viewCoupon.putExtra("couponValidEndDate",
-						coupons.getValid_end_date());
-				System.out.println("before sent: " + coupons);
+				viewCoupon.putExtra("couponIdx", arg2);
+//				viewCoupon.putExtra("couponCode", coupons.getCode());
+//				viewCoupon.putExtra("couponDetails",
+//						coupons.getCoupon_details());
+//				viewCoupon.putExtra("couponMerchant", coupons.getMerchant());
+//				viewCoupon.putExtra("couponValidStatus",
+//						coupons.getValid_status());
+//				viewCoupon.putExtra("couponValidDate", coupons.getValid_date());
+//				viewCoupon.putExtra("couponValidStartDate",
+//						coupons.getValid_start_date());
+//				viewCoupon.putExtra("couponValidEndDate",
+//						coupons.getValid_end_date());
+//				System.out.println("before sent: " + coupons);
 
 				startActivity(viewCoupon);
 			}

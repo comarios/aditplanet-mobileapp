@@ -1,6 +1,8 @@
 package com.aditplanet.main;
 
 import com.aditplanet.R;
+import com.aditplanet.model.Coupons;
+import com.aditplanet.model.CouponsManager;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -38,22 +40,29 @@ public class ViewCouponDetails extends Activity {
 		couponValidStartDate = (TextView) findViewById(R.id.details_couponValidStartDate);
 		couponValidEndDate = (TextView) findViewById(R.id.details_couponValidEndDate);
 
-		// Show information.
-		couponCode.setText(extras.getString("couponCode"));
-		couponDetails.setText(extras.getString("couponDetails"));
-		couponMerchant.setText(extras.getString("couponMerchant"));
-		couponValidStatus.setText(extras.getString("couponValidStatus"));
-		couponValidDate.setText(extras.getString("couponValidDate"));
-		couponValidStartDate.setText(extras.getString("couponValidStartDate"));
-		couponValidEndDate.setText(extras.getString("couponValidEndDate"));
 		
-		System.out.println("sent: couponCode" + extras.getString("couponCode"));
-		System.out.println("sent: couponDetails" + extras.getString("couponDetails"));
-		System.out.println("sent: couponMerchant" + extras.getString("couponMerchant"));
-		System.out.println("sent: couponValidStatus" + extras.getString("couponValidStatus"));
-		System.out.println("sent: couponValidDate" + extras.getString("couponValidDate"));
-		System.out.println("sent: couponValidStartDate" + extras.getString("couponValidStartDate"));
-		System.out.println("sent: couponValidEndDate" + extras.getString("couponValidEndDate"));
+		Coupons coupons = CouponsManager.getInstance()
+				.getCouponsByIndex(extras.getInt("couponIdx"));
+		
+		System.out.println("after sent: coupon: " + coupons);
+		
+		
+		// Show information.
+		couponCode.setText("Coupon Code: " + coupons.getCode());
+		couponDetails.setText("Details: " +coupons.getCoupon_details());
+		couponMerchant.setText("Merchant: " +coupons.getMerchant());
+		couponValidStatus.setText("Valid status: " +coupons.getValid_status()+"");
+		couponValidDate.setText("Valid Date: " +coupons.getValid_date()+"");
+		couponValidStartDate.setText("Valid Start Date: " +coupons.getValid_start_date()+"");
+		couponValidEndDate.setText("Valid End Date: " +coupons.getValid_end_date()+"");
+		
+//		System.out.println("sent: couponCode" + extras.getString("couponCode"));
+//		System.out.println("sent: couponDetails" + extras.getString("couponDetails"));
+//		System.out.println("sent: couponMerchant" + extras.getString("couponMerchant"));
+//		System.out.println("sent: couponValidStatus" + extras.getString("couponValidStatus"));
+//		System.out.println("sent: couponValidDate" + extras.getString("couponValidDate"));
+//		System.out.println("sent: couponValidStartDate" + extras.getString("couponValidStartDate"));
+//		System.out.println("sent: couponValidEndDate" + extras.getString("couponValidEndDate"));
 
 		
 	}
