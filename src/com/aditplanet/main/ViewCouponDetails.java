@@ -30,6 +30,7 @@ public class ViewCouponDetails extends Activity {
 		}
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+	
 
 		// Set-up text views.
 		couponCode = (TextView) findViewById(R.id.details_couponCode);
@@ -69,11 +70,17 @@ public class ViewCouponDetails extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		System.out.println("onOptionsItemSelected");
+
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			NavUtils.navigateUpFromSameTask(this);
+			System.out.println("home");
 			return true;
 		default:
+			System.out.println("default");
+
 			return super.onOptionsItemSelected(item);
 		}
 	}

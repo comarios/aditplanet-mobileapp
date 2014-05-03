@@ -38,41 +38,62 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 
+		this.autoLoginConfiguration();
+
+		if (AutoLogin.getAnswer(getFilesDir())) {
+			this.navigateToMainActivity();
+		} else {
+			
+			this.intialiseObjects();
+
+			this.constructElementsInUI();
+		}
+
+	}
+	
+	private void navigateToMainActivity()
+	{
+		Intent i = new Intent(LoginActivity.this, MainActivity.class);
+		startActivity(i);
+	}
+	
+	private void constructElementsInUI()
+	{
+		Button btnLogin = (Button) findViewById(R.id.btnLogin);
+		final EditText username = (EditText) findViewById(R.id.txtUsername);
+		final EditText password = (EditText) findViewById(R.id.txtPassword);
+		
+		btnLogin.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+				System.out.println("reached here");
+				// Perform authentication check - use aditplanet auth API
+				authentication(username.getText().toString(), password
+						.getText().toString());
+			}
+
+		});
+	}
+
+	private void intialiseObjects()
+	{
+		messages = new Messages(this);
+
+	}
+
+	private void autoLoginConfiguration()
+	{
 		File myFileLoggedIN = new File(getFilesDir() + AutoLogin.confFile);
 
 		if (!myFileLoggedIN.exists()) {
 			AutoLogin.saveToFileLoggedIN(this, getFilesDir(),
 					AutoLogin.IS_LOGGED_IN_NO);
 		}
-
-		if (AutoLogin.getAnswer(getFilesDir())) {
-			Intent i = new Intent(LoginActivity.this, MainActivity.class);
-			startActivity(i);
-		} else {
-			Button btnLogin = (Button) findViewById(R.id.btnLogin);
-			final EditText username = (EditText) findViewById(R.id.txtUsername);
-			final EditText password = (EditText) findViewById(R.id.txtPassword);
-
-			messages = new Messages(this);
-
-			btnLogin.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-
-					System.out.println("reached here");
-					// Perform authentication check - use aditplanet auth API
-					authentication(username.getText().toString(), password
-							.getText().toString());
-				}
-
-			});
-
-		}
-
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

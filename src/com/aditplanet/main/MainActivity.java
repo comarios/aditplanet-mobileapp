@@ -95,6 +95,7 @@ public class MainActivity extends FragmentActivity implements
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
 				
+				
 			}
 			
 			
