@@ -17,14 +17,7 @@ public class Coupons {
 	private Date valid_start_date;
 	private Date valid_end_date;
 
-	public String toString() {
 
-		return "code: " + this.code + ", valid_status: " + this.valid_status
-				+ "valid_date:" + this.valid_date + "merchant: "
-				+ this.merchant + ", coupon_details: " + this.coupon_details
-				+ "valid_start_date:" + this.valid_start_date
-				+ "valid_end_date:" + this.valid_end_date;
-	}
 
 	public Coupons(JSONObject coupons) {
 		try {
@@ -43,6 +36,17 @@ public class Coupons {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public Coupons(String code, int validStatus, String validDate, String merchant, String couponDetails, String validStartDate, String validEndDate)
+	{
+		this.code = code;
+		this.valid_status = (validStatus == 0) ? false : true;
+		this.valid_date = DateParser.parseDate(validDate);
+		this.merchant = merchant;
+		this.coupon_details = couponDetails;
+		this.valid_start_date = DateParser.parseDate(validStartDate);
+		this.valid_end_date = DateParser.parseDate(validEndDate);
 	}
 
 	public String getCode() {
@@ -101,4 +105,13 @@ public class Coupons {
 		this.valid_end_date = valid_end_date;
 	}
 
+	
+	public String toString() {
+
+		return "code: " + this.code + ", valid_status: " + this.valid_status
+				+ "valid_date:" + this.valid_date + "merchant: "
+				+ this.merchant + ", coupon_details: " + this.coupon_details
+				+ "valid_start_date:" + this.valid_start_date
+				+ "valid_end_date:" + this.valid_end_date;
+	}
 }
