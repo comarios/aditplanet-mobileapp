@@ -3,12 +3,17 @@ package com.aditplanet.main;
 import com.aditplanet.R;
 
 import android.os.Bundle;
+import android.provider.Telephony.TextBasedSmsColumns;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class ValidateByCouponNumber extends Fragment {
 
@@ -17,6 +22,22 @@ public class ValidateByCouponNumber extends Fragment {
 			Bundle savedInstanceState) {
 
 		View rootView = inflater.inflate(R.layout.fragment_coupon_number, container, false);
+		
+//		final TextView txtCouponCode = (TextView) rootView.findViewById(R.id.txtCouponCode);
+//		Button btnValidateByCouponCode = (Button) rootView.findViewById(R.id.btnValidateByCouponCode);
+//		
+//		btnValidateByCouponCode.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//
+//				System.out.println("reached here");
+//				// Perform authentication check - use aditplanet auth API
+//				Toast.makeText(getActivity(), txtCouponCode.getText().toString(), Toast.LENGTH_LONG).show();
+//			}
+//
+//		});
 		
 		return rootView;
 	}

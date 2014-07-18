@@ -13,7 +13,7 @@
         android:ems="10"
         android:gravity="center"
         android:hint="@string/coupon_code"
-        android:inputType="text" />
+        android:inputType="number" />
 
     <Button
         android:id="@+id/btnValidateByCouponCode"

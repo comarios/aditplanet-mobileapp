@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.aditplanet.R;
 import com.aditplanet.adapters.TabsPagerAdapter;
@@ -42,7 +43,7 @@ public class MainActivity extends FragmentActivity implements
 	private EditText couponCode;
 	private Messages messages;
 	// Tab titles
-	private String[] tabs = { "Coupon Number", "QR Code", "My Coupons" };
+	private String[] tabs = { "Coupon Code", "QR Code", "My Coupons" };
 	private final int VALIDATE_BY_QRCODE = 1;
 	public static final String FRAGMENT_UPDATE = "com.aditplanet.main.MainActivity.FRAGMENT_UPDATE";
 	
@@ -204,7 +205,7 @@ public class MainActivity extends FragmentActivity implements
 				// Pull out the first event on the public timeline
 				 try {
 					JSONObject json = new JSONObject(response);
-					
+					Toast.makeText(getApplicationContext(), "json: " + json, Toast.LENGTH_LONG).show();
 					System.out.println("json: " + json);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block

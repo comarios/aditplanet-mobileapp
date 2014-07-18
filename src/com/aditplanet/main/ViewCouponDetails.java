@@ -8,18 +8,24 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 public class ViewCouponDetails extends Activity {
 
-	private TextView couponCode;
-	private TextView couponDetails;
-	private TextView couponMerchant;
-	private TextView couponValidStatus;
-	private TextView couponValidDate;
-	private TextView couponValidStartDate;
-	private TextView couponValidEndDate;
+//	private TextView couponCode;
+//	private TextView couponDetails;
+//	private TextView couponMerchant;
+//	private TextView couponValidStatus;
+//	private TextView couponValidDate;
+//	private TextView couponValidStartDate;
+//	private TextView couponValidEndDate;
 
+	
+	private WebView webView;
+	private String couponURI;
+	private final String couponViewAPI = "http://aditplanet.com/coupon_view.php?id=";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,13 +39,13 @@ public class ViewCouponDetails extends Activity {
 	
 
 		// Set-up text views.
-		couponCode = (TextView) findViewById(R.id.details_couponCode);
-		couponDetails = (TextView) findViewById(R.id.details_couponDetails);
-		couponMerchant = (TextView) findViewById(R.id.details_couponMerchant);
-		couponValidStatus = (TextView) findViewById(R.id.details_couponValidStatus);
-		couponValidDate = (TextView) findViewById(R.id.details_couponValidDate);
-		couponValidStartDate = (TextView) findViewById(R.id.details_couponValidStartDate);
-		couponValidEndDate = (TextView) findViewById(R.id.details_couponValidEndDate);
+//		couponCode = (TextView) findViewById(R.id.details_couponCode);
+//		couponDetails = (TextView) findViewById(R.id.details_couponDetails);
+//		couponMerchant = (TextView) findViewById(R.id.details_couponMerchant);
+//		couponValidStatus = (TextView) findViewById(R.id.details_couponValidStatus);
+//		couponValidDate = (TextView) findViewById(R.id.details_couponValidDate);
+//		couponValidStartDate = (TextView) findViewById(R.id.details_couponValidStartDate);
+//		couponValidEndDate = (TextView) findViewById(R.id.details_couponValidEndDate);
 
 		
 		Coupons coupons = CouponsManager.getInstance()
@@ -49,13 +55,20 @@ public class ViewCouponDetails extends Activity {
 		
 		
 		// Show information.
-		couponCode.setText("Coupon Code: " + coupons.getCode());
-		couponDetails.setText("Details: " +coupons.getCoupon_details());
-		couponMerchant.setText("Merchant: " +coupons.getMerchant());
-		couponValidStatus.setText("Valid status: " +coupons.getValid_status()+"");
-		couponValidDate.setText("Valid Date: " +coupons.getValid_date()+"");
-		couponValidStartDate.setText("Valid Start Date: " +coupons.getValid_start_date()+"");
-		couponValidEndDate.setText("Valid End Date: " +coupons.getValid_end_date()+"");
+		webView = (WebView) findViewById(R.id.couponWebView);
+		webView.getSettings().setJavaScriptEnabled(true);
+		int couponCode = Integer.parseInt(coupons.getCode());
+		int removeFirstTwoDigits = Integer.parseInt(Integer.toString(couponCode).substring(2));
+		
+		couponURI = couponViewAPI + "00_" + removeFirstTwoDigits + "_00";
+		webView.loadUrl(couponURI);
+//		couponCode.setText("Coupon Code: " + coupons.getCode());
+//		couponDetails.setText("Details: " +coupons.getCoupon_details());
+//		couponMerchant.setText("Merchant: " +coupons.getMerchant());
+//		couponValidStatus.setText("Valid status: " +coupons.getValid_status()+"");
+//		couponValidDate.setText("Valid Date: " +coupons.getValid_date()+"");
+//		couponValidStartDate.setText("Valid Start Date: " +coupons.getValid_start_date()+"");
+//		couponValidEndDate.setText("Valid End Date: " +coupons.getValid_end_date()+"");
 		
 //		System.out.println("sent: couponCode" + extras.getString("couponCode"));
 //		System.out.println("sent: couponDetails" + extras.getString("couponDetails"));

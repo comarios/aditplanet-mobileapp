@@ -166,6 +166,7 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 				SymbolSet syms = scanner.getResults();
 				for (Symbol sym : syms) {
 					scanText.setText("barcode result " + sym.getData());
+					System.out.println("barcode result " + sym.getData());
 					barcodeScanned = true;
 				}
 			}

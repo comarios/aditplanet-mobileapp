@@ -44,20 +44,15 @@ public final class R {
     }
     public static final class id {
         public static final int ScanButton=0x7f090006;
-        public static final int action_logout=0x7f090016;
+        public static final int action_logout=0x7f090011;
+        public static final int btnDistributor=0x7f09000f;
         public static final int btnLogin=0x7f09000d;
+        public static final int btnMerchant=0x7f090010;
         public static final int btnValidateByCouponCode=0x7f090002;
         public static final int cameraPreview=0x7f090004;
+        public static final int couponWebView=0x7f09000e;
         public static final int coupon_code=0x7f090009;
         public static final int coupon_details=0x7f09000a;
-        public static final int details_couponCode=0x7f09000f;
-        public static final int details_couponDetails=0x7f090010;
-        public static final int details_couponImage=0x7f09000e;
-        public static final int details_couponMerchant=0x7f090011;
-        public static final int details_couponValidDate=0x7f090013;
-        public static final int details_couponValidEndDate=0x7f090015;
-        public static final int details_couponValidStartDate=0x7f090014;
-        public static final int details_couponValidStatus=0x7f090012;
         public static final int list=0x7f090003;
         public static final int list_image=0x7f090008;
         public static final int pager=0x7f090000;
@@ -77,6 +72,7 @@ public final class R {
         public static final int list_row=0x7f030006;
         public static final int login=0x7f030007;
         public static final int view_coupon_details=0x7f030008;
+        public static final int welcome=0x7f030009;
     }
     public static final class menu {
         public static final int main=0x7f080000;
