@@ -5,6 +5,7 @@ import com.aditplanet.model.Coupons;
 import com.aditplanet.model.CouponsManager;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
@@ -80,7 +81,11 @@ public class ViewCouponDetails extends Activity {
 
 		
 	}
-
+	@Override
+	public void onBackPressed() {    
+		NavUtils.navigateUpFromSameTask(this);
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
