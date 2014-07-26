@@ -31,6 +31,7 @@ public class ViewCouponDetails extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.view_coupon_details);
+		
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 
@@ -82,19 +83,21 @@ public class ViewCouponDetails extends Activity {
 		
 	}
 	@Override
-	public void onBackPressed() {    
+	public void onBackPressed() {   
+		
+//		super.onBackPressed();
+		
 		NavUtils.navigateUpFromSameTask(this);
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
-		System.out.println("onOptionsItemSelected");
+		System.out.println("ViewCouponDetails : onOptionsItemSelected");
 
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			NavUtils.navigateUpFromSameTask(this);
-			System.out.println("home");
 			return true;
 		default:
 			System.out.println("default");

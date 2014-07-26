@@ -38,6 +38,7 @@ import com.loopj.android.http.RequestParams;
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
+	private static int lastVisitedPage;
 	private ViewPager viewPager;
 	private TabsPagerAdapter mAdapter;
 	private ActionBar actionBar;
@@ -53,15 +54,20 @@ public class MainActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_main);
-	
-
+			
+		
 		// Initilization
 		viewPager = (ViewPager) findViewById(R.id.pager);
+		
+		System.out.println("MainActivity : onCreate lastvisited: " + lastVisitedPage);
+		
 		actionBar = getActionBar();
 		mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 		messages = new Messages(this);
 
 		viewPager.setAdapter(mAdapter);
+
+		
 		actionBar.setHomeButtonEnabled(false);
 		// Hide Actionbar Title
 	    actionBar.setDisplayShowTitleEnabled(false);
@@ -88,6 +94,9 @@ public class MainActivity extends FragmentActivity implements
 				// on changing the page
 				// make respected tab selected
 
+				System.out.println("MainActivity : onPageSelected position " + position);
+				lastVisitedPage = position;
+				
 				actionBar.setSelectedNavigationItem(position);
 			}
 
@@ -102,6 +111,11 @@ public class MainActivity extends FragmentActivity implements
 			}
 
 		});
+				
+		//We are doing that in order to navigate to the third view
+		//when we navigate to a current coupon.
+		viewPager.setCurrentItem(lastVisitedPage);
+
 	}
 
 	@Override
@@ -162,11 +176,13 @@ public class MainActivity extends FragmentActivity implements
 		// configureCameraElements((tab.getPosition() == VALIDATE_BY_QRCODE));
 
 		viewPager.setCurrentItem(tab.getPosition());
+
 	}
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 	}
+
 
 	public void btnValidateByCouponCode(View view) {
 		couponCode = (EditText) findViewById(R.id.txtCouponCode);

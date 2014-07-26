@@ -32,6 +32,9 @@ public class MyCoupons extends Fragment {
 
 		listView = (ListView) rootView.findViewById(R.id.list);
 		setDataToAdapter();
+		
+		
+		
 
 		/**
 		 * Inner class responsible to listens possible touch on list view.

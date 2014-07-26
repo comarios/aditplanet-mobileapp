@@ -3,7 +3,7 @@ package com.aditplanet.main;
 import com.aditplanet.R;
 
 import android.os.Bundle;
-import android.provider.Telephony.TextBasedSmsColumns;
+//import android.provider.Telephony.TextBasedSmsColumns;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
