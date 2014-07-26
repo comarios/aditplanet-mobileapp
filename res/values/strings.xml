@@ -12,8 +12,20 @@
     <string name="coupon_code">Enter Coupon Code</string>
     <string name="action_logout">Logout</string>
     <string name="btnTextForValidateByCouponCode">Validate</string>
+ 	
+ 	
+ 	<!-- welcome_screen.xml -->
+ 	<string name="welcomeScreen_subText1">Welcome to aditplanet</string>
+ 	<string name="welcomeScreen_subText2">Your advertising platform</string>
+ 	<string name="welcomeScreen_subText3">Loading. Please wait...</string>
+ 	
+ 	<!-- login.xml -->
  	<string name="user_id">User ID</string>
- 	<string name="user_id_hint">Enter your ADITmax User ID</string>
+ 	<string name="user_id_hint">Enter your Aditplanet User ID</string>
  	<string name="password">Password</string>
- 	<string name="password_hint">Enter your ADITmax Password</string>
+ 	<string name="password_hint">Enter your Aditplanet Password</string>
+ 	<string name="btnLogin_text">Press to Login</string>
+ 	<string name="login_welcome_sub1">Welcome to aditplanet</string>
+ 	<string name="login_welcome_sub2">Login to validate your coupons</string>
+ 	<string name="login_welcome_sub3">and view their details</string>
 </resources>

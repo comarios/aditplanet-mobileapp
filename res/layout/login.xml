@@ -4,78 +4,89 @@
     android:layout_height="fill_parent"
     android:fillViewport="true" >
 
+    <!-- Login Form -->
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dip" >
 
-        <!-- Login Form -->
+        <!-- Login Welcome Message -->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dip"
-            android:gravity="center" >
-
-            <!-- Email Label -->
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/user_id"
-                android:textColor="#372c24" />
-
-            <EditText
-                android:id="@+id/txtUsername"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dip"
-                android:layout_marginTop="5dip"
-                android:singleLine="true" 
-                android:hint="@string/user_id_hint"/>
-            <!-- Password Label -->
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/password"
-                android:textColor="#372c24" />
-
-            <EditText
-                android:id="@+id/txtPassword"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
-                android:inputType="textPassword"
-                android:hint="@string/password_hint"
-                android:singleLine="true" />
-            <!-- Login button -->
-
-            <Button
-                android:id="@+id/btnLogin"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                android:text="Login" />
-            
-
-        </LinearLayout>
-        <!-- Login Form Ends -->
-
-       <!--   <LinearLayout
-            android:id="@+id/header"
+        <TextView
+            android:id="@+id/loginWelcome_subText_1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:background="@layout/header_gradient"
-            android:paddingBottom="5dip"
-            android:paddingTop="5dip" >
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/login_welcome_sub1"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:src="@drawable/ic_launcher" />
-        </LinearLayout>-->
+        <TextView
+            android:id="@+id/loginWelcome_subText_2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/loginWelcome_subText_1"
+            android:gravity="center"
+            android:text="@string/login_welcome_sub2"
+            android:textSize="14sp" />
 
+        <TextView
+            android:id="@+id/loginWelcome_subText_3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/loginWelcome_subText_2"
+            android:gravity="center"
+            android:text="@string/login_welcome_sub3"
+            android:textSize="14sp" />
 
+        <!-- Email Label -->
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/user_id"
+            android:layout_marginTop="60dp"
+            android:textColor="#372c24" />
+
+        <EditText
+            android:id="@+id/txtUsername"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:layout_marginTop="5dip"
+            android:hint="@string/user_id_hint"
+            android:singleLine="true" />
+        <!-- Password Label -->
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/password"
+            android:textColor="#372c24" />
+
+        <EditText
+            android:id="@+id/txtPassword"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword"
+            android:singleLine="true" />
+        <!-- Login button -->
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="@string/btnLogin_text" />
+    </LinearLayout>
+    <!-- Login Form Ends -->
 </ScrollView>
