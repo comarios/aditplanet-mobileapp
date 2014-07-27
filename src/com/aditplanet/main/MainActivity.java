@@ -45,34 +45,36 @@ public class MainActivity extends FragmentActivity implements
 	private EditText couponCode;
 	private Messages messages;
 	// Tab titles
-	private String[] tabs = { "#CODE", "QR CODE", "COUPONS" };//{ "COUPON CODE", "QR CODE SCANNER", "ALL COUPONS" };
+	private String[] tabs = { "#CODE", "QR CODE", "COUPONS" };// {
+																// "COUPON CODE",
+																// "QR CODE SCANNER",
+																// "ALL COUPONS"
+																// };
 	private final int VALIDATE_BY_QRCODE = 1;
 	public static final String FRAGMENT_UPDATE = "com.aditplanet.main.MainActivity.FRAGMENT_UPDATE";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.activity_main);
-			
-		
+
 		// Initilization
 		viewPager = (ViewPager) findViewById(R.id.pager);
-		
-		System.out.println("MainActivity : onCreate lastvisited: " + lastVisitedPage);
-		
+
+		System.out.println("MainActivity : onCreate lastvisited: "
+				+ lastVisitedPage);
+
 		actionBar = getActionBar();
 		mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 		messages = new Messages(this);
 
 		viewPager.setAdapter(mAdapter);
 
-		
 		actionBar.setHomeButtonEnabled(false);
 		// Hide Actionbar Title
-	    actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		
 
 		if (CouponsManager.getInstance().isCouponsListEmpty()) {
 			getCouponsFromAPI();
@@ -94,9 +96,10 @@ public class MainActivity extends FragmentActivity implements
 				// on changing the page
 				// make respected tab selected
 
-				System.out.println("MainActivity : onPageSelected position " + position);
+				System.out.println("MainActivity : onPageSelected position "
+						+ position);
 				lastVisitedPage = position;
-				
+
 				actionBar.setSelectedNavigationItem(position);
 			}
 
@@ -111,12 +114,13 @@ public class MainActivity extends FragmentActivity implements
 			}
 
 		});
-				
-		//We are doing that in order to navigate to the third view
-		//when we navigate to a current coupon.
+
+		// We are doing that in order to navigate to the third view
+		// when we navigate to a current coupon.
 		viewPager.setCurrentItem(lastVisitedPage);
 
 	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -182,7 +186,6 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 	}
-
 
 	public void btnValidateByCouponCode(View view) {
 		couponCode = (EditText) findViewById(R.id.txtCouponCode);
