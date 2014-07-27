@@ -155,7 +155,9 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f070001;
-        public static final int Divider=0x7f070005;
+        /**  the theme applied to the application or activity 
+         */
+        public static final int CustomActionBarTheme=0x7f070003;
         /** 
       This style kills the design 
 
@@ -169,9 +171,25 @@ public final class R {
     </style>
 
     
+  <style name="myTheme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/myTheme.ActionBar</item>
+        <item name="android:actionMenuTextColor">@color/dark_black</item>
+    </style>
+
+    <style name="myTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#FFF</item>
+        <item name="android:textAppearance">@style/myTheme.ActionBar.Text</item>
+        <item name="android:titleTextStyle">@style/myTheme.ActionBar.Text</item>
+    </style>
+
+    <style name="myTheme.ActionBar.Text" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/dark_black</item>
+    </style> 
          */
-        public static final int myTheme=0x7f070002;
-        public static final int myTheme_ActionBar=0x7f070003;
-        public static final int myTheme_ActionBar_Text=0x7f070004;
+        public static final int Divider=0x7f070002;
+        /**  ActionBar styles 
+         */
+        public static final int MyActionBar=0x7f070004;
+        public static final int MyActionBar_title=0x7f070005;
     }
 }

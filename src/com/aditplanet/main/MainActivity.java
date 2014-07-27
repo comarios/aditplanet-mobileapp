@@ -10,6 +10,7 @@ import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -19,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aditplanet.R;
@@ -73,7 +76,19 @@ public class MainActivity extends FragmentActivity implements
 
 		actionBar.setHomeButtonEnabled(false);
 		// Hide Actionbar Title
-		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setDisplayShowTitleEnabled(true);
+		
+		 int titleId = getResources().getIdentifier("action_bar_title", "id","android"); 
+		 int upId = getResources().getIdentifier("up", "id", "android");
+
+		 ImageView backImageView = (ImageView)findViewById(upId);
+		 
+		 backImageView.setBackgroundColor(Color.BLACK);
+		 
+		 TextView txtTitle = (TextView) findViewById(titleId);
+		 
+		 txtTitle.setTextColor(Color.BLACK);
+		
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		if (CouponsManager.getInstance().isCouponsListEmpty()) {
