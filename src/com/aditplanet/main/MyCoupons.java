@@ -5,12 +5,18 @@ import java.util.List;
 
 import com.aditplanet.R;
 import com.aditplanet.adapters.LazyAdapter;
+import com.aditplanet.adapters.SubTabsPagerAdapter;
+import com.aditplanet.adapters.TabsPagerAdapter;
 import com.aditplanet.model.Coupons;
 import com.aditplanet.model.CouponsManager;
 
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +27,10 @@ public class MyCoupons extends Fragment {
 
 	private ListView listView;
 	private LazyAdapter lAdapter;
+	private String[] tabs = { "COUPON CODE", "QR CODE SCANNER", "ALL COUPONS" };
+	private ViewPager subViewPager;
+	private SubTabsPagerAdapter submAdapter;
+	private ActionBar subActionBar;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,9 +42,27 @@ public class MyCoupons extends Fragment {
 
 		listView = (ListView) rootView.findViewById(R.id.list);
 		setDataToAdapter();
-		
-		
-		
+
+//		subViewPager = (ViewPager) getActivity().findViewById(R.id.pager);
+//		subActionBar = getActivity().getActionBar();
+//		submAdapter = new SubTabsPagerAdapter(getActivity()
+//				.getSupportFragmentManager());
+//
+//		System.out.println("subViewPager: " + subViewPager);
+//		if(subViewPager != null)
+//			subViewPager.setAdapter(submAdapter);
+//
+//		subActionBar.setHomeButtonEnabled(false);
+//
+//		// Hide Actionbar Title
+//		subActionBar.setDisplayShowTitleEnabled(false);
+//		subActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+//
+//		// Adding Tabs
+//		for (String tab_name : tabs) {
+//			subActionBar.addTab(subActionBar.newTab().setText(tab_name)
+//					.setTabListener(this));
+//		}
 
 		/**
 		 * Inner class responsible to listens possible touch on list view.
@@ -46,24 +74,25 @@ public class MyCoupons extends Fragment {
 					long arg3) {
 
 				// TODO: Fix the view_coupons_details.xml and the code below
-//				Coupons coupons = CouponsManager.getInstance()
-//						.getCouponsByIndex(arg2);
+				// Coupons coupons = CouponsManager.getInstance()
+				// .getCouponsByIndex(arg2);
 
 				Intent viewCoupon = new Intent(getActivity(),
 						ViewCouponDetails.class);
 				viewCoupon.putExtra("couponIdx", arg2);
-//				viewCoupon.putExtra("couponCode", coupons.getCode());
-//				viewCoupon.putExtra("couponDetails",
-//						coupons.getCoupon_details());
-//				viewCoupon.putExtra("couponMerchant", coupons.getMerchant());
-//				viewCoupon.putExtra("couponValidStatus",
-//						coupons.getValid_status());
-//				viewCoupon.putExtra("couponValidDate", coupons.getValid_date());
-//				viewCoupon.putExtra("couponValidStartDate",
-//						coupons.getValid_start_date());
-//				viewCoupon.putExtra("couponValidEndDate",
-//						coupons.getValid_end_date());
-//				System.out.println("before sent: " + coupons);
+				// viewCoupon.putExtra("couponCode", coupons.getCode());
+				// viewCoupon.putExtra("couponDetails",
+				// coupons.getCoupon_details());
+				// viewCoupon.putExtra("couponMerchant", coupons.getMerchant());
+				// viewCoupon.putExtra("couponValidStatus",
+				// coupons.getValid_status());
+				// viewCoupon.putExtra("couponValidDate",
+				// coupons.getValid_date());
+				// viewCoupon.putExtra("couponValidStartDate",
+				// coupons.getValid_start_date());
+				// viewCoupon.putExtra("couponValidEndDate",
+				// coupons.getValid_end_date());
+				// System.out.println("before sent: " + coupons);
 
 				startActivity(viewCoupon);
 			}
@@ -97,5 +126,27 @@ public class MyCoupons extends Fragment {
 		listView.setAdapter(lAdapter);
 
 	}
+
+//	@Override
+//	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+//		// TODO Auto-generated method stub
+//
+//	}
+//
+//	@Override
+//	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+//		// TODO Auto-generated method stub
+//		// on tab selected
+//		// show respected fragment view
+//		// configureCameraElements((tab.getPosition() == VALIDATE_BY_QRCODE));
+//
+//		subViewPager.setCurrentItem(tab.getPosition());
+//	}
+//
+//	@Override
+//	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+//		// TODO Auto-generated method stub
+//
+//	}
 
 }

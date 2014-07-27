@@ -28,4 +28,9 @@
  	<string name="login_welcome_sub1">Welcome to aditplanet</string>
  	<string name="login_welcome_sub2">Login to validate your coupons</string>
  	<string name="login_welcome_sub3">and view their details</string>
+ 	
+ 	<!-- fragment_my_coupons.xml -->
+ 	<string name="subTabValidated">VALIDATED</string>
+ 	<string name="subTabNonValidated">NON VALIDATED</string>
+ 	<string name="subTabAll">ALL</string>
 </resources>

@@ -45,7 +45,7 @@ public class MainActivity extends FragmentActivity implements
 	private EditText couponCode;
 	private Messages messages;
 	// Tab titles
-	private String[] tabs = { "COUPON CODE", "QR CODE SCANNER", "ALL COUPONS" };
+	private String[] tabs = { "#CODE", "QR CODE", "COUPONS" };//{ "COUPON CODE", "QR CODE SCANNER", "ALL COUPONS" };
 	private final int VALIDATE_BY_QRCODE = 1;
 	public static final String FRAGMENT_UPDATE = "com.aditplanet.main.MainActivity.FRAGMENT_UPDATE";
 

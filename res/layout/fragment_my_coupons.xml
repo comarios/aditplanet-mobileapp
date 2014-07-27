@@ -14,7 +14,7 @@
         android:layout_centerInParent="true"/>
     
 
-</RelativeLayout>
+</RelativeLayout>
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -22,9 +22,78 @@
     android:orientation="vertical"
     android:tileMode="repeat" >
 
-    <!-- Add a view to show current information -->
-    <!-- Backround is only in ListView -->
+    <!-- <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
+        <Button
+            android:id="@+id/btnSubTab1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/subTabValidated" >
+        </Button>
+
+        <Button
+            android:id="@+id/btnSubTab2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/btnSubTab1"
+            android:layout_weight="1"
+            android:text="@string/subTabNonValidated" >
+        </Button>
+
+        <Button
+            android:id="@+id/btnSubTab3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/btnSubTab2"
+            android:layout_weight="1"
+            android:text="@string/subTabAll" >
+        </Button>
+    </LinearLayout> -->
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#000"
+                android:textColor="#FFF"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:text="@string/subTabValidated" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#000"
+                android:textColor="#FFF"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:text="@string/subTabNonValidated" />
+            
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#000"
+                android:textColor="#FFF"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:text="@string/subTabAll" />
+
+        </LinearLayout>
+        
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
