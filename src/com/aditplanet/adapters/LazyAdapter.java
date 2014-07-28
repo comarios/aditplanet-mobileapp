@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.aditplanet.R;
 import com.aditplanet.model.Coupons;
+import com.aditplanet.model.CouponsManager;
 
 import android.app.Activity;
 import android.content.Context;
@@ -33,6 +34,7 @@ public class LazyAdapter extends BaseAdapter
 	public static final String KEY_COUPON_CODE = "coupon_code";
 	public static final String KEY_COUPON_DETAILS = "coupon_details";
 	public static final String KEY_IMAGE = "thumb_url";
+	public static final String KEY_COUPON_VALIDATION = "coupon_validation";
 
 	/** Main activity. */
 	//private Activity activity;
@@ -111,6 +113,8 @@ public class LazyAdapter extends BaseAdapter
 		//map.put(LazyAdapter.KEY_PROFILE_NAME, newLocationData.getLocation());
 		map.put(LazyAdapter.KEY_COUPON_CODE, coupons.getCode());
 		map.put(LazyAdapter.KEY_COUPON_DETAILS, coupons.getCoupon_details());
+		System.out.println("HERE333: " + coupons.getValid_status());
+		map.put(LazyAdapter.KEY_COUPON_VALIDATION, coupons.getValid_status().toString());
 		//map.put(LazyAdapter.KEY_IMAGE, coupons.getCode());
 		
 		//Adding HashList to ArrayList
@@ -157,7 +161,7 @@ public class LazyAdapter extends BaseAdapter
 		TextView couponCode = (TextView) vi.findViewById(R.id.coupon_code);
 		TextView couponDetails = (TextView) vi.findViewById(R.id.coupon_details);
 													
-//		ImageView thumb_image = (ImageView) vi.findViewById(R.id.list_image);
+		ImageView thumb_image = (ImageView) vi.findViewById(R.id.list_image);
 
 		Map<String, String> coupons = new HashMap<String, String>();
 		coupons = data.get(position);
@@ -165,6 +169,14 @@ public class LazyAdapter extends BaseAdapter
 		//Setting all values in listview
 		couponCode.setText(coupons.get(KEY_COUPON_CODE));
 		couponDetails.setText(coupons.get(KEY_COUPON_DETAILS));
+		
+		if(Boolean.parseBoolean(coupons.get(KEY_COUPON_VALIDATION))){
+			thumb_image.setImageResource(R.drawable.ic_validated);	
+		}else{
+			thumb_image.setImageResource(R.drawable.ic_not_validated);
+		}
+		
+		
 		return vi;
 	}
 }

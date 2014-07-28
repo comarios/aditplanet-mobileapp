@@ -48,7 +48,7 @@ public class MainActivity extends FragmentActivity implements
 	private EditText couponCode;
 	private Messages messages;
 	// Tab titles
-	private String[] tabs = { "#CODE", "QR CODE", "COUPONS" };// {
+	private String[] tabs = { "COUPON CODE", "QR CODE SCANNER", "ALL COUPONS" };// {
 																// "COUPON CODE",
 																// "QR CODE SCANNER",
 																// "ALL COUPONS"
@@ -79,15 +79,12 @@ public class MainActivity extends FragmentActivity implements
 		actionBar.setDisplayShowTitleEnabled(true);
 		
 		 int titleId = getResources().getIdentifier("action_bar_title", "id","android"); 
-		 int upId = getResources().getIdentifier("up", "id", "android");
-
-		 ImageView backImageView = (ImageView)findViewById(upId);
-		 
-		 backImageView.setBackgroundColor(Color.BLACK);
+		
 		 
 		 TextView txtTitle = (TextView) findViewById(titleId);
 		 
 		 txtTitle.setTextColor(Color.BLACK);
+		 
 		
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -178,6 +175,7 @@ public class MainActivity extends FragmentActivity implements
 	public void logout() {
 		AutoLogin.saveToFileLoggedIN(this, getFilesDir(),
 				AutoLogin.IS_LOGGED_IN_NO);
+		CouponsManager.getInstance().clearData();
 		super.finish();
 		this.finish();
 		Intent i = new Intent(MainActivity.this, LoginActivity.class);
@@ -228,7 +226,7 @@ public class MainActivity extends FragmentActivity implements
 	// sendBroadcast(intent);
 	// }
 
-	private void validationByCouponCode(String couponCode) {
+	private void validationByCouponCode(final String couponCode) {
 		RequestParams params = new RequestParams();
 
 		User user = CouponsManager.getInstance().getUser();
@@ -243,8 +241,11 @@ public class MainActivity extends FragmentActivity implements
 						// Pull out the first event on the public timeline
 						try {
 							JSONObject json = new JSONObject(response);
+							System.out.println("couponCode: " + couponCode);
+							CouponsManager.getInstance().setValidStatusByCouponNumber(couponCode);
+							
 							Toast.makeText(getApplicationContext(),
-									"json: " + json, Toast.LENGTH_LONG).show();
+									"json: " + "valid", Toast.LENGTH_LONG).show();
 							System.out.println("json: " + json);
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
@@ -285,6 +286,7 @@ public class MainActivity extends FragmentActivity implements
 							JSONObject json = new JSONObject(coupons);
 
 							if (RemoteParser.isAuth(json)) {
+								System.out.println("User Authenticated successful: " + username);
 								List<Coupons> couponsList = RemoteParser
 										.getCoupons(json);
 								CouponsManager.getInstance().setCoupons(

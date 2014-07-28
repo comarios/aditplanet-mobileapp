@@ -44,4 +44,23 @@ public class CouponsManager {
 	public boolean isCouponsListEmpty() {
 		return coupons.size() == 0 ? true : false;
 	}
+
+	public void clearData() {
+		coupons.clear();
+		coupons = null;
+	}
+
+	/*
+	 * Validates a coupon. Set valid status true.
+	 */
+	public void setValidStatusByCouponNumber(String couponCode) {
+
+		
+		for (int i = 0; i < coupons.size(); ++i) {
+			if (coupons.get(i).getCode().equals(couponCode)) {
+				
+				coupons.get(i).setValid_status(true);
+			}
+		}
+	}
 }

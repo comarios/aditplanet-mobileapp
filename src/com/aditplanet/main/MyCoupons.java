@@ -43,26 +43,26 @@ public class MyCoupons extends Fragment {
 		listView = (ListView) rootView.findViewById(R.id.list);
 		setDataToAdapter();
 
-//		subViewPager = (ViewPager) getActivity().findViewById(R.id.pager);
-//		subActionBar = getActivity().getActionBar();
-//		submAdapter = new SubTabsPagerAdapter(getActivity()
-//				.getSupportFragmentManager());
-//
-//		System.out.println("subViewPager: " + subViewPager);
-//		if(subViewPager != null)
-//			subViewPager.setAdapter(submAdapter);
-//
-//		subActionBar.setHomeButtonEnabled(false);
-//
-//		// Hide Actionbar Title
-//		subActionBar.setDisplayShowTitleEnabled(false);
-//		subActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-//
-//		// Adding Tabs
-//		for (String tab_name : tabs) {
-//			subActionBar.addTab(subActionBar.newTab().setText(tab_name)
-//					.setTabListener(this));
-//		}
+		// subViewPager = (ViewPager) getActivity().findViewById(R.id.pager);
+		// subActionBar = getActivity().getActionBar();
+		// submAdapter = new SubTabsPagerAdapter(getActivity()
+		// .getSupportFragmentManager());
+		//
+		// System.out.println("subViewPager: " + subViewPager);
+		// if(subViewPager != null)
+		// subViewPager.setAdapter(submAdapter);
+		//
+		// subActionBar.setHomeButtonEnabled(false);
+		//
+		// // Hide Actionbar Title
+		// subActionBar.setDisplayShowTitleEnabled(false);
+		// subActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		//
+		// // Adding Tabs
+		// for (String tab_name : tabs) {
+		// subActionBar.addTab(subActionBar.newTab().setText(tab_name)
+		// .setTabListener(this));
+		// }
 
 		/**
 		 * Inner class responsible to listens possible touch on list view.
@@ -117,36 +117,47 @@ public class MyCoupons extends Fragment {
 			// p.getProfileImage(ld.getProfile()));
 			map.put(LazyAdapter.KEY_COUPON_CODE, cp.getCode());
 			map.put(LazyAdapter.KEY_COUPON_DETAILS, cp.getCoupon_details());
-
+			map.put(LazyAdapter.KEY_COUPON_VALIDATION, cp.getValid_status()
+					.toString());
 			// Adding HashList to ArrayList
 			this.lAdapter.addToContentList(map);
+			System.out.println("TEST1: " + cp.getCode() + ", " + cp.getValid_status());
 			map.clear();
 		}
 
+		
 		listView.setAdapter(lAdapter);
 
 	}
 
-//	@Override
-//	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-//		// TODO Auto-generated method stub
-//
-//	}
-//
-//	@Override
-//	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-//		// TODO Auto-generated method stub
-//		// on tab selected
-//		// show respected fragment view
-//		// configureCameraElements((tab.getPosition() == VALIDATE_BY_QRCODE));
-//
-//		subViewPager.setCurrentItem(tab.getPosition());
-//	}
-//
-//	@Override
-//	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-//		// TODO Auto-generated method stub
-//
-//	}
+	@Override
+	public void onResume() {
+		super.onResume();
+		System.out.println("IS HERE ON RESUME");
+		setDataToAdapter();
+		lAdapter.notifyDataSetChanged();
+	}
+
+	// @Override
+	// public void onTabReselected(Tab tab, FragmentTransaction ft) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// @Override
+	// public void onTabSelected(Tab tab, FragmentTransaction ft) {
+	// // TODO Auto-generated method stub
+	// // on tab selected
+	// // show respected fragment view
+	// // configureCameraElements((tab.getPosition() == VALIDATE_BY_QRCODE));
+	//
+	// subViewPager.setCurrentItem(tab.getPosition());
+	// }
+	//
+	// @Override
+	// public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+	// // TODO Auto-generated method stub
+	//
+	// }
 
 }

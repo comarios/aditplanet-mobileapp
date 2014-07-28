@@ -35,14 +35,18 @@ public final class R {
         public static final int help=0x7f020004;
         public static final int ic_action_help=0x7f020005;
         public static final int ic_action_ic_menu_exit=0x7f020006;
-        public static final int ic_action_location_found=0x7f020007;
-        public static final int ic_action_refresh=0x7f020008;
-        public static final int ic_action_search=0x7f020009;
-        public static final int ic_launcher=0x7f02000a;
-        public static final int info=0x7f02000b;
-        public static final int logo=0x7f02000c;
-        public static final int qr_icon=0x7f02000d;
-        public static final int qr_wrapper=0x7f02000e;
+        public static final int ic_action_ic_menu_exit_white=0x7f020007;
+        public static final int ic_action_location_found=0x7f020008;
+        public static final int ic_action_refresh=0x7f020009;
+        public static final int ic_action_search=0x7f02000a;
+        public static final int ic_launcher=0x7f02000b;
+        public static final int ic_not_validated=0x7f02000c;
+        public static final int ic_up_button=0x7f02000d;
+        public static final int ic_validated=0x7f02000e;
+        public static final int info=0x7f02000f;
+        public static final int logo=0x7f020010;
+        public static final int qr_icon=0x7f020011;
+        public static final int qr_wrapper=0x7f020012;
     }
     public static final class id {
         public static final int ScanButton=0x7f09000b;
