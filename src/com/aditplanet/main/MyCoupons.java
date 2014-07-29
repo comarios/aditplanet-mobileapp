@@ -21,7 +21,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MyCoupons extends Fragment {
 
@@ -121,11 +123,11 @@ public class MyCoupons extends Fragment {
 					.toString());
 			// Adding HashList to ArrayList
 			this.lAdapter.addToContentList(map);
-			System.out.println("TEST1: " + cp.getCode() + ", " + cp.getValid_status());
+			System.out.println("TEST1: " + cp.getCode() + ", "
+					+ cp.getValid_status());
 			map.clear();
 		}
 
-		
 		listView.setAdapter(lAdapter);
 
 	}
@@ -137,27 +139,24 @@ public class MyCoupons extends Fragment {
 		setDataToAdapter();
 		lAdapter.notifyDataSetChanged();
 	}
+	
+	//NOT WORKING!!!
 
-	// @Override
-	// public void onTabReselected(Tab tab, FragmentTransaction ft) {
-	// // TODO Auto-generated method stub
-	//
-	// }
-	//
-	// @Override
-	// public void onTabSelected(Tab tab, FragmentTransaction ft) {
-	// // TODO Auto-generated method stub
-	// // on tab selected
-	// // show respected fragment view
-	// // configureCameraElements((tab.getPosition() == VALIDATE_BY_QRCODE));
-	//
-	// subViewPager.setCurrentItem(tab.getPosition());
-	// }
-	//
-	// @Override
-	// public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-	// // TODO Auto-generated method stub
-	//
-	// }
+//	/**
+//	 * Sub-tabs buttons. On click methods
+//	 * */
+//
+//	public void btnFilterValidated(View view) {
+//
+//		Toast.makeText(getActivity().getApplicationContext(), "this", Toast.LENGTH_LONG).show();
+//	}
+//
+//	public void btnFilterNotValidated(View view) {
+//
+//	}
+//
+//	public void btnFilterAll(View view) {
+//
+//	}
 
 }

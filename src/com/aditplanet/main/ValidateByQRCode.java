@@ -90,7 +90,7 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 			public void onClick(View v) {
 				if (barcodeScanned) {
 					barcodeScanned = false;
-					scanText.setText("Scanning...");
+					scanText.setText("Please wait. We are scanning...");
 					mCamera.setPreviewCallback(previewCb);
 					mCamera.startPreview();
 					previewing = true;

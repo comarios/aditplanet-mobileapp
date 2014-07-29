@@ -14,7 +14,7 @@
         android:layout_centerInParent="true"/>
     
 
-</RelativeLayout>
+</RelativeLayout>
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -22,7 +22,8 @@
     android:orientation="vertical"
     android:tileMode="repeat" >
 
-    <!-- <LinearLayout
+    <!--
+    <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -53,47 +54,62 @@
             android:layout_weight="1"
             android:text="@string/subTabAll" >
         </Button>
-    </LinearLayout> -->
+    </LinearLayout>
+    -->
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
-            <Button
-                android:id="@+id/button1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#000"
-                android:textColor="#FFF"
-                android:textSize="12dp"
-                android:textStyle="bold"
-                android:text="@string/subTabValidated" />
+        <!-- android:onClick="btnFilterValidated" -->
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#000"
-                android:textColor="#FFF"
-                android:textSize="12dp"
-                android:textStyle="bold"
-                android:text="@string/subTabNonValidated" />
+        <Button
+            android:id="@+id/btnValidated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#000"
             
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#000"
-                android:textColor="#FFF"
-                android:textSize="12dp"
-                android:textStyle="bold"
-                android:text="@string/subTabAll" />
+            android:text="@string/subTabValidated"
+            android:textColor="#FFF"
+            android:textSize="12dp"
+            android:textStyle="bold" />
 
-        </LinearLayout>
-        
+        <View
+            android:layout_width="2px"
+            android:layout_height="fill_parent"
+            android:background="#90909090" />
+        <!-- android:onClick="btnFilterNotValidated" -->
+
+        <Button
+            android:id="@+id/btnNotValidated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#000"
+            android:text="@string/subTabNonValidated"
+            android:textColor="#FFF"
+            android:textSize="12dp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="2px"
+            android:layout_height="fill_parent"
+            android:background="#f3f3f3" />
+<!-- android:onClick="btnFilterAll" -->
+        <Button
+            android:id="@+id/btnAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#000"
+            
+            android:text="@string/subTabAll"
+            android:textColor="#FFF"
+            android:textSize="12dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
