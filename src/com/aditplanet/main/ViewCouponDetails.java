@@ -27,6 +27,7 @@ public class ViewCouponDetails extends Activity {
 	private WebView webView;
 	private String couponURI;
 	private final String couponViewAPI = "http://aditplanet.com/coupon_view.php?id=";
+	private String REDEEM_OFFLINE = "&mobile=1";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +80,7 @@ public class ViewCouponDetails extends Activity {
 		int removeFirstTwoDigits = Integer.parseInt(Integer
 				.toString(couponCode).substring(2));
 
-		couponURI = couponViewAPI + "00_" + removeFirstTwoDigits + "_00";
+		couponURI = couponViewAPI + "00_" + removeFirstTwoDigits + "_00" + REDEEM_OFFLINE;
 		webView.loadUrl(couponURI);
 		// couponCode.setText("Coupon Code: " + coupons.getCode());
 		// couponDetails.setText("Details: " +coupons.getCoupon_details());

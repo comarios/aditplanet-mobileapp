@@ -32,11 +32,12 @@ import com.aditplanet.model.CouponsManager;
 import com.aditplanet.model.User;
 import com.aditplanet.utils.AutoLogin;
 import com.aditplanet.utils.Messages;
-import com.aditplanet.utils.NotificationService;
 import com.aditplanet.web.client.RemoteParser;
 import com.aditplanet.web.client.WebClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.aditplanet.utils.Dialogs;
+import com.aditplanet.utils.NetworkConnection;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -47,12 +48,13 @@ public class MainActivity extends FragmentActivity implements
 	private ActionBar actionBar;
 	private EditText couponCode;
 	private Messages messages;
+	private NetworkConnection network = new NetworkConnection(MainActivity.this);
 	// Tab titles
 	private String[] tabs = { "COUPON CODE", "QR CODE SCANNER", "ALL COUPONS" };// {
-																// "COUPON CODE",
-																// "QR CODE SCANNER",
-																// "ALL COUPONS"
-																// };
+	// "COUPON CODE",
+	// "QR CODE SCANNER",
+	// "ALL COUPONS"
+	// };
 	private final int VALIDATE_BY_QRCODE = 1;
 	public static final String FRAGMENT_UPDATE = "com.aditplanet.main.MainActivity.FRAGMENT_UPDATE";
 
@@ -68,71 +70,79 @@ public class MainActivity extends FragmentActivity implements
 		System.out.println("MainActivity : onCreate lastvisited: "
 				+ lastVisitedPage);
 
-		actionBar = getActionBar();
-		mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-		messages = new Messages(this);
+		if (network.haveNetworkConnection()) {
 
-		viewPager.setAdapter(mAdapter);
+			actionBar = getActionBar();
+			mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+			messages = new Messages(this);
 
-		actionBar.setHomeButtonEnabled(false);
-		// Hide Actionbar Title
-		actionBar.setDisplayShowTitleEnabled(true);
-		
-		 int titleId = getResources().getIdentifier("action_bar_title", "id","android"); 
-		
-		 
-		 TextView txtTitle = (TextView) findViewById(titleId);
-		 
-		 txtTitle.setTextColor(Color.BLACK);
-		 
-		
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+			viewPager.setAdapter(mAdapter);
 
-		if (CouponsManager.getInstance().isCouponsListEmpty()) {
-			getCouponsFromAPI();
+			actionBar.setHomeButtonEnabled(false);
+			// Hide Actionbar Title
+			actionBar.setDisplayShowTitleEnabled(true);
+
+			int titleId = getResources().getIdentifier("action_bar_title",
+					"id", "android");
+
+			TextView txtTitle = (TextView) findViewById(titleId);
+
+			txtTitle.setTextColor(Color.BLACK);
+
+			actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+			if (CouponsManager.getInstance().isCouponsListEmpty()) {
+				getCouponsFromAPI();
+			}
+
+			// Adding Tabs
+			for (String tab_name : tabs) {
+				actionBar.addTab(actionBar.newTab().setText(tab_name)
+						.setTabListener(this));
+			}
+
+			/**
+			 * on swiping the viewpager make respective tab selected
+			 * */
+			viewPager
+					.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+						@Override
+						public void onPageSelected(int position) {
+							// on changing the page
+							// make respected tab selected
+
+							System.out
+									.println("MainActivity : onPageSelected position "
+											+ position);
+							lastVisitedPage = position;
+
+							actionBar.setSelectedNavigationItem(position);
+						}
+
+						@Override
+						public void onPageScrolled(int arg0, float arg1,
+								int arg2) {
+
+						}
+
+						@Override
+						public void onPageScrollStateChanged(int arg0) {
+
+						}
+
+					});
+
+			// We are doing that in order to navigate to the third view
+			// when we navigate to a current coupon.
+			viewPager.setCurrentItem(lastVisitedPage);
+
+		}else{
+			
+			new Dialogs().createDialogINTERNET(MainActivity.this,
+					getApplicationContext());
 		}
-
-		// Adding Tabs
-		for (String tab_name : tabs) {
-			actionBar.addTab(actionBar.newTab().setText(tab_name)
-					.setTabListener(this));
-		}
-
-		/**
-		 * on swiping the viewpager make respective tab selected
-		 * */
-		viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-			@Override
-			public void onPageSelected(int position) {
-				// on changing the page
-				// make respected tab selected
-
-				System.out.println("MainActivity : onPageSelected position "
-						+ position);
-				lastVisitedPage = position;
-
-				actionBar.setSelectedNavigationItem(position);
-			}
-
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-			}
-
-			@Override
-			public void onPageScrollStateChanged(int arg0) {
-
-			}
-
-		});
-
-		// We are doing that in order to navigate to the third view
-		// when we navigate to a current coupon.
-		viewPager.setCurrentItem(lastVisitedPage);
-
 	}
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -208,6 +218,22 @@ public class MainActivity extends FragmentActivity implements
 		// Toast.LENGTH_LONG).show();
 	}
 
+	
+	/*
+	 * Buttons for the sub-menu of ViewCouponDetails.java
+	 * */
+	public void btnFilterNotValidated(View view) {
+		
+		 Toast.makeText(getApplicationContext(), "Clicked",
+		 Toast.LENGTH_LONG).show();
+		 
+		 /*
+		  * Update the ViewCouponDetails listview with the Non-Validated coupons
+		  * */
+		 
+	}
+	
+	
 	// private void configureCameraElements(boolean cameraTabSelected)
 	// {
 	// Intent intent = new Intent(FRAGMENT_UPDATE);
@@ -242,10 +268,12 @@ public class MainActivity extends FragmentActivity implements
 						try {
 							JSONObject json = new JSONObject(response);
 							System.out.println("couponCode: " + couponCode);
-							CouponsManager.getInstance().setValidStatusByCouponNumber(couponCode);
-							
+							CouponsManager.getInstance()
+									.setValidStatusByCouponNumber(couponCode);
+
 							Toast.makeText(getApplicationContext(),
-									"json: " + "valid", Toast.LENGTH_LONG).show();
+									"json: " + "valid", Toast.LENGTH_LONG)
+									.show();
 							System.out.println("json: " + json);
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
@@ -286,7 +314,9 @@ public class MainActivity extends FragmentActivity implements
 							JSONObject json = new JSONObject(coupons);
 
 							if (RemoteParser.isAuth(json)) {
-								System.out.println("User Authenticated successful: " + username);
+								System.out
+										.println("User Authenticated successful: "
+												+ username);
 								List<Coupons> couponsList = RemoteParser
 										.getCoupons(json);
 								CouponsManager.getInstance().setCoupons(
