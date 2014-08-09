@@ -23,7 +23,9 @@ import com.aditplanet.model.Coupons;
 import com.aditplanet.model.CouponsManager;
 import com.aditplanet.model.User;
 import com.aditplanet.utils.AutoLogin;
+import com.aditplanet.utils.Dialogs;
 import com.aditplanet.utils.Messages;
+import com.aditplanet.utils.NetworkConnection;
 import com.aditplanet.web.client.RemoteParser;
 import com.aditplanet.web.client.WebClient;
 import com.loopj.android.http.*;
@@ -32,37 +34,43 @@ public class LoginActivity extends Activity {
 
 	private Messages messages;
 	public static final String LOGIN_CREDENTIALS = "LoginCredentials";
+	private NetworkConnection network = new NetworkConnection(
+			LoginActivity.this);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 
-		this.autoLoginConfiguration();
+		if (network.haveNetworkConnection()) {
+			this.autoLoginConfiguration();
 
-		if (AutoLogin.getAnswer(getFilesDir())) {
-			this.navigateToMainActivity();
+			if (AutoLogin.getAnswer(getFilesDir())) {
+				this.navigateToMainActivity();
+			} else {
+
+				this.intialiseObjects();
+
+				this.constructElementsInUI();
+			}
 		} else {
-			
-			this.intialiseObjects();
 
-			this.constructElementsInUI();
+			new Dialogs().createDialogINTERNET(LoginActivity.this,
+					getApplicationContext());
 		}
 
 	}
-	
-	private void navigateToMainActivity()
-	{
+
+	private void navigateToMainActivity() {
 		Intent i = new Intent(LoginActivity.this, MainActivity.class);
 		startActivity(i);
 	}
-	
-	private void constructElementsInUI()
-	{
+
+	private void constructElementsInUI() {
 		Button btnLogin = (Button) findViewById(R.id.btnLogin);
 		final EditText username = (EditText) findViewById(R.id.txtUsername);
 		final EditText password = (EditText) findViewById(R.id.txtPassword);
-		
+
 		btnLogin.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -78,14 +86,12 @@ public class LoginActivity extends Activity {
 		});
 	}
 
-	private void intialiseObjects()
-	{
+	private void intialiseObjects() {
 		messages = new Messages(this);
 
 	}
 
-	private void autoLoginConfiguration()
-	{
+	private void autoLoginConfiguration() {
 		File myFileLoggedIN = new File(getFilesDir() + AutoLogin.confFile);
 
 		if (!myFileLoggedIN.exists()) {
@@ -93,7 +99,7 @@ public class LoginActivity extends Activity {
 					AutoLogin.IS_LOGGED_IN_NO);
 		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -161,7 +167,7 @@ public class LoginActivity extends Activity {
 		editor.putString("password", password);
 
 		editor.commit();
-		
+
 		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 		startActivity(intent);
 	}
