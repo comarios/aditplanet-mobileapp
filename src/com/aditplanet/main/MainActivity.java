@@ -50,7 +50,7 @@ public class MainActivity extends FragmentActivity implements
 	private Messages messages;
 	private NetworkConnection network = new NetworkConnection(MainActivity.this);
 	// Tab titles
-	private String[] tabs = { "COUPON CODE", "QR CODE SCANNER", "ALL COUPONS" };// {
+	private String[] tabs = { "VALIDATE COUPONS", "ALL COUPONS" };// {
 	// "COUPON CODE",
 	// "QR CODE SCANNER",
 	// "ALL COUPONS"
