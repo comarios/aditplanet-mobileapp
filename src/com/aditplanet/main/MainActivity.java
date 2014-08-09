@@ -18,9 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,13 +29,13 @@ import com.aditplanet.model.Coupons;
 import com.aditplanet.model.CouponsManager;
 import com.aditplanet.model.User;
 import com.aditplanet.utils.AutoLogin;
+import com.aditplanet.utils.Dialogs;
 import com.aditplanet.utils.Messages;
+import com.aditplanet.utils.NetworkConnection;
 import com.aditplanet.web.client.RemoteParser;
 import com.aditplanet.web.client.WebClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.aditplanet.utils.Dialogs;
-import com.aditplanet.utils.NetworkConnection;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -219,19 +217,6 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	
-	/*
-	 * Buttons for the sub-menu of ViewCouponDetails.java
-	 * */
-	public void btnFilterNotValidated(View view) {
-		
-		 Toast.makeText(getApplicationContext(), "Clicked",
-		 Toast.LENGTH_LONG).show();
-		 
-		 /*
-		  * Update the ViewCouponDetails listview with the Non-Validated coupons
-		  * */
-		 
-	}
 	
 	
 	// private void configureCameraElements(boolean cameraTabSelected)

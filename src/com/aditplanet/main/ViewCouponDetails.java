@@ -35,8 +35,10 @@ public class ViewCouponDetails extends Activity {
 		setContentView(R.layout.view_coupon_details);
 
 		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
+		String couponCode = null;
 
+		if (extras != null) {
+			couponCode = extras.getString("couponCode");
 		}
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -68,19 +70,21 @@ public class ViewCouponDetails extends Activity {
 		// couponValidEndDate = (TextView)
 		// findViewById(R.id.details_couponValidEndDate);
 
-		Coupons coupons = CouponsManager.getInstance().getCouponsByIndex(
-				extras.getInt("couponIdx"));
+		// Coupons coupons = CouponsManager.getInstance().getCouponsByIndex(
+		// extras.getInt("couponIdx"));
 
+		Coupons coupons = CouponsManager.getInstance().getCouponsByCode(couponCode);
 		System.out.println("after sent: coupon: " + coupons);
 
 		// Show information.
 		webView = (WebView) findViewById(R.id.couponWebView);
 		webView.getSettings().setJavaScriptEnabled(true);
-		int couponCode = Integer.parseInt(coupons.getCode());
+		int IntCouponCode = Integer.parseInt(couponCode);
 		int removeFirstTwoDigits = Integer.parseInt(Integer
-				.toString(couponCode).substring(2));
+				.toString(IntCouponCode).substring(2));
 
-		couponURI = couponViewAPI + "00_" + removeFirstTwoDigits + "_00" + REDEEM_OFFLINE;
+		couponURI = couponViewAPI + "00_" + removeFirstTwoDigits + "_00"
+				+ REDEEM_OFFLINE;
 		webView.loadUrl(couponURI);
 		// couponCode.setText("Coupon Code: " + coupons.getCode());
 		// couponDetails.setText("Details: " +coupons.getCoupon_details());

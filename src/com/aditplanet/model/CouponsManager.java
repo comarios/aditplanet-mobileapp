@@ -33,6 +33,16 @@ public class CouponsManager {
 		return coupons.get(idx);
 	}
 
+	public Coupons getCouponsByCode(String code) {
+		for (Coupons c : coupons) {
+			if (c.getCode().equals(code)) {
+
+				return c;
+			}
+		}
+		return null;
+	}
+
 	public void setUser(User _user) {
 		user = _user;
 	}
@@ -55,10 +65,9 @@ public class CouponsManager {
 	 */
 	public void setValidStatusByCouponNumber(String couponCode) {
 
-		
 		for (int i = 0; i < coupons.size(); ++i) {
 			if (coupons.get(i).getCode().equals(couponCode)) {
-				
+
 				coupons.get(i).setValid_status(true);
 			}
 		}

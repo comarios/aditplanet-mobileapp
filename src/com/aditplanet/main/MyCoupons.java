@@ -1,5 +1,6 @@
 package com.aditplanet.main;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import com.aditplanet.adapters.SubTabsPagerAdapter;
 import com.aditplanet.adapters.TabsPagerAdapter;
 import com.aditplanet.model.Coupons;
 import com.aditplanet.model.CouponsManager;
+import com.aditplanet.utils.CouponsFilters;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -20,7 +22,9 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,6 +37,14 @@ public class MyCoupons extends Fragment {
 	private ViewPager subViewPager;
 	private SubTabsPagerAdapter submAdapter;
 	private ActionBar subActionBar;
+	private Button validatedCoupons;
+	private Button nonValidatedCoupons;
+	private Button allCoupons;
+	private HashMap<String, List<Coupons>> filteredCoupons = null;
+	private String KEY_VALIDATED = "VALIDATED";
+	private String KEY_NONVALIDATED = "NONVALIDATED";
+	private String KEY_ALL = "ALL";
+	private CouponsFilters filters;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,28 +55,44 @@ public class MyCoupons extends Fragment {
 		lAdapter = new LazyAdapter(getActivity());
 
 		listView = (ListView) rootView.findViewById(R.id.list);
-		setDataToAdapter();
+		setDataToAdapter(CouponsManager.getInstance().getCoupons());
+		filters = CouponsFilters.ALL;
 
-		// subViewPager = (ViewPager) getActivity().findViewById(R.id.pager);
-		// subActionBar = getActivity().getActionBar();
-		// submAdapter = new SubTabsPagerAdapter(getActivity()
-		// .getSupportFragmentManager());
-		//
-		// System.out.println("subViewPager: " + subViewPager);
-		// if(subViewPager != null)
-		// subViewPager.setAdapter(submAdapter);
-		//
-		// subActionBar.setHomeButtonEnabled(false);
-		//
-		// // Hide Actionbar Title
-		// subActionBar.setDisplayShowTitleEnabled(false);
-		// subActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		//
-		// // Adding Tabs
-		// for (String tab_name : tabs) {
-		// subActionBar.addTab(subActionBar.newTab().setText(tab_name)
-		// .setTabListener(this));
-		// }
+		configureFiltering();
+
+		/*
+		 * Buttons for the sub-menu of ViewCouponDetails
+		 */
+
+		validatedCoupons = (Button) rootView
+				.findViewById(R.id.btnValidatedCoupons);
+		nonValidatedCoupons = (Button) rootView
+				.findViewById(R.id.btnNotValidatedCoupons);
+		allCoupons = (Button) rootView.findViewById(R.id.btnAllCoupons);
+
+		validatedCoupons.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+
+				setDataToAdapter(filteredCoupons.get(KEY_VALIDATED));
+				filters = CouponsFilters.VALIDATED;
+			}
+		});
+
+		nonValidatedCoupons.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+
+				setDataToAdapter(filteredCoupons.get(KEY_NONVALIDATED));
+				filters = CouponsFilters.NONVALIDATED;
+			}
+		});
+
+		allCoupons.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+
+				setDataToAdapter(filteredCoupons.get(KEY_ALL));
+				filters = CouponsFilters.ALL;
+			}
+		});
 
 		/**
 		 * Inner class responsible to listens possible touch on list view.
@@ -81,20 +109,19 @@ public class MyCoupons extends Fragment {
 
 				Intent viewCoupon = new Intent(getActivity(),
 						ViewCouponDetails.class);
-				viewCoupon.putExtra("couponIdx", arg2);
-				// viewCoupon.putExtra("couponCode", coupons.getCode());
-				// viewCoupon.putExtra("couponDetails",
-				// coupons.getCoupon_details());
-				// viewCoupon.putExtra("couponMerchant", coupons.getMerchant());
-				// viewCoupon.putExtra("couponValidStatus",
-				// coupons.getValid_status());
-				// viewCoupon.putExtra("couponValidDate",
-				// coupons.getValid_date());
-				// viewCoupon.putExtra("couponValidStartDate",
-				// coupons.getValid_start_date());
-				// viewCoupon.putExtra("couponValidEndDate",
-				// coupons.getValid_end_date());
-				// System.out.println("before sent: " + coupons);
+
+				if (filters == CouponsFilters.VALIDATED) {
+					viewCoupon.putExtra("couponCode",
+							filteredCoupons.get(KEY_VALIDATED).get(arg2)
+									.getCode());
+				} else if (filters == CouponsFilters.NONVALIDATED) {
+					viewCoupon.putExtra("couponCode",
+							filteredCoupons.get(KEY_NONVALIDATED).get(arg2)
+									.getCode());
+				} else if (filters == CouponsFilters.ALL) {
+					viewCoupon.putExtra("couponCode",
+							filteredCoupons.get(KEY_ALL).get(arg2).getCode());
+				}
 
 				startActivity(viewCoupon);
 			}
@@ -103,11 +130,32 @@ public class MyCoupons extends Fragment {
 		return rootView;
 	}
 
-	private void setDataToAdapter() {
+	private void configureFiltering() {
 
-		lAdapter.clearContentList();
+		filteredCoupons = new HashMap<String, List<Coupons>>();
 
 		List<Coupons> coupons = CouponsManager.getInstance().getCoupons();
+		List<Coupons> validatedCoupons = new ArrayList<Coupons>();
+		List<Coupons> nonValidatedCoupons = new ArrayList<Coupons>();
+
+		for (Coupons c : coupons) {
+
+			if (c.getValid_status()) {
+				validatedCoupons.add(c);
+			} else {
+				nonValidatedCoupons.add(c);
+			}
+		}
+
+		filteredCoupons.put(KEY_VALIDATED, validatedCoupons);
+		filteredCoupons.put(KEY_NONVALIDATED, nonValidatedCoupons);
+		filteredCoupons.put(KEY_ALL, coupons);
+
+	}
+
+	private void setDataToAdapter(List<Coupons> coupons) {
+
+		lAdapter.clearContentList();
 
 		HashMap<String, String> map = new HashMap<String, String>();
 
@@ -136,27 +184,8 @@ public class MyCoupons extends Fragment {
 	public void onResume() {
 		super.onResume();
 		System.out.println("IS HERE ON RESUME");
-		setDataToAdapter();
+		setDataToAdapter(CouponsManager.getInstance().getCoupons());
 		lAdapter.notifyDataSetChanged();
 	}
-	
-	//NOT WORKING!!!
-
-//	/**
-//	 * Sub-tabs buttons. On click methods
-//	 * */
-//
-//	public void btnFilterValidated(View view) {
-//
-//		Toast.makeText(getActivity().getApplicationContext(), "this", Toast.LENGTH_LONG).show();
-//	}
-//
-//	public void btnFilterNotValidated(View view) {
-//
-//	}
-//
-//	public void btnFilterAll(View view) {
-//
-//	}
 
 }
