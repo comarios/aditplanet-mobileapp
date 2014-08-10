@@ -31,13 +31,13 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 		switch (index) {
 		case 0:
 
-			// Top Rated fragment activity
+			// ValidateByCouponNumber fragment activity
 			return new ValidateByCouponNumber();
-//		case 1:
-//			// Games fragment activity
-//			return new ValidateByQRCode();
 		case 1:
-			// Movies fragment activity
+			// ValidateByQRCode fragment activity
+			return new ValidateByQRCode();
+		case 2:
+			// MyCoupons activity
 			return new MyCoupons();
 		}
 
@@ -55,7 +55,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 	@Override
 	public int getCount() {
 		// get item count - equal to number of tabs
-		return 2;
+		return 3;
 	}
 	
  
