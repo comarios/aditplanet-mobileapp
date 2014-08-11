@@ -8,17 +8,20 @@ import org.json.JSONObject;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +51,8 @@ public class MainActivity extends FragmentActivity implements
 	private Messages messages;
 	private NetworkConnection network = new NetworkConnection(MainActivity.this);
 	// Tab titles
-	private String[] tabs = {"COUPON CODE","QR CODE SCANNER","ALL COUPONS"};//{ "VALIDATE COUPONS", "ALL COUPONS" };// {
+	private String[] tabs = {"COUPON CODE","QR CODE","ALL COUPONS"};// {"COUPON CODE","QR CODE SCANNER","ALL COUPONS"}{ "VALIDATE COUPONS", "ALL COUPONS" };//
+																	// {
 	// "COUPON CODE",
 	// "QR CODE SCANNER",
 	// "ALL COUPONS"
@@ -99,6 +103,19 @@ public class MainActivity extends FragmentActivity implements
 						.setTabListener(this));
 			}
 
+			/*
+			 * Configure first page to display xml for validateByCouponCode
+			 */
+//			RelativeLayout layout = (RelativeLayout) findViewById(R.id.layoutValidation);
+//			View loadCouponCodeXML;
+//		
+//			LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
+//			loadCouponCodeXML = inflater.inflate(R.layout.fragment_coupon_number, null);
+//
+//			
+//			//if (layout.getChildCount() == 0) {
+//				layout.addView(loadCouponCodeXML);
+//			//}
 			/**
 			 * on swiping the viewpager make respective tab selected
 			 * */
@@ -135,8 +152,8 @@ public class MainActivity extends FragmentActivity implements
 			// when we navigate to a current coupon.
 			viewPager.setCurrentItem(lastVisitedPage);
 
-		}else{
-			
+		} else {
+
 			new Dialogs().createDialogINTERNET(MainActivity.this,
 					getApplicationContext());
 		}
@@ -201,7 +218,7 @@ public class MainActivity extends FragmentActivity implements
 		// configureCameraElements((tab.getPosition() == VALIDATE_BY_QRCODE));
 
 		updateMyCouponsFragmentIfNeeded();
-		
+
 		viewPager.setCurrentItem(tab.getPosition());
 
 	}
@@ -218,9 +235,6 @@ public class MainActivity extends FragmentActivity implements
 		// Toast.LENGTH_LONG).show();
 	}
 
-	
-	
-	
 	// private void configureCameraElements(boolean cameraTabSelected)
 	// {
 	// Intent intent = new Intent(FRAGMENT_UPDATE);
@@ -335,25 +349,22 @@ public class MainActivity extends FragmentActivity implements
 					}
 				});
 	}
-	
+
 	/**
 	 * 
 	 * UI updates.
 	 */
-	
-	private void updateMyCouponsFragmentIfNeeded()
-	{
-		 MyCoupons fragment = 
-		          (MyCoupons) getSupportFragmentManager().findFragmentByTag(
-		                       "android:switcher:"+R.id.pager+":2");
-		      if(fragment != null)  // could be null if not instantiated yet
-		      {
-		         if(fragment.getView() != null) 
-		         {
-		            // no need to call if fragment's onDestroyView() 
-		            //has since been called.
-		            fragment.reloadDataRemotely(); // do what updates are required
-		         }
-		      }
+
+	private void updateMyCouponsFragmentIfNeeded() {
+		MyCoupons fragment = (MyCoupons) getSupportFragmentManager()
+				.findFragmentByTag("android:switcher:" + R.id.pager + ":2");
+		if (fragment != null) // could be null if not instantiated yet
+		{
+			if (fragment.getView() != null) {
+				// no need to call if fragment's onDestroyView()
+				// has since been called.
+				fragment.reloadDataRemotely(); // do what updates are required
+			}
+		}
 	}
 }

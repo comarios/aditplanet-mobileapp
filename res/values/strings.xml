@@ -31,6 +31,10 @@
  	
  	<!-- fragment_my_coupons.xml -->
  	<string name="subTabValidated">VALIDATED</string>
- 	<string name="subTabNonValidated">NON VALIDATED</string>
+ 	<string name="subTabNonValidated">NON-VALIDATED</string>
  	<string name="subTabAll">ALL</string>
+ 	
+ 	<!-- fragment_validation.xml -->
+ 	<string name="subTabValidateByCouponCode">Coupon Code</string>
+ 	<string name="subTabValidateByQRCode">QR Code</string>
 </resources>

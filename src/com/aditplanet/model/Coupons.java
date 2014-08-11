@@ -12,12 +12,11 @@ public class Coupons {
 	private String code;
 	private Boolean valid_status;
 	private Date valid_date;
+	private String valid_dateAsString;
 	private String merchant;
 	private String coupon_details;
 	private Date valid_start_date;
 	private Date valid_end_date;
-
-
 
 	public Coupons(JSONObject coupons) {
 		try {
@@ -26,6 +25,7 @@ public class Coupons {
 					: false);
 			this.valid_date = DateParser.parseDate(coupons
 					.getString("valid_date"));
+			this.valid_dateAsString = coupons.getString("valid_date");
 			this.merchant = coupons.getString("merchant");
 			this.coupon_details = coupons.getString("coupon_details");
 			this.valid_start_date = DateParser.parseDate(coupons
@@ -37,9 +37,10 @@ public class Coupons {
 			e.printStackTrace();
 		}
 	}
-	
-	public Coupons(String code, int validStatus, String validDate, String merchant, String couponDetails, String validStartDate, String validEndDate)
-	{
+
+	public Coupons(String code, int validStatus, String validDate,
+			String merchant, String couponDetails, String validStartDate,
+			String validEndDate) {
 		this.code = code;
 		this.valid_status = (validStatus == 0) ? false : true;
 		this.valid_date = DateParser.parseDate(validDate);
@@ -105,7 +106,14 @@ public class Coupons {
 		this.valid_end_date = valid_end_date;
 	}
 
-	
+	public String getValid_dateAsString() {
+		return valid_dateAsString;
+	}
+
+	public void setValid_dateAsString(String valid_dateAsString) {
+		this.valid_dateAsString = valid_dateAsString;
+	}
+
 	public String toString() {
 
 		return "code: " + this.code + ", valid_status: " + this.valid_status

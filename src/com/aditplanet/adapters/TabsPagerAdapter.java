@@ -6,6 +6,7 @@ import java.util.Map;
 import com.aditplanet.main.ValidateByQRCode;
 import com.aditplanet.main.MyCoupons;
 import com.aditplanet.main.ValidateByCouponNumber;
+import com.aditplanet.main.Validation;
 
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;

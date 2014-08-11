@@ -41,7 +41,7 @@ public class ViewCouponDetails extends Activity {
 			couponCode = extras.getString("couponCode");
 		}
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		//getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		int titleId = getResources().getIdentifier("action_bar_title", "id",
 				"android");

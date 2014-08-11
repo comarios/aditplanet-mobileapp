@@ -31,55 +31,61 @@ public final class R {
     public static final class drawable {
         public static final int aditplanet_logo=0x7f020000;
         public static final int aditplanet_splash_logo=0x7f020001;
-        public static final int button_pressed=0x7f020002;
-        public static final int dots=0x7f020003;
-        public static final int error=0x7f020004;
-        public static final int help=0x7f020005;
-        public static final int ic_action_help=0x7f020006;
-        public static final int ic_action_ic_menu_exit=0x7f020007;
-        public static final int ic_action_ic_menu_exit_white=0x7f020008;
-        public static final int ic_action_location_found=0x7f020009;
-        public static final int ic_action_refresh=0x7f02000a;
-        public static final int ic_action_search=0x7f02000b;
-        public static final int ic_launcher=0x7f02000c;
-        public static final int ic_not_validated=0x7f02000d;
-        public static final int ic_up_button=0x7f02000e;
-        public static final int ic_validated=0x7f02000f;
-        public static final int info=0x7f020010;
-        public static final int logo=0x7f020011;
-        public static final int qr_icon=0x7f020012;
-        public static final int qr_wrapper=0x7f020013;
+        public static final int bg_focused=0x7f020002;
+        public static final int bg_selected=0x7f020003;
+        public static final int bg_selector=0x7f020004;
+        public static final int bg_unselected=0x7f020005;
+        public static final int button_pressed=0x7f020006;
+        public static final int dots=0x7f020007;
+        public static final int error=0x7f020008;
+        public static final int help=0x7f020009;
+        public static final int ic_action_help=0x7f02000a;
+        public static final int ic_action_ic_menu_exit=0x7f02000b;
+        public static final int ic_action_ic_menu_exit_white=0x7f02000c;
+        public static final int ic_action_location_found=0x7f02000d;
+        public static final int ic_action_refresh=0x7f02000e;
+        public static final int ic_action_search=0x7f02000f;
+        public static final int ic_launcher=0x7f020010;
+        public static final int ic_not_validated=0x7f020011;
+        public static final int ic_up_button=0x7f020012;
+        public static final int ic_validated=0x7f020013;
+        public static final int info=0x7f020014;
+        public static final int logo=0x7f020015;
+        public static final int qr_icon=0x7f020016;
+        public static final int qr_wrapper=0x7f020017;
     }
     public static final class id {
         public static final int ScanButton=0x7f09000b;
-        public static final int action_logout=0x7f09001c;
+        public static final int action_logout=0x7f09001e;
         public static final int btnAllCoupons=0x7f090007;
-        public static final int btnLogin=0x7f090015;
+        public static final int btnLogin=0x7f090017;
         public static final int btnNotValidatedCoupons=0x7f090006;
         public static final int btnValidateByCouponCode=0x7f090004;
+        public static final int btnValidateByQRCode=0x7f09000c;
         public static final int btnValidatedCoupons=0x7f090005;
         public static final int cameraPreview=0x7f090009;
-        public static final int content=0x7f090019;
-        public static final int couponWebView=0x7f090016;
-        public static final int coupon_code=0x7f09000e;
-        public static final int coupon_details=0x7f09000f;
-        public static final int footer=0x7f090018;
-        public static final int header=0x7f090017;
+        public static final int content=0x7f09001b;
+        public static final int couponWebView=0x7f090018;
+        public static final int coupon_code=0x7f090010;
+        public static final int coupon_details=0x7f090011;
+        public static final int footer=0x7f09001a;
+        public static final int header=0x7f090019;
+        public static final int layoutValidation=0x7f09000d;
         public static final int list=0x7f090008;
-        public static final int list_image=0x7f09000d;
-        public static final int loginWelcome_subText_1=0x7f090010;
-        public static final int loginWelcome_subText_2=0x7f090011;
-        public static final int loginWelcome_subText_3=0x7f090012;
+        public static final int list_image=0x7f09000f;
+        public static final int loginWelcome_subText_1=0x7f090012;
+        public static final int loginWelcome_subText_2=0x7f090013;
+        public static final int loginWelcome_subText_3=0x7f090014;
         public static final int pager=0x7f090000;
         public static final int scanText=0x7f09000a;
-        public static final int thumbnail=0x7f09000c;
+        public static final int thumbnail=0x7f09000e;
         public static final int title=0x7f090001;
         public static final int txtCouponCode=0x7f090003;
-        public static final int txtPassword=0x7f090014;
-        public static final int txtUsername=0x7f090013;
+        public static final int txtPassword=0x7f090016;
+        public static final int txtUsername=0x7f090015;
         public static final int welcomeScreen_subText_1=0x7f090002;
-        public static final int welcomeScreen_subText_2=0x7f09001a;
-        public static final int welcomeScreen_subText_3=0x7f09001b;
+        public static final int welcomeScreen_subText_2=0x7f09001c;
+        public static final int welcomeScreen_subText_3=0x7f09001d;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -88,11 +94,12 @@ public final class R {
         public static final int fragment_coupon_number=0x7f030003;
         public static final int fragment_my_coupons=0x7f030004;
         public static final int fragment_qrcode=0x7f030005;
-        public static final int header_gradient=0x7f030006;
-        public static final int list_row=0x7f030007;
-        public static final int login=0x7f030008;
-        public static final int view_coupon_details=0x7f030009;
-        public static final int welcome_screen=0x7f03000a;
+        public static final int fragment_validation=0x7f030006;
+        public static final int header_gradient=0x7f030007;
+        public static final int list_row=0x7f030008;
+        public static final int login=0x7f030009;
+        public static final int view_coupon_details=0x7f03000a;
+        public static final int welcome_screen=0x7f03000b;
     }
     public static final class menu {
         public static final int main=0x7f080000;
@@ -117,6 +124,10 @@ public final class R {
         public static final int password_hint=0x7f060011;
         public static final int subTabAll=0x7f060018;
         public static final int subTabNonValidated=0x7f060017;
+        /**  fragment_validation.xml 
+         */
+        public static final int subTabValidateByCouponCode=0x7f060019;
+        public static final int subTabValidateByQRCode=0x7f06001a;
         /**  fragment_my_coupons.xml 
          */
         public static final int subTabValidated=0x7f060016;

@@ -172,7 +172,7 @@ public class MyCoupons extends Fragment {
 			// map.put(LazyAdapter.KEY_IMAGE_ID,
 			// p.getProfileImage(ld.getProfile()));
 			map.put(LazyAdapter.KEY_COUPON_CODE, cp.getCode());
-			map.put(LazyAdapter.KEY_COUPON_DETAILS, cp.getCoupon_details());
+			map.put(LazyAdapter.KEY_COUPON_DETAILS, cp.getValid_dateAsString());
 			map.put(LazyAdapter.KEY_COUPON_VALIDATION, cp.getValid_status()
 					.toString());
 			// Adding HashList to ArrayList

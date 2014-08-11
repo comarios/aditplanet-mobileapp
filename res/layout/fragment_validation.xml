@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:tileMode="repeat" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btnValidateByCouponCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_pressed"
+            android:text="@string/subTabValidateByCouponCode"
+            android:textColor="#FFF"
+            android:textSize="12dp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="2px"
+            android:layout_height="fill_parent"
+            android:background="#90909090" />
+
+        <Button
+            android:id="@+id/btnValidateByQRCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#000"
+            android:text="@string/subTabValidateByQRCode"
+            android:textColor="#FFF"
+            android:textSize="12dp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="2px"
+            android:layout_height="fill_parent"
+            android:background="#f3f3f3" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutValidation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </RelativeLayout>
+
+</LinearLayout>
