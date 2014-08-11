@@ -54,4 +54,17 @@ public class RemoteParser {
 		return couponsList;
 
 	}
+	
+	/**
+	 * Methods used before request.
+	 */
+	
+	public static String parseCouponAfterScan(String couponData)
+	{
+		String firstCouples = couponData.substring(0, 2);
+		
+		String secondCouples = couponData.substring(couponData.length() - 2, couponData.length());
+				
+		return firstCouples + secondCouples;
+	}
 }

@@ -45,10 +45,14 @@ public class MyCoupons extends Fragment {
 	private String KEY_NONVALIDATED = "NONVALIDATED";
 	private String KEY_ALL = "ALL";
 	private CouponsFilters filters;
+	private Boolean fragmentCreated = false;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
+		System.out.println("IS HERE ON CREATE");
+
 
 		View rootView = inflater.inflate(R.layout.fragment_my_coupons,
 				container, false);
@@ -127,6 +131,8 @@ public class MyCoupons extends Fragment {
 			}
 		});
 
+		fragmentCreated = true;
+		
 		return rootView;
 	}
 
@@ -178,6 +184,25 @@ public class MyCoupons extends Fragment {
 
 		listView.setAdapter(lAdapter);
 
+	}
+	
+	public void reloadDataRemotely()
+	{
+		System.out.println("reloadDataRemotely f created: " + this.filters + "filtered coupons: " + filteredCoupons);
+		
+		switch (this.filters) {
+		case VALIDATED:
+			setDataToAdapter(filteredCoupons.get(KEY_VALIDATED));
+			break;
+			
+		case NONVALIDATED:
+			setDataToAdapter(filteredCoupons.get(KEY_NONVALIDATED));
+			break;
+
+		default:
+			setDataToAdapter(filteredCoupons.get(KEY_ALL));
+			break;
+		}
 	}
 
 	@Override

@@ -200,6 +200,8 @@ public class MainActivity extends FragmentActivity implements
 		// show respected fragment view
 		// configureCameraElements((tab.getPosition() == VALIDATE_BY_QRCODE));
 
+		updateMyCouponsFragmentIfNeeded();
+		
 		viewPager.setCurrentItem(tab.getPosition());
 
 	}
@@ -332,5 +334,26 @@ public class MainActivity extends FragmentActivity implements
 						messages.showNetworkError();
 					}
 				});
+	}
+	
+	/**
+	 * 
+	 * UI updates.
+	 */
+	
+	private void updateMyCouponsFragmentIfNeeded()
+	{
+		 MyCoupons fragment = 
+		          (MyCoupons) getSupportFragmentManager().findFragmentByTag(
+		                       "android:switcher:"+R.id.pager+":2");
+		      if(fragment != null)  // could be null if not instantiated yet
+		      {
+		         if(fragment.getView() != null) 
+		         {
+		            // no need to call if fragment's onDestroyView() 
+		            //has since been called.
+		            fragment.reloadDataRemotely(); // do what updates are required
+		         }
+		      }
 	}
 }

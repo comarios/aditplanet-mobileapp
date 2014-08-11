@@ -71,4 +71,11 @@ public class Messages
 		AlertDialog alert = alert_box.create();
 		alert.show();
 	}
+	
+	public static void showToash(String message)
+	{
+		Toast.makeText(mainActivity.getApplicationContext(),
+				message, Toast.LENGTH_LONG)
+				.show();
+	}
 }
