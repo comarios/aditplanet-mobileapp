@@ -1,6 +1,9 @@
 package com.aditplanet.main;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -153,6 +156,15 @@ public class MyCoupons extends Fragment {
 			}
 		}
 
+		
+		Collections.sort(validatedCoupons, new Comparator<Coupons>() {
+		    public int compare(Coupons o1, Coupons o2) {
+		    	if (o1.getValid_date() == null || o2.getValid_date() == null)
+		            return 0;
+		          return o1.getValid_date().compareTo(o2.getValid_date());
+		    }
+		});
+		Collections.reverse(validatedCoupons);
 		filteredCoupons.put(KEY_VALIDATED, validatedCoupons);
 		filteredCoupons.put(KEY_NONVALIDATED, nonValidatedCoupons);
 		filteredCoupons.put(KEY_ALL, coupons);

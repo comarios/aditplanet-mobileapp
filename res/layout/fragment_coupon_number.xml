@@ -15,6 +15,15 @@
         android:hint="@string/coupon_code"
         android:inputType="number" />
 
+    <ProgressBar
+        android:id="@+id/progressBarValidationByCouponCode"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_below="@+id/txtCouponCode"
+        android:layout_centerHorizontal="true" />
+
     <Button
         android:id="@+id/btnValidateByCouponCode"
         android:layout_width="wrap_content"

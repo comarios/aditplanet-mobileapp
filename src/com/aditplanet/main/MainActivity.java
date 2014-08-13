@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,7 +21,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,10 +52,22 @@ public class MainActivity extends FragmentActivity implements
 	private ActionBar actionBar;
 	private EditText couponCode;
 	private Messages messages;
+	private ProgressBar spinner;
 	private NetworkConnection network = new NetworkConnection(MainActivity.this);
 	// Tab titles
-	private String[] tabs = {"COUPON CODE","QR CODE","ALL COUPONS"};// {"COUPON CODE","QR CODE SCANNER","ALL COUPONS"}{ "VALIDATE COUPONS", "ALL COUPONS" };//
-																	// {
+	private String[] tabs = { "COUPON CODE", "QR CODE", "ALL COUPONS" };// {"COUPON CODE","QR CODE SCANNER","ALL COUPONS"}{
+																		// "VALIDATE COUPONS",
+																		// "ALL COUPONS"
+																		// };//
+
+	private static final String COUPON_NOT_FOUND = "Error:Coupon not found";
+	private static final String COUPON_ALREADY_VALIDATED = "Error:Coupon already validated";
+	private static final String COUPON_SUCCESS = "success";
+	private static final String COUPON_NOT_FOUND_DIALOG = "An error occurred. The coupon code is invalid.";
+	private static final String COUPON_ALREADY_VALIDATED_DIALOG = "An error occurred. The coupon has been already validated.";
+	private static final String COUPON_SUCCESS_DIALOG = "The coupon has successfully validated.";
+	
+	// {
 	// "COUPON CODE",
 	// "QR CODE SCANNER",
 	// "ALL COUPONS"
@@ -64,8 +79,15 @@ public class MainActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		
 		setContentView(R.layout.activity_main);
-
+		User user = CouponsManager.getInstance().getUser();
+		if(user.getUsername() != null){
+			setTitle("Welcome: " + user.getUsername());
+		}else{
+			// Something is going wrong. You should redirect to the Login Page
+			
+		}
 		// Initilization
 		viewPager = (ViewPager) findViewById(R.id.pager);
 
@@ -106,16 +128,19 @@ public class MainActivity extends FragmentActivity implements
 			/*
 			 * Configure first page to display xml for validateByCouponCode
 			 */
-//			RelativeLayout layout = (RelativeLayout) findViewById(R.id.layoutValidation);
-//			View loadCouponCodeXML;
-//		
-//			LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
-//			loadCouponCodeXML = inflater.inflate(R.layout.fragment_coupon_number, null);
-//
-//			
-//			//if (layout.getChildCount() == 0) {
-//				layout.addView(loadCouponCodeXML);
-//			//}
+			// RelativeLayout layout = (RelativeLayout)
+			// findViewById(R.id.layoutValidation);
+			// View loadCouponCodeXML;
+			//
+			// LayoutInflater inflater = (LayoutInflater)
+			// getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			// loadCouponCodeXML =
+			// inflater.inflate(R.layout.fragment_coupon_number, null);
+			//
+			//
+			// //if (layout.getChildCount() == 0) {
+			// layout.addView(loadCouponCodeXML);
+			// //}
 			/**
 			 * on swiping the viewpager make respective tab selected
 			 * */
@@ -229,6 +254,8 @@ public class MainActivity extends FragmentActivity implements
 
 	public void btnValidateByCouponCode(View view) {
 		couponCode = (EditText) findViewById(R.id.txtCouponCode);
+		spinner = (ProgressBar) findViewById(R.id.progressBarValidationByCouponCode);
+		spinner.setVisibility(View.VISIBLE);
 		validationByCouponCode(couponCode.getText().toString());
 
 		// Toast.makeText(getApplicationContext(), "Send request to server!",
@@ -261,21 +288,51 @@ public class MainActivity extends FragmentActivity implements
 		params.put("m_pass", user.getPassword());
 		params.put("c_key", couponCode);
 
+		// final ProgressDialog validationProgress = new ProgressDialog(this);
+		// validationProgress.setTitle("Please Wait");
+		// validationProgress.setMessage("We are validating the coupon...");
+		// validationProgress.show();
+
 		WebClient.get("merchants_api.php", params,
 				new AsyncHttpResponseHandler() {
 					@Override
 					public void onSuccess(String response) {
 						// Pull out the first event on the public timeline
 						try {
-							JSONObject json = new JSONObject(response);
-							System.out.println("couponCode: " + couponCode);
-							CouponsManager.getInstance()
-									.setValidStatusByCouponNumber(couponCode);
 
-							Toast.makeText(getApplicationContext(),
-									"json: " + "valid", Toast.LENGTH_LONG)
-									.show();
-							System.out.println("json: " + json);
+							JSONObject json = new JSONObject(response);
+							spinner.setVisibility(View.GONE);
+							if (json.getString("res").equals(COUPON_NOT_FOUND)) {
+								new Dialogs().createDialogValidation(
+										MainActivity.this,
+										getApplicationContext(),
+										COUPON_NOT_FOUND_DIALOG);
+
+							} else if (json.getString("res").equals(
+									COUPON_ALREADY_VALIDATED)) {
+								new Dialogs().createDialogValidation(
+										MainActivity.this,
+										getApplicationContext(),
+										COUPON_ALREADY_VALIDATED_DIALOG);
+
+							} else if (json.getString("res").equals(
+									COUPON_SUCCESS)) {
+
+								CouponsManager.getInstance()
+										.setValidStatusByCouponNumber(
+												couponCode);
+								new Dialogs()
+										.createDialogValidation(
+												MainActivity.this,
+												getApplicationContext(),
+												COUPON_SUCCESS_DIALOG);
+							}
+
+							System.out.println("couponCode: " + couponCode);
+
+							System.out.println("json: " + json.getString("res"));
+							// To dismiss the dialog
+							// validationProgress.dismiss();
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -286,6 +343,7 @@ public class MainActivity extends FragmentActivity implements
 					public void onFailure(Throwable error, String content) {
 						System.out.println(error.getMessage());
 						// TODO: Add message for network failure
+						
 						Messages.showNetworkError();
 					}
 				});

@@ -52,4 +52,20 @@ public class Dialogs {
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
+	
+	
+	public void createDialogValidation(final Activity activity,
+			final Context context, String validationOutput) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+		builder.setTitle(validationOutput)
+				.setCancelable(true)
+				.setNegativeButton("Cancel",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+
+							}
+						});
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
 }

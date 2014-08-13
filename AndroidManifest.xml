@@ -56,11 +56,13 @@
         <activity
             android:name="com.aditplanet.login.LoginActivity"
             android:noHistory="true"
+            android:theme="@style/CustomActionBarTheme"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.aditplanet.main.MainActivity"
             android:noHistory="true"
+            android:theme="@style/CustomActionBarTheme"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
