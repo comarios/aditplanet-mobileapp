@@ -245,7 +245,7 @@ public class MainActivity extends FragmentActivity implements
 		// configureCameraElements((tab.getPosition() == VALIDATE_BY_QRCODE));
 
 		updateMyCouponsFragmentIfNeeded();
-
+		openCameraIfNeeded(tab.getPosition());
 		viewPager.setCurrentItem(tab.getPosition());
 
 	}
@@ -434,6 +434,24 @@ public class MainActivity extends FragmentActivity implements
 				getCouponsFromAPI();//?????? 
 				fragment.reloadDataRemotely(); // do what updates are required
 				
+			}
+		}
+	}
+	
+	private void openCameraIfNeeded(int tabPos){
+		
+		if(tabPos == 1){
+			ValidateByQRCode fragment = (ValidateByQRCode) getSupportFragmentManager()
+					.findFragmentByTag("android:switcher:" + R.id.pager + ":1");
+			if (fragment != null) // could be null if not instantiated yet
+			{
+				if (fragment.getView() != null) {
+					// no need to call if fragment's onDestroyView()
+					// has since been called.
+					
+					
+					
+				}
 			}
 		}
 	}

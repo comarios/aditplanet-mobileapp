@@ -82,6 +82,8 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 		getActivity().setRequestedOrientation(
 				ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+		//System.out.println("camera is up");
+		
 		autoFocusHandler = new Handler();
 		mCamera = getCameraInstance();
 

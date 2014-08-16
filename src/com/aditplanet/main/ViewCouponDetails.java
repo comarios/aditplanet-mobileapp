@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -79,6 +80,7 @@ public class ViewCouponDetails extends Activity {
 		// Show information.
 		webView = (WebView) findViewById(R.id.couponWebView);
 		webView.getSettings().setJavaScriptEnabled(true);
+		webView.setWebViewClient(new WebViewClient());
 		int IntCouponCode = Integer.parseInt(couponCode);
 		int removeFirstTwoDigits = Integer.parseInt(Integer
 				.toString(IntCouponCode).substring(2));
