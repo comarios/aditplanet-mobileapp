@@ -32,11 +32,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.aditplanet.R;
 import com.aditplanet.model.CouponsManager;
 import com.aditplanet.model.User;
 import com.aditplanet.qrcode.CameraPreview;
+import com.aditplanet.utils.Dialogs;
 import com.aditplanet.utils.Messages;
 import com.aditplanet.web.client.RemoteParser;
 import com.aditplanet.web.client.WebClient;
@@ -48,13 +48,20 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 	private Camera mCamera;
 	private CameraPreview mPreview;
 	private Handler autoFocusHandler;
-//	private FragmentServiceReceiver fragmentService;
-//	private IntentFilter fragmentFilter;
+	// private FragmentServiceReceiver fragmentService;
+	// private IntentFilter fragmentFilter;
+	private static final String COUPON_NOT_FOUND = "Error:Coupon not found";
+	private static final String COUPON_ALREADY_VALIDATED = "Error:Coupon already validated";
+	private static final String COUPON_SUCCESS = "success";
+	private static final String COUPON_NOT_FOUND_DIALOG = "An error occurred. The coupon code is invalid.";
+	private static final String COUPON_ALREADY_VALIDATED_DIALOG = "An error occurred. The coupon has been already validated.";
+	private static final String COUPON_SUCCESS_DIALOG = "The coupon has successfully validated.";
+	private static final String COUPON_NETWORK_ERROR = "Network error has occurred. Please try again.";
 
 	ImageView qrWrapper;
 	TextView scanText;
 	Button scanButton;
-	
+
 	ImageScanner scanner;
 
 	FrameLayout preview;
@@ -69,7 +76,7 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+
 		View rootView = inflater.inflate(R.layout.fragment_qrcode, container,
 				false);
 		getActivity().setRequestedOrientation(
@@ -89,11 +96,11 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 		this.preview.addView(mPreview);
 
 		qrWrapper = new ImageView(rootView.getContext());
-		qrWrapper.setImageDrawable(rootView.getResources()
-				.getDrawable(R.drawable.qr_wrapper));
+		qrWrapper.setImageDrawable(rootView.getResources().getDrawable(
+				R.drawable.qr_wrapper));
 
 		this.preview.addView(qrWrapper);
-		
+
 		scanText = (TextView) rootView.findViewById(R.id.scanText);
 
 		scanButton = (Button) rootView.findViewById(R.id.ScanButton);
@@ -115,17 +122,17 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 	}
 
 	public void onPause() {
-		super.onPause();
 		releaseCamera();
+		super.onPause();
 	}
 
-//	private void setUpCameraElements() {
-//
-//	}
-//
-//	private void releaseCameraElements() {
-//
-//	}
+	// private void setUpCameraElements() {
+	//
+	// }
+	//
+	// private void releaseCameraElements() {
+	//
+	// }
 
 	// private void setUpNotifications()
 	// {
@@ -143,7 +150,7 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 		return c;
 	}
 
-	private void releaseCamera() {
+	public void releaseCamera() {
 		if (mCamera != null) {
 			previewing = false;
 			mCamera.setPreviewCallback(null);
@@ -151,6 +158,16 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 			mCamera.release();
 			mCamera = null;
 		}
+	}
+
+	public void unblockCamera() {
+
+		scanText.setText("Please wait. We are scanning...");
+		mCamera.setPreviewCallback(previewCb);
+		mCamera.startPreview();
+		previewing = true;
+		mCamera.autoFocus(autoFocusCB);
+
 	}
 
 	private Runnable doAutoFocus = new Runnable() {
@@ -178,13 +195,14 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 				SymbolSet syms = scanner.getResults();
 				String couponData = null;
 				for (Symbol sym : syms) {
-					scanText.setText("barcode result " + sym.getData());
+					// scanText.setText("barcode result " + sym.getData());
 					couponData = sym.getData();
-					System.out.println("barcode result " + sym.getData());
+					// System.out.println("barcode result " + sym.getData());
 					barcodeScanned = true;
 				}
-				
-				//Take data of the qr-code and send them to the server in order to validate the coupon.
+
+				// Take data of the qr-code and send them to the server in order
+				// to validate the coupon.
 				validateCouponWithData(couponData);
 			}
 		}
@@ -196,26 +214,25 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 			autoFocusHandler.postDelayed(doAutoFocus, 1000);
 		}
 	};
-	
-	
+
 	/**
 	 * Client methods.
 	 */
-	
-	private void validateCouponWithData(String data)
-	{
+
+	private void validateCouponWithData(String data) {
 		RequestParams params = new RequestParams();
-		
+
 		User user = CouponsManager.getInstance().getUser();
-		
-		System.out.println("Username: " + user.getUsername() + " Password: " + user.getPassword());
-		
+
+		System.out.println("Username: " + user.getUsername() + " Password: "
+				+ user.getPassword());
+
 		params.put("m_name", user.getUsername());
 		params.put("m_pass", user.getPassword());
 		params.put("c_key", RemoteParser.parseCouponAfterScan(data));
 
 		final String couponCode = RemoteParser.parseCouponAfterScan(data);
-		
+
 		WebClient.get("merchants_api.php", params,
 				new AsyncHttpResponseHandler() {
 					@Override
@@ -223,13 +240,38 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 						// Pull out the first event on the public timeline
 						try {
 							JSONObject json = new JSONObject(response);
-							System.out.println("couponCode: " + couponCode);
 
-							CouponsManager.getInstance()
-									.setValidStatusByCouponNumber(couponCode);
+							if (json.getString("res").equals(COUPON_NOT_FOUND)) {
+								new Dialogs().createDialogQRValidation(
+										getActivity(), getActivity()
+												.getApplicationContext(),
+										COUPON_NOT_FOUND_DIALOG,
+										ValidateByQRCode.this);
 
-							Messages.showToash("valid, JSON: "+json);
-							System.out.println("json: " + json);
+							} else if (json.getString("res").equals(
+									COUPON_ALREADY_VALIDATED)) {
+								new Dialogs().createDialogQRValidation(
+										getActivity(), getActivity()
+												.getApplicationContext(),
+										COUPON_ALREADY_VALIDATED_DIALOG,
+										ValidateByQRCode.this);
+
+							} else if (json.getString("res").equals(
+									COUPON_SUCCESS)) {
+
+								CouponsManager.getInstance()
+										.setValidStatusByCouponNumber(
+												couponCode);
+								new Dialogs().createDialogQRValidation(
+										getActivity(), getActivity()
+												.getApplicationContext(),
+										COUPON_SUCCESS_DIALOG,
+										ValidateByQRCode.this);
+							}
+
+							//
+							// Messages.showToash("valid, JSON: "+json);
+							// System.out.println("jsonQRCODE: " + json);
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
@@ -242,7 +284,7 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 						Messages.showNetworkError();
 					}
 				});
-		
+
 	}
 
 	// @Override
@@ -256,20 +298,20 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 	 * Inner Class BroadCastReceiver, used for communication between fragments
 	 * 
 	 */
-//	public class FragmentServiceReceiver extends BroadcastReceiver {
-//		@Override
-//		public void onReceive(Context context, Intent intent) {
-//			// TODO Auto-generated method stub
-//
-//			Boolean releaseCamera = intent.getBooleanExtra("releaseCamera",
-//					false);
-//			if(!releaseCamera){
-//			
-//			}
-//			// if(releaseCamera){
-//			// releaseCamera();
-//			// }
-//			System.out.println("on receive:" + releaseCamera);
-//		}
-//	}
+	// public class FragmentServiceReceiver extends BroadcastReceiver {
+	// @Override
+	// public void onReceive(Context context, Intent intent) {
+	// // TODO Auto-generated method stub
+	//
+	// Boolean releaseCamera = intent.getBooleanExtra("releaseCamera",
+	// false);
+	// if(!releaseCamera){
+	//
+	// }
+	// // if(releaseCamera){
+	// // releaseCamera();
+	// // }
+	// System.out.println("on receive:" + releaseCamera);
+	// }
+	// }
 }

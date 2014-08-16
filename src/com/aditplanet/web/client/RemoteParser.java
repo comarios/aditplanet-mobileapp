@@ -61,10 +61,9 @@ public class RemoteParser {
 	
 	public static String parseCouponAfterScan(String couponData)
 	{
-		String firstCouples = couponData.substring(0, 2);
+		System.out.println("couponData: " + couponData);
+		String [] tokens = couponData.split("_");
 		
-		String secondCouples = couponData.substring(couponData.length() - 2, couponData.length());
-				
-		return firstCouples + secondCouples;
+		return tokens[0] + tokens[tokens.length-1];
 	}
 }

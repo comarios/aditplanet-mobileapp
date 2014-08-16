@@ -1,7 +1,12 @@
 package com.aditplanet.utils;
 
+import com.aditplanet.R;
+import com.aditplanet.main.MyCoupons;
+import com.aditplanet.main.ValidateByQRCode;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -63,6 +68,23 @@ public class Dialogs {
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 
+							}
+						});
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+	
+	public void createDialogQRValidation(final Activity activity,
+			final Context context, String validationOutput, final ValidateByQRCode fragment) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+		builder.setTitle(validationOutput)
+				.setCancelable(true)
+				.setNegativeButton("Press to Scan again",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+
+								//fragment.releaseCamera();
+								fragment.unblockCamera();
 							}
 						});
 		AlertDialog alert = builder.create();
