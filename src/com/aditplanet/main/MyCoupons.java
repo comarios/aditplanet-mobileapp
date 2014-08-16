@@ -43,10 +43,10 @@ public class MyCoupons extends Fragment {
 	private Button validatedCoupons;
 	private Button nonValidatedCoupons;
 	private Button allCoupons;
-	private HashMap<String, List<Coupons>> filteredCoupons = null;
-	private String KEY_VALIDATED = "VALIDATED";
-	private String KEY_NONVALIDATED = "NONVALIDATED";
-	private String KEY_ALL = "ALL";
+//	private HashMap<String, List<Coupons>> filteredCoupons = null;
+//	private String KEY_VALIDATED = "VALIDATED";
+//	private String KEY_NONVALIDATED = "NONVALIDATED";
+//	private String KEY_ALL = "ALL";
 	private CouponsFilters filters;
 	private Boolean fragmentCreated = false;
 
@@ -65,7 +65,7 @@ public class MyCoupons extends Fragment {
 		setDataToAdapter(CouponsManager.getInstance().getCoupons());
 		filters = CouponsFilters.ALL;
 
-		configureFiltering();
+		//configureFiltering();
 
 		/*
 		 * Buttons for the sub-menu of ViewCouponDetails
@@ -80,7 +80,8 @@ public class MyCoupons extends Fragment {
 		validatedCoupons.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 
-				setDataToAdapter(filteredCoupons.get(KEY_VALIDATED));
+				//setDataToAdapter(filteredCoupons.get(KEY_VALIDATED));
+				setDataToAdapter(CouponsManager.getInstance().getValidatedCouponsList());
 				filters = CouponsFilters.VALIDATED;
 			}
 		});
@@ -88,7 +89,8 @@ public class MyCoupons extends Fragment {
 		nonValidatedCoupons.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 
-				setDataToAdapter(filteredCoupons.get(KEY_NONVALIDATED));
+				//setDataToAdapter(filteredCoupons.get(KEY_NONVALIDATED));
+				setDataToAdapter(CouponsManager.getInstance().getNonValidatedCouponsList());
 				filters = CouponsFilters.NONVALIDATED;
 			}
 		});
@@ -96,7 +98,8 @@ public class MyCoupons extends Fragment {
 		allCoupons.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 
-				setDataToAdapter(filteredCoupons.get(KEY_ALL));
+				//setDataToAdapter(filteredCoupons.get(KEY_ALL));
+				setDataToAdapter(CouponsManager.getInstance().getCoupons());
 				filters = CouponsFilters.ALL;
 			}
 		});
@@ -119,15 +122,15 @@ public class MyCoupons extends Fragment {
 
 				if (filters == CouponsFilters.VALIDATED) {
 					viewCoupon.putExtra("couponCode",
-							filteredCoupons.get(KEY_VALIDATED).get(arg2)
+							CouponsManager.getInstance().getValidatedCouponsList().get(arg2)
 									.getCode());
 				} else if (filters == CouponsFilters.NONVALIDATED) {
 					viewCoupon.putExtra("couponCode",
-							filteredCoupons.get(KEY_NONVALIDATED).get(arg2)
+							CouponsManager.getInstance().getNonValidatedCouponsList().get(arg2)
 									.getCode());
 				} else if (filters == CouponsFilters.ALL) {
 					viewCoupon.putExtra("couponCode",
-							filteredCoupons.get(KEY_ALL).get(arg2).getCode());
+							CouponsManager.getInstance().getCoupons().get(arg2).getCode());
 				}
 
 				startActivity(viewCoupon);
@@ -139,37 +142,37 @@ public class MyCoupons extends Fragment {
 		return rootView;
 	}
 
-	private void configureFiltering() {
-
-		filteredCoupons = new HashMap<String, List<Coupons>>();
-
-		List<Coupons> coupons = CouponsManager.getInstance().getCoupons();
-		List<Coupons> validatedCoupons = new ArrayList<Coupons>();
-		List<Coupons> nonValidatedCoupons = new ArrayList<Coupons>();
-
-		for (Coupons c : coupons) {
-
-			if (c.getValid_status()) {
-				validatedCoupons.add(c);
-			} else {
-				nonValidatedCoupons.add(c);
-			}
-		}
-
-		
-		Collections.sort(validatedCoupons, new Comparator<Coupons>() {
-		    public int compare(Coupons o1, Coupons o2) {
-		    	if (o1.getValid_date() == null || o2.getValid_date() == null)
-		            return 0;
-		          return o1.getValid_date().compareTo(o2.getValid_date());
-		    }
-		});
-		Collections.reverse(validatedCoupons);
-		filteredCoupons.put(KEY_VALIDATED, validatedCoupons);
-		filteredCoupons.put(KEY_NONVALIDATED, nonValidatedCoupons);
-		filteredCoupons.put(KEY_ALL, coupons);
-
-	}
+//	private void configureFiltering() {
+//
+//		filteredCoupons = new HashMap<String, List<Coupons>>();
+//
+//		List<Coupons> coupons = CouponsManager.getInstance().getCoupons();
+//		List<Coupons> validatedCoupons = new ArrayList<Coupons>();
+//		List<Coupons> nonValidatedCoupons = new ArrayList<Coupons>();
+//
+//		for (Coupons c : coupons) {
+//
+//			if (c.getValid_status()) {
+//				validatedCoupons.add(c);
+//			} else {
+//				nonValidatedCoupons.add(c);
+//			}
+//		}
+//
+//		
+//		Collections.sort(validatedCoupons, new Comparator<Coupons>() {
+//		    public int compare(Coupons o1, Coupons o2) {
+//		    	if (o1.getValid_date() == null || o2.getValid_date() == null)
+//		            return 0;
+//		          return o1.getValid_date().compareTo(o2.getValid_date());
+//		    }
+//		});
+//		Collections.reverse(validatedCoupons);
+//		filteredCoupons.put(KEY_VALIDATED, validatedCoupons);
+//		filteredCoupons.put(KEY_NONVALIDATED, nonValidatedCoupons);
+//		filteredCoupons.put(KEY_ALL, coupons);
+//
+//	}
 
 	private void setDataToAdapter(List<Coupons> coupons) {
 
@@ -200,19 +203,19 @@ public class MyCoupons extends Fragment {
 	
 	public void reloadDataRemotely()
 	{
-		System.out.println("reloadDataRemotely f created: " + this.filters + "filtered coupons: " + filteredCoupons);
+		System.out.println("reloadDataRemotely f created: " + this.filters);
 		
 		switch (this.filters) {
 		case VALIDATED:
-			setDataToAdapter(filteredCoupons.get(KEY_VALIDATED));
+			setDataToAdapter(CouponsManager.getInstance().getValidatedCouponsList());
 			break;
 			
 		case NONVALIDATED:
-			setDataToAdapter(filteredCoupons.get(KEY_NONVALIDATED));
+			setDataToAdapter(CouponsManager.getInstance().getNonValidatedCouponsList());
 			break;
 
 		default:
-			setDataToAdapter(filteredCoupons.get(KEY_ALL));
+			setDataToAdapter(CouponsManager.getInstance().getCoupons());
 			break;
 		}
 	}

@@ -66,7 +66,7 @@ public class MainActivity extends FragmentActivity implements
 	private static final String COUPON_NOT_FOUND_DIALOG = "An error occurred. The coupon code is invalid.";
 	private static final String COUPON_ALREADY_VALIDATED_DIALOG = "An error occurred. The coupon has been already validated.";
 	private static final String COUPON_SUCCESS_DIALOG = "The coupon has successfully validated.";
-	
+	private static final String COUPON_NETWORK_ERROR = "Network error has occurred. Please try again.";
 	// {
 	// "COUPON CODE",
 	// "QR CODE SCANNER",
@@ -82,11 +82,13 @@ public class MainActivity extends FragmentActivity implements
 		
 		setContentView(R.layout.activity_main);
 		User user = CouponsManager.getInstance().getUser();
-		if(user.getUsername() != null){
-			setTitle("Welcome: " + user.getUsername());
+		// Something is going wrong. You should redirect to the Login Page
+		if(user == null){
+			Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+			startActivity(intent);
 		}else{
-			// Something is going wrong. You should redirect to the Login Page
 			
+			setTitle("Welcome: " + user.getUsername());
 		}
 		// Initilization
 		viewPager = (ViewPager) findViewById(R.id.pager);
@@ -292,7 +294,7 @@ public class MainActivity extends FragmentActivity implements
 		// validationProgress.setTitle("Please Wait");
 		// validationProgress.setMessage("We are validating the coupon...");
 		// validationProgress.show();
-
+	
 		WebClient.get("merchants_api.php", params,
 				new AsyncHttpResponseHandler() {
 					@Override
@@ -336,6 +338,12 @@ public class MainActivity extends FragmentActivity implements
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+							spinner.setVisibility(View.GONE);
+							new Dialogs()
+							.createDialogValidation(
+									MainActivity.this,
+									getApplicationContext(),
+									COUPON_NETWORK_ERROR);
 						}
 					}
 
@@ -343,7 +351,7 @@ public class MainActivity extends FragmentActivity implements
 					public void onFailure(Throwable error, String content) {
 						System.out.println(error.getMessage());
 						// TODO: Add message for network failure
-						
+						spinner.setVisibility(View.GONE);
 						Messages.showNetworkError();
 					}
 				});
@@ -421,7 +429,11 @@ public class MainActivity extends FragmentActivity implements
 			if (fragment.getView() != null) {
 				// no need to call if fragment's onDestroyView()
 				// has since been called.
+				
+				//TODO: check it out
+				getCouponsFromAPI();//?????? 
 				fragment.reloadDataRemotely(); // do what updates are required
+				
 			}
 		}
 	}
