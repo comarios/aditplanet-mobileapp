@@ -66,7 +66,6 @@ public class MainActivity extends FragmentActivity implements
 	// "QR CODE SCANNER",
 	// "ALL COUPONS"
 	// };
-	private final int VALIDATE_BY_QRCODE = 1;
 	public static final String FRAGMENT_UPDATE = "com.aditplanet.main.MainActivity.FRAGMENT_UPDATE";
 
 	@Override

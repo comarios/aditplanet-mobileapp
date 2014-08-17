@@ -40,7 +40,7 @@ import com.loopj.android.http.RequestParams;
 public class ValidateByQRCode extends Fragment { // implements Observer {
 
 	private Camera mCamera;
-	private CameraPreview mPreview;
+	private CameraPreview mPreview = null;
 	private Handler autoFocusHandler;
 	// private FragmentServiceReceiver fragmentService;
 	// private IntentFilter fragmentFilter;
@@ -145,49 +145,17 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 	public void onPause() {
 		
 		super.onPause();
-
-		this.stopCamera();
 		
-//		if(previewing)
-//		{
-//			comesFromResume = true;
-//			
-//			
-//			System.out.println("Fragment onPause previewing: " + previewing);
-//
-//			this.saveOnResumeState();
-//			
-//
-//		}
-//		else
-//		{
-//			System.out.println("Fragment onPause previewing: " + previewing);
-//
-//			comesFromResume = false;
-//			
-//			this.saveOnResumeState();
-//		}
-//		releaseCamera();
-
+		this.releaseCamera();
+		
 		
 	}
 	
-//	public void onDestroy()
-//	{
-//		System.out.println("On Destroy.");
-//		
-//		comesFromResume = false;
-//		
-//		this.saveOnResumeState();
-//		
-//		super.onStop();
-//	}
-//	
 	/** A safe way to get an instance of the Camera object. */
 	public static Camera getCameraInstance() {
 		Camera c = null;
 		try {
-			c = Camera.open();
+			c = Camera.open(0);
 		} catch (Exception e) {
 		}
 		return c;
@@ -333,79 +301,91 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 
 	}
 
+	private void continueCamera()
+	{
+		barcodeScanned = false;
+		scanText.setText("Please wait. We are scanning...");
+		mCamera.setPreviewCallback(previewCb);
+		mCamera.startPreview();
+		previewing = true;
+		mCamera.autoFocus(autoFocusCB);
+	}
+	
+	private void pauseCamera()
+	{
+		previewing = false;
+		mCamera.setPreviewCallback(null);
+		mCamera.stopPreview();
+	}
+	
 	/**
 	 * Camera managers methods.
 	 */
 	
 	public void startCamera()
 	{
-		autoFocusHandler = new Handler();
-		mCamera = getCameraInstance();
+		// Get a handler that can be used to post to the main thread
+//		Handler mainHandler = new Handler();
+//
+//		Runnable myRunnable = new Runnable() {
+//			
+//			@Override
+//			public void run() {
+				
 
-		// Instance barcode scanner
-		scanner = new ImageScanner();
-		scanner.setConfig(0, Config.X_DENSITY, 3);
-		scanner.setConfig(0, Config.Y_DENSITY, 3);
+//			}
+//		};
+		
+		
+		if(mPreview != null)
+		{			
+			continueCamera();
+		}
+		else
+		{
+			autoFocusHandler = new Handler();
+			System.out.println("Camera" + mCamera);
 
-		mPreview = new CameraPreview(getActivity().getApplicationContext(),
-				mCamera, previewCb, autoFocusCB);
-		this.preview = (FrameLayout) rootView.findViewById(R.id.cameraPreview);
-		this.preview.addView(mPreview);
+			mCamera = getCameraInstance();
 
-		qrWrapper = new ImageView(rootView.getContext());
-		qrWrapper.setImageDrawable(rootView.getResources().getDrawable(
-				R.drawable.qr_wrapper));
+			// Instance barcode scanner
+			scanner = new ImageScanner();
+			scanner.setConfig(0, Config.X_DENSITY, 3);
+			scanner.setConfig(0, Config.Y_DENSITY, 3);
+			
+			mPreview = new CameraPreview(getActivity().getApplicationContext(),
+					mCamera, previewCb, autoFocusCB);
+			this.preview = (FrameLayout) rootView.findViewById(R.id.cameraPreview);
+			this.preview.addView(mPreview);
 
-		this.preview.addView(qrWrapper);
+			qrWrapper = new ImageView(rootView.getContext());
+			qrWrapper.setImageDrawable(rootView.getResources().getDrawable(
+					R.drawable.qr_wrapper));
+
+			this.preview.addView(qrWrapper);
+		}
+
+//        new Thread() {
+//            public void run() {
+//            	
+//
+//            }
+//        }.start();
+		
 	}
 	
 	public void stopCamera()
 	{
-		this.releaseCamera();
-	}
-	
-	/**
-	 * Internal memory methods
-	 */
-	
-//	private void saveOnResumeState()
-//	{
-//		System.out.println("saveOnResumeState : " + comesFromResume);
-//		
-//		SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
-//		SharedPreferences.Editor editor = preferences.edit();
-//		editor.putBoolean("comesFromResume", comesFromResume); // value to store
-//		editor.commit();
-//	
-//
-//	}
-	
-	private void getOnResumeState()
-	{
+		if(mPreview == null)
+		{
+			this.releaseCamera();
+		}
+		else
+		{
 
-	       SharedPreferences settings = getActivity().getPreferences(Context.MODE_PRIVATE);
-	       System.out.println("SETTINGS: " + settings);
-	       
-	        comesFromResume = settings.getBoolean("comesFromResume", false);
-			System.out.println("getOnResumeState : " + comesFromResume);
-
-	       
-//		FileInputStream fis;
-//		
-//		try {
-//			fis = getActivity().openFileInput("hello_file");
-//			
-//			fis.read();
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-
-
+			pauseCamera();
+		}
 		
-		
-	        
-//	       return comesFromResume;
 	}
 	
 	
