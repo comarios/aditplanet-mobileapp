@@ -32,7 +32,6 @@
         android:layout_alignRight="@+id/txtCouponCode"
         android:layout_below="@+id/txtCouponCode"
         android:layout_marginTop="60dp"
-        android:onClick="btnValidateByCouponCode"
         android:text="@string/btnTextForValidateByCouponCode"
         android:textSize="14sp"
         android:textStyle="bold"

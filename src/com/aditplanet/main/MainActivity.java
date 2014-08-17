@@ -44,7 +44,7 @@ public class MainActivity extends FragmentActivity implements
 	private ViewPager viewPager;
 	private TabsPagerAdapter mAdapter;
 	private ActionBar actionBar;
-	private EditText couponCode;
+//	private EditText couponCode;
 	private Messages messages;
 	private ProgressBar spinner;
 	private NetworkConnection network = new NetworkConnection(MainActivity.this);
@@ -54,13 +54,13 @@ public class MainActivity extends FragmentActivity implements
 																		// "ALL COUPONS"
 																		// };//
 
-	private static final String COUPON_NOT_FOUND = "Error:Coupon not found";
-	private static final String COUPON_ALREADY_VALIDATED = "Error:Coupon already validated";
-	private static final String COUPON_SUCCESS = "success";
-	private static final String COUPON_NOT_FOUND_DIALOG = "An error occurred. The coupon code is invalid.";
-	private static final String COUPON_ALREADY_VALIDATED_DIALOG = "An error occurred. The coupon has been already validated.";
-	private static final String COUPON_SUCCESS_DIALOG = "The coupon has successfully validated.";
-	private static final String COUPON_NETWORK_ERROR = "Network error has occurred. Please try again.";
+//	private static final String COUPON_NOT_FOUND = "Error:Coupon not found";
+//	private static final String COUPON_ALREADY_VALIDATED = "Error:Coupon already validated";
+//	private static final String COUPON_SUCCESS = "success";
+//	private static final String COUPON_NOT_FOUND_DIALOG = "An error occurred. The coupon code is invalid.";
+//	private static final String COUPON_ALREADY_VALIDATED_DIALOG = "An error occurred. The coupon has been already validated.";
+//	private static final String COUPON_SUCCESS_DIALOG = "The coupon has successfully validated.";
+//	private static final String COUPON_NETWORK_ERROR = "Network error has occurred. Please try again.";
 	// {
 	// "COUPON CODE",
 	// "QR CODE SCANNER",
@@ -178,14 +178,14 @@ public class MainActivity extends FragmentActivity implements
 
 			System.out.println("LAST VISITED: " + lastVisitedPage);
 			
+			
+			// If the last visited page is the camera one
+			// then set the first page in the pager. 
+			// For better user experience.
+			
 			if(lastVisitedPage == 1)
 			{
-				
-//				lastVisitedPage = 0;
 				viewPager.setCurrentItem(0);
-
-				//openCameraIfNeeded(lastVisitedPage);
-
 			}
 			else
 			{
@@ -277,15 +277,17 @@ public class MainActivity extends FragmentActivity implements
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 	}
 
-	public void btnValidateByCouponCode(View view) {
-		couponCode = (EditText) findViewById(R.id.txtCouponCode);
-		spinner = (ProgressBar) findViewById(R.id.progressBarValidationByCouponCode);
-		spinner.setVisibility(View.VISIBLE);
-		validationByCouponCode(couponCode.getText().toString());
-
-		// Toast.makeText(getApplicationContext(), "Send request to server!",
-		// Toast.LENGTH_LONG).show();
-	}
+	
+	//TODO: MOVED.
+//	public void btnValidateByCouponCode(View view) {
+//		couponCode = (EditText) findViewById(R.id.txtCouponCode);
+//		spinner = (ProgressBar) findViewById(R.id.progressBarValidationByCouponCode);
+//		spinner.setVisibility(View.VISIBLE);
+//		validationByCouponCode(couponCode.getText().toString());
+//
+//		// Toast.makeText(getApplicationContext(), "Send request to server!",
+//		// Toast.LENGTH_LONG).show();
+//	}
 
 	// private void configureCameraElements(boolean cameraTabSelected)
 	// {
@@ -304,82 +306,84 @@ public class MainActivity extends FragmentActivity implements
 	// }
 	// sendBroadcast(intent);
 	// }
-
-	private void validationByCouponCode(final String couponCode) {
-		RequestParams params = new RequestParams();
-
-		User user = CouponsManager.getInstance().getUser();
-		params.put("m_name", user.getUsername());
-		params.put("m_pass", user.getPassword());
-		params.put("c_key", couponCode);
-
-		// final ProgressDialog validationProgress = new ProgressDialog(this);
-		// validationProgress.setTitle("Please Wait");
-		// validationProgress.setMessage("We are validating the coupon...");
-		// validationProgress.show();
 	
-		WebClient.get("merchants_api.php", params,
-				new AsyncHttpResponseHandler() {
-					@Override
-					public void onSuccess(String response) {
-						// Pull out the first event on the public timeline
-						try {
+	//TODO: MOVED.
 
-							JSONObject json = new JSONObject(response);
-							spinner.setVisibility(View.GONE);
-							if (json.getString("res").equals(COUPON_NOT_FOUND)) {
-								new Dialogs().createDialogValidation(
-										MainActivity.this,
-										getApplicationContext(),
-										COUPON_NOT_FOUND_DIALOG);
-
-							} else if (json.getString("res").equals(
-									COUPON_ALREADY_VALIDATED)) {
-								new Dialogs().createDialogValidation(
-										MainActivity.this,
-										getApplicationContext(),
-										COUPON_ALREADY_VALIDATED_DIALOG);
-
-							} else if (json.getString("res").equals(
-									COUPON_SUCCESS)) {
-
-								CouponsManager.getInstance()
-										.setValidStatusByCouponNumber(
-												couponCode);
-								new Dialogs()
-										.createDialogValidation(
-												MainActivity.this,
-												getApplicationContext(),
-												COUPON_SUCCESS_DIALOG);
-							}
-
-							System.out.println("couponCode: " + couponCode);
-
-							System.out.println("json: " + json.getString("res"));
-							// To dismiss the dialog
-							// validationProgress.dismiss();
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-							spinner.setVisibility(View.GONE);
-							new Dialogs()
-							.createDialogValidation(
-									MainActivity.this,
-									getApplicationContext(),
-									COUPON_NETWORK_ERROR);
-						}
-					}
-
-					@Override
-					public void onFailure(Throwable error, String content) {
-						System.out.println(error.getMessage());
-						// TODO: Add message for network failure
-						spinner.setVisibility(View.GONE);
-						Messages.showNetworkError();
-					}
-				});
-
-	}
+//	private void validationByCouponCode(final String couponCode) {
+//		RequestParams params = new RequestParams();
+//
+//		User user = CouponsManager.getInstance().getUser();
+//		params.put("m_name", user.getUsername());
+//		params.put("m_pass", user.getPassword());
+//		params.put("c_key", couponCode);
+//
+//		// final ProgressDialog validationProgress = new ProgressDialog(this);
+//		// validationProgress.setTitle("Please Wait");
+//		// validationProgress.setMessage("We are validating the coupon...");
+//		// validationProgress.show();
+//	
+//		WebClient.get("merchants_api.php", params,
+//				new AsyncHttpResponseHandler() {
+//					@Override
+//					public void onSuccess(String response) {
+//						// Pull out the first event on the public timeline
+//						try {
+//
+//							JSONObject json = new JSONObject(response);
+//							spinner.setVisibility(View.GONE);
+//							if (json.getString("res").equals(COUPON_NOT_FOUND)) {
+//								new Dialogs().createDialogValidation(
+//										MainActivity.this,
+//										getApplicationContext(),
+//										COUPON_NOT_FOUND_DIALOG);
+//
+//							} else if (json.getString("res").equals(
+//									COUPON_ALREADY_VALIDATED)) {
+//								new Dialogs().createDialogValidation(
+//										MainActivity.this,
+//										getApplicationContext(),
+//										COUPON_ALREADY_VALIDATED_DIALOG);
+//
+//							} else if (json.getString("res").equals(
+//									COUPON_SUCCESS)) {
+//
+//								CouponsManager.getInstance()
+//										.setValidStatusByCouponNumber(
+//												couponCode);
+//								new Dialogs()
+//										.createDialogValidation(
+//												MainActivity.this,
+//												getApplicationContext(),
+//												COUPON_SUCCESS_DIALOG);
+//							}
+//
+//							System.out.println("couponCode: " + couponCode);
+//
+//							System.out.println("json: " + json.getString("res"));
+//							// To dismiss the dialog
+//							// validationProgress.dismiss();
+//						} catch (JSONException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//							spinner.setVisibility(View.GONE);
+//							new Dialogs()
+//							.createDialogValidation(
+//									MainActivity.this,
+//									getApplicationContext(),
+//									COUPON_NETWORK_ERROR);
+//						}
+//					}
+//
+//					@Override
+//					public void onFailure(Throwable error, String content) {
+//						System.out.println(error.getMessage());
+//						// TODO: Add message for network failure
+//						spinner.setVisibility(View.GONE);
+//						Messages.showNetworkError();
+//					}
+//				});
+//
+//	}
 
 	private void getCouponsFromAPI() {
 
@@ -459,16 +463,6 @@ public class MainActivity extends FragmentActivity implements
 				
 			}
 		}
-	}
-	
-	private void saveOnResumeState(Boolean state)
-	{		
-		System.out.println("MainActivity : saveOnResumeState: " + lastVisitedPage);
-		
-		SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = preferences.edit();
-		editor.putBoolean("comesFromResume", state); // value to store
-		editor.commit();
 	}
 	
 	private void openCameraIfNeeded(int tabPos) {
