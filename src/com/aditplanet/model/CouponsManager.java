@@ -108,6 +108,7 @@ public class CouponsManager {
 		}
 
 		Collections.sort(validatedCoupons, new Comparator<Coupons>() {
+			@Override
 			public int compare(Coupons o1, Coupons o2) {
 				if (o1.getValid_date() == null || o2.getValid_date() == null)
 					return 0;

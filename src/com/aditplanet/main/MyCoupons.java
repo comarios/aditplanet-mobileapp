@@ -1,23 +1,16 @@
 package com.aditplanet.main;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import com.aditplanet.R;
 import com.aditplanet.adapters.LazyAdapter;
 import com.aditplanet.adapters.SubTabsPagerAdapter;
-import com.aditplanet.adapters.TabsPagerAdapter;
 import com.aditplanet.model.Coupons;
 import com.aditplanet.model.CouponsManager;
 import com.aditplanet.utils.CouponsFilters;
 
 import android.app.ActionBar;
-import android.app.ActionBar.Tab;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,9 +21,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class MyCoupons extends Fragment {
 
@@ -54,8 +45,6 @@ public class MyCoupons extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		System.out.println("IS HERE ON CREATE");
-
 
 		View rootView = inflater.inflate(R.layout.fragment_my_coupons,
 				container, false);
@@ -78,6 +67,7 @@ public class MyCoupons extends Fragment {
 		allCoupons = (Button) rootView.findViewById(R.id.btnAllCoupons);
 
 		validatedCoupons.setOnClickListener(new OnClickListener() {
+			@Override
 			public void onClick(View v) {
 
 				//setDataToAdapter(filteredCoupons.get(KEY_VALIDATED));
@@ -87,6 +77,7 @@ public class MyCoupons extends Fragment {
 		});
 
 		nonValidatedCoupons.setOnClickListener(new OnClickListener() {
+			@Override
 			public void onClick(View v) {
 
 				//setDataToAdapter(filteredCoupons.get(KEY_NONVALIDATED));
@@ -96,6 +87,7 @@ public class MyCoupons extends Fragment {
 		});
 
 		allCoupons.setOnClickListener(new OnClickListener() {
+			@Override
 			public void onClick(View v) {
 
 				//setDataToAdapter(filteredCoupons.get(KEY_ALL));
@@ -192,8 +184,8 @@ public class MyCoupons extends Fragment {
 					.toString());
 			// Adding HashList to ArrayList
 			this.lAdapter.addToContentList(map);
-			System.out.println("TEST1: " + cp.getCode() + ", "
-					+ cp.getValid_status());
+//			System.out.println("TEST1: " + cp.getCode() + ", "
+//					+ cp.getValid_status());
 			map.clear();
 		}
 

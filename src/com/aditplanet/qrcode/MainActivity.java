@@ -6,10 +6,8 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,11 +15,8 @@ import android.widget.TableLayout.LayoutParams;
 import android.hardware.Camera;
 import android.hardware.Camera.PreviewCallback;
 import android.hardware.Camera.AutoFocusCallback;
-import android.hardware.Camera.Parameters;
 import android.hardware.Camera.Size;
 import android.widget.TextView;
-import android.graphics.ImageFormat;
-
 import net.sourceforge.zbar.ImageScanner;
 import net.sourceforge.zbar.Image;
 import net.sourceforge.zbar.Symbol;
@@ -48,7 +43,8 @@ public class MainActivity extends Activity
         System.loadLibrary("iconv");
     } 
 
-    public void onCreate(Bundle savedInstanceState) {
+    @Override
+	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
@@ -57,13 +53,15 @@ public class MainActivity extends Activity
 
     }
 
-    public void onPause() {
+    @Override
+	public void onPause() {
         super.onPause();
         
         releaseCamera();
     }
     
-    public void onResume()
+    @Override
+	public void onResume()
     {
     	super.onResume();
     	
@@ -84,7 +82,7 @@ public class MainActivity extends Activity
         this.preview = (FrameLayout)findViewById(R.id.cameraPreview);
         this.preview.addView(mPreview);
         ImageView iv = new ImageView(this);
-        iv.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        iv.setLayoutParams(new LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
         iv.setImageResource(R.drawable.ic_launcher);
         this.preview.addView(iv);
     	
@@ -93,7 +91,8 @@ public class MainActivity extends Activity
         scanButton = (Button)findViewById(R.id.ScanButton);
 
         scanButton.setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
+                @Override
+				public void onClick(View v) {
                     if (barcodeScanned) {
                         barcodeScanned = false;
                         scanText.setText("Scanning...");
@@ -128,14 +127,16 @@ public class MainActivity extends Activity
     }
 
     private Runnable doAutoFocus = new Runnable() {
-            public void run() {
+            @Override
+			public void run() {
                 if (previewing)
                     mCamera.autoFocus(autoFocusCB);
             }
         };
 
     PreviewCallback previewCb = new PreviewCallback() {
-            public void onPreviewFrame(byte[] data, Camera camera) {
+            @Override
+			public void onPreviewFrame(byte[] data, Camera camera) {
                 Camera.Parameters parameters = camera.getParameters();
                 Size size = parameters.getPreviewSize();
 
@@ -160,7 +161,8 @@ public class MainActivity extends Activity
 
     // Mimic continuous auto-focusing
     AutoFocusCallback autoFocusCB = new AutoFocusCallback() {
-            public void onAutoFocus(boolean success, Camera camera) {
+            @Override
+			public void onAutoFocus(boolean success, Camera camera) {
                 autoFocusHandler.postDelayed(doAutoFocus, 1000);
             }
         };

@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,18 +15,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.aditplanet.R;
 import com.aditplanet.adapters.TabsPagerAdapter;
 import com.aditplanet.login.LoginActivity;
@@ -95,6 +89,13 @@ public class MainActivity extends FragmentActivity implements
 
 		System.out.println("MainActivity : onCreate lastvisited: "
 				+ lastVisitedPage);
+
+
+		
+//		SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
+//		SharedPreferences.Editor editor = preferences.edit();
+//		editor.putBoolean("comesFromResume", false); // value to store
+//		editor.commit();
 
 		if (network.haveNetworkConnection()) {
 
@@ -175,9 +176,28 @@ public class MainActivity extends FragmentActivity implements
 
 					});
 
-			// We are doing that in order to navigate to the third view
-			// when we navigate to a current coupon.
-			viewPager.setCurrentItem(lastVisitedPage);
+			System.out.println("LAST VISITED: " + lastVisitedPage);
+			
+			if(lastVisitedPage == 1)
+			{
+				
+//				lastVisitedPage = 0;
+				viewPager.setCurrentItem(0);
+
+				//openCameraIfNeeded(lastVisitedPage);
+
+			}
+			else
+			{
+				// We are doing that in order to navigate to the third view
+				// when we navigate to a current coupon.
+				viewPager.setCurrentItem(lastVisitedPage);
+			}
+			
+
+			
+//			saveOnResumeState(lastVisitedPage == 1 ? true : false );
+			
 
 		} else {
 
@@ -210,13 +230,14 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
+	@Override
 	public void onPause() {
-		System.out.println("Main Activity : onPause");
 
 		super.onPause();
 
 	}
 
+	@Override
 	public void onResume() {
 		super.onResume();
 
@@ -236,6 +257,8 @@ public class MainActivity extends FragmentActivity implements
 
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+		
+		System.out.println("RESELECTED : " + tab.getPosition());
 	}
 
 	@Override
@@ -399,7 +422,7 @@ public class MainActivity extends FragmentActivity implements
 
 							} else {
 								// Show authentication error message
-								messages.showAuthError();
+								Messages.showAuthError();
 							}
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
@@ -409,9 +432,9 @@ public class MainActivity extends FragmentActivity implements
 
 					@Override
 					public void onFailure(Throwable error, String content) {
-						System.out.println(error.getMessage());
+//						System.out.println(error.getMessage());
 						// TODO: Add message for network failure
-						messages.showNetworkError();
+						Messages.showNetworkError();
 					}
 				});
 	}
@@ -438,7 +461,19 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 	
-	private void openCameraIfNeeded(int tabPos){
+	private void saveOnResumeState(Boolean state)
+	{		
+		System.out.println("MainActivity : saveOnResumeState: " + lastVisitedPage);
+		
+		SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putBoolean("comesFromResume", state); // value to store
+		editor.commit();
+	}
+	
+	private void openCameraIfNeeded(int tabPos) {
+		
+		System.out.println("openCameraIfNeeded: " + tabPos);
 		
 		if(tabPos == 1){
 			ValidateByQRCode fragment = (ValidateByQRCode) getSupportFragmentManager()
@@ -449,8 +484,26 @@ public class MainActivity extends FragmentActivity implements
 					// no need to call if fragment's onDestroyView()
 					// has since been called.
 					
+					fragment.startCamera();
 					
+//					saveOnResumeState(true);
 					
+				}
+			}
+		}
+		else
+		{
+			ValidateByQRCode fragment = (ValidateByQRCode) getSupportFragmentManager()
+					.findFragmentByTag("android:switcher:" + R.id.pager + ":1");
+			if (fragment != null) // could be null if not instantiated yet
+			{
+				if (fragment.getView() != null) {
+					// no need to call if fragment's onDestroyView()
+					// has since been called.
+					
+					fragment.stopCamera();
+//					saveOnResumeState(false);
+
 				}
 			}
 		}

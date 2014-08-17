@@ -1,10 +1,8 @@
 package com.aditplanet.login;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -141,7 +139,7 @@ public class LoginActivity extends Activity {
 								authSuccess(username, password);
 							} else {
 								// Show authentication error message
-								messages.showAuthError();
+								Messages.showAuthError();
 							}
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
@@ -153,7 +151,7 @@ public class LoginActivity extends Activity {
 					public void onFailure(Throwable error, String content) {
 						System.out.println(error.getMessage());
 						// TODO: Add message for network failure
-						messages.showNetworkError();
+						Messages.showNetworkError();
 					}
 				});
 	}

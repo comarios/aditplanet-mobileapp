@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.text.Html;
-import android.widget.TextView;
 import android.widget.Toast;
 /**
  * This class is used globally to print messages like pop-up messages or toast messages.

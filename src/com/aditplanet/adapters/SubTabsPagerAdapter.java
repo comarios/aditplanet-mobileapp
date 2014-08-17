@@ -5,10 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.aditplanet.main.MyCoupons;
-import com.aditplanet.main.ValidateByCouponNumber;
-import com.aditplanet.main.ValidateByQRCode;
-
 public class SubTabsPagerAdapter extends FragmentPagerAdapter {
 
 	public SubTabsPagerAdapter(FragmentManager fm) {

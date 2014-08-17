@@ -1,7 +1,5 @@
 package com.aditplanet.database;
 
-import java.util.Date;
-
 import com.aditplanet.database.DBSQLiteHelper.DbCouponsColumns;
 import com.aditplanet.model.Coupons;
 

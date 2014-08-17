@@ -1,12 +1,9 @@
 package com.aditplanet.utils;
 
-import com.aditplanet.R;
-import com.aditplanet.main.MyCoupons;
 import com.aditplanet.main.ValidateByQRCode;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +18,7 @@ public class Dialogs {
 				.setCancelable(true)
 				.setPositiveButton("Turn on Wi-Fi",
 						new DialogInterface.OnClickListener() {
+							@Override
 							public void onClick(DialogInterface dialog, int id) {
 								Intent networkSettings = new Intent(android.provider.Settings.ACTION_WIFI_SETTINGS);
 								// Flag is required due to calling of new
@@ -35,6 +33,7 @@ public class Dialogs {
 						})
 				.setNegativeButton("Cancel",
 						new DialogInterface.OnClickListener() {
+							@Override
 							public void onClick(DialogInterface dialog, int id) {
 
 							}
@@ -50,6 +49,7 @@ public class Dialogs {
 				.setCancelable(true)
 				.setNegativeButton("Cancel",
 						new DialogInterface.OnClickListener() {
+							@Override
 							public void onClick(DialogInterface dialog, int id) {
 
 							}
@@ -66,6 +66,7 @@ public class Dialogs {
 				.setCancelable(true)
 				.setNegativeButton("Cancel",
 						new DialogInterface.OnClickListener() {
+							@Override
 							public void onClick(DialogInterface dialog, int id) {
 
 							}
@@ -81,6 +82,7 @@ public class Dialogs {
 				.setCancelable(true)
 				.setNegativeButton("Press to Scan again",
 						new DialogInterface.OnClickListener() {
+							@Override
 							public void onClick(DialogInterface dialog, int id) {
 
 								//fragment.releaseCamera();

@@ -8,12 +8,8 @@ import net.sourceforge.zbar.Image;
 import net.sourceforge.zbar.ImageScanner;
 import net.sourceforge.zbar.Symbol;
 import net.sourceforge.zbar.SymbolSet;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
 import android.hardware.Camera.AutoFocusCallback;
@@ -21,7 +17,6 @@ import android.hardware.Camera.PreviewCallback;
 import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Messenger;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +26,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.aditplanet.R;
 import com.aditplanet.model.CouponsManager;
 import com.aditplanet.model.User;
@@ -58,6 +52,8 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 	private static final String COUPON_SUCCESS_DIALOG = "The coupon has successfully validated.";
 	private static final String COUPON_NETWORK_ERROR = "Network error has occurred. Please try again.";
 
+	private Boolean comesFromResume;
+	
 	ImageView qrWrapper;
 	TextView scanText;
 	Button scanButton;
@@ -65,6 +61,9 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 	ImageScanner scanner;
 
 	FrameLayout preview;
+	
+	private View rootView;
+	
 
 	private boolean barcodeScanned = false;
 	private boolean previewing = true;
@@ -77,38 +76,56 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View rootView = inflater.inflate(R.layout.fragment_qrcode, container,
+		this.rootView = inflater.inflate(R.layout.fragment_qrcode, container,
 				false);
 		getActivity().setRequestedOrientation(
 				ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-		//System.out.println("camera is up");
 		
-		autoFocusHandler = new Handler();
-		mCamera = getCameraInstance();
-
-		// Instance barcode scanner
-		scanner = new ImageScanner();
-		scanner.setConfig(0, Config.X_DENSITY, 3);
-		scanner.setConfig(0, Config.Y_DENSITY, 3);
-
-		mPreview = new CameraPreview(getActivity().getApplicationContext(),
-				mCamera, previewCb, autoFocusCB);
-		this.preview = (FrameLayout) rootView.findViewById(R.id.cameraPreview);
-		this.preview.addView(mPreview);
-
-		qrWrapper = new ImageView(rootView.getContext());
-		qrWrapper.setImageDrawable(rootView.getResources().getDrawable(
-				R.drawable.qr_wrapper));
-
-		this.preview.addView(qrWrapper);
-
+//		this.getOnResumeState();
+//		
+//		System.out.println("Comes from Camera: " + comesFromResume);
+//		
+//		if(comesFromResume)
+//		{
+//			startCamera();
+//			
+//			comesFromResume = false;
+//			System.out.println("On create fragment " + comesFromResume);
+////			this.saveOnResumeState();
+//		}
+//		else
+//		{
+//			comesFromResume = false;
+//		}
+		
+//		autoFocusHandler = new Handler();
+//		mCamera = getCameraInstance();
+//
+//		// Instance barcode scanner
+//		scanner = new ImageScanner();
+//		scanner.setConfig(0, Config.X_DENSITY, 3);
+//		scanner.setConfig(0, Config.Y_DENSITY, 3);
+//
+//		mPreview = new CameraPreview(getActivity().getApplicationContext(),
+//				mCamera, previewCb, autoFocusCB);
+//		this.preview = (FrameLayout) rootView.findViewById(R.id.cameraPreview);
+//		this.preview.addView(mPreview);
+//
+//		qrWrapper = new ImageView(rootView.getContext());
+//		qrWrapper.setImageDrawable(rootView.getResources().getDrawable(
+//				R.drawable.qr_wrapper));
+//
+//		this.preview.addView(qrWrapper);
+				
 		scanText = (TextView) rootView.findViewById(R.id.scanText);
 
 		scanButton = (Button) rootView.findViewById(R.id.ScanButton);
 
 		scanButton.setOnClickListener(new OnClickListener() {
+			@Override
 			public void onClick(View v) {
+				
 				if (barcodeScanned) {
 					barcodeScanned = false;
 					scanText.setText("Please wait. We are scanning...");
@@ -120,28 +137,52 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 			}
 		});
 
+
 		return rootView;
 	}
-
+	
+	@Override
 	public void onPause() {
-		releaseCamera();
+		
 		super.onPause();
+
+		this.stopCamera();
+		
+//		if(previewing)
+//		{
+//			comesFromResume = true;
+//			
+//			
+//			System.out.println("Fragment onPause previewing: " + previewing);
+//
+//			this.saveOnResumeState();
+//			
+//
+//		}
+//		else
+//		{
+//			System.out.println("Fragment onPause previewing: " + previewing);
+//
+//			comesFromResume = false;
+//			
+//			this.saveOnResumeState();
+//		}
+//		releaseCamera();
+
+		
 	}
-
-	// private void setUpCameraElements() {
-	//
-	// }
-	//
-	// private void releaseCameraElements() {
-	//
-	// }
-
-	// private void setUpNotifications()
-	// {
-	// System.out.println("HERE, setup notifications");
-	// //NotificationService.getInstance().addObserver("obs", this);
-	// }
-
+	
+//	public void onDestroy()
+//	{
+//		System.out.println("On Destroy.");
+//		
+//		comesFromResume = false;
+//		
+//		this.saveOnResumeState();
+//		
+//		super.onStop();
+//	}
+//	
 	/** A safe way to get an instance of the Camera object. */
 	public static Camera getCameraInstance() {
 		Camera c = null;
@@ -173,6 +214,7 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 	}
 
 	private Runnable doAutoFocus = new Runnable() {
+		@Override
 		public void run() {
 			if (previewing)
 				mCamera.autoFocus(autoFocusCB);
@@ -180,6 +222,7 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 	};
 
 	PreviewCallback previewCb = new PreviewCallback() {
+		@Override
 		public void onPreviewFrame(byte[] data, Camera camera) {
 			Camera.Parameters parameters = camera.getParameters();
 			Size size = parameters.getPreviewSize();
@@ -212,6 +255,7 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 
 	// Mimic continuous auto-focusing
 	AutoFocusCallback autoFocusCB = new AutoFocusCallback() {
+		@Override
 		public void onAutoFocus(boolean success, Camera camera) {
 			autoFocusHandler.postDelayed(doAutoFocus, 1000);
 		}
@@ -289,6 +333,82 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 
 	}
 
+	/**
+	 * Camera managers methods.
+	 */
+	
+	public void startCamera()
+	{
+		autoFocusHandler = new Handler();
+		mCamera = getCameraInstance();
+
+		// Instance barcode scanner
+		scanner = new ImageScanner();
+		scanner.setConfig(0, Config.X_DENSITY, 3);
+		scanner.setConfig(0, Config.Y_DENSITY, 3);
+
+		mPreview = new CameraPreview(getActivity().getApplicationContext(),
+				mCamera, previewCb, autoFocusCB);
+		this.preview = (FrameLayout) rootView.findViewById(R.id.cameraPreview);
+		this.preview.addView(mPreview);
+
+		qrWrapper = new ImageView(rootView.getContext());
+		qrWrapper.setImageDrawable(rootView.getResources().getDrawable(
+				R.drawable.qr_wrapper));
+
+		this.preview.addView(qrWrapper);
+	}
+	
+	public void stopCamera()
+	{
+		this.releaseCamera();
+	}
+	
+	/**
+	 * Internal memory methods
+	 */
+	
+//	private void saveOnResumeState()
+//	{
+//		System.out.println("saveOnResumeState : " + comesFromResume);
+//		
+//		SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+//		SharedPreferences.Editor editor = preferences.edit();
+//		editor.putBoolean("comesFromResume", comesFromResume); // value to store
+//		editor.commit();
+//	
+//
+//	}
+	
+	private void getOnResumeState()
+	{
+
+	       SharedPreferences settings = getActivity().getPreferences(Context.MODE_PRIVATE);
+	       System.out.println("SETTINGS: " + settings);
+	       
+	        comesFromResume = settings.getBoolean("comesFromResume", false);
+			System.out.println("getOnResumeState : " + comesFromResume);
+
+	       
+//		FileInputStream fis;
+//		
+//		try {
+//			fis = getActivity().openFileInput("hello_file");
+//			
+//			fis.read();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+
+
+		
+		
+	        
+//	       return comesFromResume;
+	}
+	
+	
 	// @Override
 	// public void update(Observable observable, Object data) {
 	// // TODO Auto-generated method stub

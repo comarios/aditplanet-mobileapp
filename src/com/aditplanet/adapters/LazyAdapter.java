@@ -7,8 +7,6 @@ import java.util.Map;
 
 import com.aditplanet.R;
 import com.aditplanet.model.Coupons;
-import com.aditplanet.model.CouponsManager;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -60,14 +58,17 @@ public class LazyAdapter extends BaseAdapter {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
+	@Override
 	public int getCount() {
 		return data.size();
 	}
 
+	@Override
 	public Object getItem(int position) {
 		return position;
 	}
 
+	@Override
 	public long getItemId(int position) {
 		return position;
 	}
@@ -146,6 +147,7 @@ public class LazyAdapter extends BaseAdapter {
 	/**
 	 * Sets characteristics into a particular element into the list view.
 	 */
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View vi = convertView;
 		if (convertView == null)

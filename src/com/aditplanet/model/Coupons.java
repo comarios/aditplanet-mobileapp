@@ -114,6 +114,7 @@ public class Coupons {
 		this.valid_dateAsString = valid_dateAsString;
 	}
 
+	@Override
 	public String toString() {
 
 		return "code: " + this.code + ", valid_status: " + this.valid_status
