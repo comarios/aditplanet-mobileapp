@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -54,27 +55,19 @@ public class MainActivity extends FragmentActivity implements
 																		// "ALL COUPONS"
 																		// };//
 
-//	private static final String COUPON_NOT_FOUND = "Error:Coupon not found";
-//	private static final String COUPON_ALREADY_VALIDATED = "Error:Coupon already validated";
-//	private static final String COUPON_SUCCESS = "success";
-//	private static final String COUPON_NOT_FOUND_DIALOG = "An error occurred. The coupon code is invalid.";
-//	private static final String COUPON_ALREADY_VALIDATED_DIALOG = "An error occurred. The coupon has been already validated.";
-//	private static final String COUPON_SUCCESS_DIALOG = "The coupon has successfully validated.";
-//	private static final String COUPON_NETWORK_ERROR = "Network error has occurred. Please try again.";
-	// {
-	// "COUPON CODE",
-	// "QR CODE SCANNER",
-	// "ALL COUPONS"
-	// };
 	public static final String FRAGMENT_UPDATE = "com.aditplanet.main.MainActivity.FRAGMENT_UPDATE";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
 		
+		super.onCreate(savedInstanceState);
+		
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_main);
+		setProgressBarIndeterminateVisibility(false);
+		
 		User user = CouponsManager.getInstance().getUser();
+		
 		// Something is going wrong. You should redirect to the Login Page
 		if(user == null){
 			Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -88,13 +81,6 @@ public class MainActivity extends FragmentActivity implements
 
 		System.out.println("MainActivity : onCreate lastvisited: "
 				+ lastVisitedPage);
-
-
-		
-//		SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
-//		SharedPreferences.Editor editor = preferences.edit();
-//		editor.putBoolean("comesFromResume", false); // value to store
-//		editor.commit();
 
 		if (network.haveNetworkConnection()) {
 
@@ -117,9 +103,9 @@ public class MainActivity extends FragmentActivity implements
 
 			actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-			if (CouponsManager.getInstance().isCouponsListEmpty()) {
-				getCouponsFromAPI();
-			}
+//			CouponsManager.getInstance().remoteReloadCoupons();
+//			getCouponsFromAPI();
+			
 
 			// Adding Tabs
 			for (String tab_name : tabs) {
@@ -174,8 +160,6 @@ public class MainActivity extends FragmentActivity implements
 						}
 
 					});
-
-			System.out.println("LAST VISITED: " + lastVisitedPage);
 			
 			
 			// If the last visited page is the camera one
@@ -385,7 +369,7 @@ public class MainActivity extends FragmentActivity implements
 //	}
 
 	private void getCouponsFromAPI() {
-
+		
 		SharedPreferences settings = getSharedPreferences(
 				LoginActivity.LOGIN_CREDENTIALS, 0);
 		final String username = settings.getString("username", null);
@@ -457,10 +441,17 @@ public class MainActivity extends FragmentActivity implements
 				// has since been called.
 				
 				//TODO: check it out
-				getCouponsFromAPI();//?????? 
+//				getCouponsFromAPI();//?????? 
+//				CouponsManager.getInstance().remoteReloadCoupons();
 				fragment.reloadDataRemotely(); // do what updates are required
 				
 			}
+		}
+		else
+		{
+			System.out.println();
+			
+			CouponsManager.getInstance().remoteReloadCoupons(null);
 		}
 	}
 	

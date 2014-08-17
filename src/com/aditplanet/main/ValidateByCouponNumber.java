@@ -20,6 +20,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -51,6 +52,8 @@ public class ValidateByCouponNumber extends Fragment implements View.OnClickList
 		spinner = (ProgressBar) rootView.findViewById(R.id.progressBarValidationByCouponCode);
 		btnValidateByCouponCode = (Button) rootView.findViewById(R.id.btnValidateByCouponCode);
 		btnValidateByCouponCode.setOnClickListener(this);
+		
+
 		
 		return rootView;
 	}

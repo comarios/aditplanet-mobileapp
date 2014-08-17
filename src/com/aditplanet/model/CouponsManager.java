@@ -6,6 +6,16 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.aditplanet.callbacks.RemoteDataCallback;
+import com.aditplanet.utils.Messages;
+import com.aditplanet.web.client.RemoteParser;
+import com.aditplanet.web.client.WebClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
 public class CouponsManager {
 
 	private static CouponsManager instance = null;
@@ -52,6 +62,7 @@ public class CouponsManager {
 	}
 
 	public void setUser(User _user) {
+		System.out.println();
 		user = _user;
 	}
 
@@ -59,8 +70,12 @@ public class CouponsManager {
 		return user;
 	}
 
-	public boolean isCouponsListEmpty() {
-		return coupons.size() == 0 ? true : false;
+	public void remoteReloadCouponsIfNeeded() {
+		
+		if(coupons.size() == 0)
+		{
+//			this.remoteReloadCoupons();
+		}
 	}
 
 	public void clearData() {
@@ -72,7 +87,7 @@ public class CouponsManager {
 	 * Validates a coupon. Set valid status true.
 	 */
 	public void setValidStatusByCouponNumber(String couponCode) {
-
+		
 		for (int i = 0; i < coupons.size(); ++i) {
 			if (coupons.get(i).getCode().equals(couponCode)) {
 
@@ -90,6 +105,54 @@ public class CouponsManager {
 	public List<Coupons> getNonValidatedCouponsList() {
 		return filteredCoupons.get(KEY_NONVALIDATED);
 	}
+	
+	public void remoteReloadCoupons(final RemoteDataCallback remoteDataCallback)
+	{
+		RequestParams params = new RequestParams();
+		params.put("m_name", this.user.getUsername());
+		params.put("m_pass", this.user.getPassword());
+
+
+		WebClient.get("merchants_api.php", params,
+				new AsyncHttpResponseHandler() {
+					@Override
+					public void onSuccess(String coupons) {
+						// Pull out the first event on the public timeline
+						try {
+
+							JSONObject json = new JSONObject(coupons);
+
+							if (RemoteParser.isAuth(json)) {
+								System.out
+										.println("User Authenticated successful: "
+												+ user.getUsername());
+								
+								List<Coupons> couponsList = RemoteParser.getCoupons(json);
+								setCoupons(couponsList);
+								
+								if(remoteDataCallback != null)
+								{
+									remoteDataCallback.remoteDataReady();
+								}
+
+							} else {
+								// Show authentication error message
+								Messages.showAuthError();
+							}
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+
+					@Override
+					public void onFailure(Throwable error, String content) {
+						Messages.showNetworkError();
+					}
+				});
+	}
+	
+
 
 	private void configureCouponsFiltering() {
 

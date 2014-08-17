@@ -51,6 +51,7 @@ public class AutoLogin {
 				BufferedReader myReader = new BufferedReader(
 						new InputStreamReader(fIn));
 				loggedIN = myReader.readLine();
+				System.out.println("Get answer: " + loggedIN);
 				Log.e("value get answer", loggedIN);
 				myReader.close();
 			} catch (Exception e) {

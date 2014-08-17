@@ -6,6 +6,7 @@ import java.util.List;
 import com.aditplanet.R;
 import com.aditplanet.adapters.LazyAdapter;
 import com.aditplanet.adapters.SubTabsPagerAdapter;
+import com.aditplanet.callbacks.RemoteDataCallback;
 import com.aditplanet.model.Coupons;
 import com.aditplanet.model.CouponsManager;
 import com.aditplanet.utils.CouponsFilters;
@@ -18,12 +19,13 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class MyCoupons extends Fragment {
+public class MyCoupons extends Fragment implements RemoteDataCallback {
 
 	private ListView listView;
 	private LazyAdapter lAdapter;
@@ -54,6 +56,9 @@ public class MyCoupons extends Fragment {
 		setDataToAdapter(CouponsManager.getInstance().getCoupons());
 		filters = CouponsFilters.ALL;
 
+
+		
+		
 		//configureFiltering();
 
 		/*
@@ -128,6 +133,8 @@ public class MyCoupons extends Fragment {
 				startActivity(viewCoupon);
 			}
 		});
+		
+		this.reloadDataRemotely();
 
 		fragmentCreated = true;
 		
@@ -195,8 +202,48 @@ public class MyCoupons extends Fragment {
 	
 	public void reloadDataRemotely()
 	{
+		getActivity().setProgressBarIndeterminateVisibility(true);
+
 		System.out.println("reloadDataRemotely f created: " + this.filters);
 		
+		this.reloadData();
+		
+		CouponsManager.getInstance().remoteReloadCoupons(this);
+		
+//		switch (this.filters) {
+//		case VALIDATED:
+//			setDataToAdapter(CouponsManager.getInstance().getValidatedCouponsList());
+//			break;
+//			
+//		case NONVALIDATED:
+//			setDataToAdapter(CouponsManager.getInstance().getNonValidatedCouponsList());
+//			break;
+//
+//		default:
+//			setDataToAdapter(CouponsManager.getInstance().getCoupons());
+//			break;
+//		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		System.out.println("IS HERE ON RESUME");
+		setDataToAdapter(CouponsManager.getInstance().getCoupons());
+		lAdapter.notifyDataSetChanged();
+	}
+
+	@Override
+	public void remoteDataReady() {
+
+		System.out.println("coupons from callback");
+		getActivity().setProgressBarIndeterminateVisibility(false);
+
+		this.reloadData();
+	}
+	
+	public void reloadData()
+	{
 		switch (this.filters) {
 		case VALIDATED:
 			setDataToAdapter(CouponsManager.getInstance().getValidatedCouponsList());
@@ -210,14 +257,6 @@ public class MyCoupons extends Fragment {
 			setDataToAdapter(CouponsManager.getInstance().getCoupons());
 			break;
 		}
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		System.out.println("IS HERE ON RESUME");
-		setDataToAdapter(CouponsManager.getInstance().getCoupons());
-		lAdapter.notifyDataSetChanged();
 	}
 
 }

@@ -47,8 +47,10 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 	private static final String COUPON_NOT_FOUND = "Error:Coupon not found";
 	private static final String COUPON_ALREADY_VALIDATED = "Error:Coupon already validated";
 	private static final String COUPON_SUCCESS = "success";
-	private static final String COUPON_NOT_FOUND_DIALOG = "An error occurred. The coupon code is invalid.";
-	private static final String COUPON_ALREADY_VALIDATED_DIALOG = "An error occurred. The coupon has been already validated.";
+	private static final String COUPON_NOT_AUTHORISED = "Error:Coupon not for merchant";
+	private static final String COUPON_NOT_AUTHORISED_DIALOG = "Error: The coupon code is not valid for this merchant.";
+	private static final String COUPON_NOT_FOUND_DIALOG = "Error: The coupon code is invalid.";
+	private static final String COUPON_ALREADY_VALIDATED_DIALOG = "Error: The coupon has been already validated.";
 	private static final String COUPON_SUCCESS_DIALOG = "The coupon has successfully validated.";
 	private static final String COUPON_NETWORK_ERROR = "Network error has occurred. Please try again.";
 
@@ -240,12 +242,13 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 
 		System.out.println("Username: " + user.getUsername() + " Password: "
 				+ user.getPassword());
+		
+		final String couponCode = RemoteParser.parseCouponAfterScan(data);
 
 		params.put("m_name", user.getUsername());
 		params.put("m_pass", user.getPassword());
-		params.put("c_key", RemoteParser.parseCouponAfterScan(data));
+		params.put("c_key", couponCode);
 
-		final String couponCode = RemoteParser.parseCouponAfterScan(data);
 
 		WebClient.get("merchants_api.php", params,
 				new AsyncHttpResponseHandler() {
@@ -255,6 +258,7 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 						try {
 							JSONObject json = new JSONObject(response);
 
+							System.out.println("JSON COUPON CODE: " + response);
 							if (json.getString("res").equals(COUPON_NOT_FOUND)) {
 								new Dialogs().createDialogQRValidation(
 										getActivity(), getActivity()
@@ -280,6 +284,16 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 										getActivity(), getActivity()
 												.getApplicationContext(),
 										COUPON_SUCCESS_DIALOG,
+										ValidateByQRCode.this);
+							} else if (json.getString("res").equals(COUPON_NOT_AUTHORISED)){
+								
+										CouponsManager.getInstance()
+										.setValidStatusByCouponNumber(
+												couponCode);
+								new Dialogs().createDialogQRValidation(
+										getActivity(), getActivity()
+												.getApplicationContext(),
+												COUPON_NOT_AUTHORISED_DIALOG,
 										ValidateByQRCode.this);
 							}
 

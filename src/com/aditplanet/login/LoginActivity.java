@@ -44,6 +44,7 @@ public class LoginActivity extends Activity {
 			this.autoLoginConfiguration();
 
 			if (AutoLogin.getAnswer(getFilesDir())) {
+				this.getGredentialsFromMemoryAndSetUser();
 				this.navigateToMainActivity();
 			} else {
 
@@ -107,6 +108,8 @@ public class LoginActivity extends Activity {
 
 	private void authentication(final String username, final String password) {
 
+		System.out.println("authentication");
+		
 		RequestParams params = new RequestParams();
 		params.put("m_name", username);
 		params.put("m_pass", password);
@@ -168,5 +171,20 @@ public class LoginActivity extends Activity {
 
 		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 		startActivity(intent);
+	}
+	
+	/**
+	 * This method is called only when user is appeared to be logged in.
+	 * That is, the autologin file (in AutoLogin class) contains YES.
+	 */
+	private void getGredentialsFromMemoryAndSetUser()
+	{
+	       SharedPreferences settings = getSharedPreferences(LOGIN_CREDENTIALS, 0);
+	       String username = settings.getString("username", null);
+	       String password = settings.getString("password", null);
+	       
+	       //Set credentials to CouponsManager.
+	       CouponsManager.getInstance().setUser(new User(username, password));
+	       
 	}
 }
