@@ -78,9 +78,9 @@ public class MainActivity extends Activity
         scanner.setConfig(0, Config.X_DENSITY, 3);
         scanner.setConfig(0, Config.Y_DENSITY, 3);
 
-        mPreview = new CameraPreview(this, mCamera, previewCb, autoFocusCB);
-        this.preview = (FrameLayout)findViewById(R.id.cameraPreview);
-        this.preview.addView(mPreview);
+//        mPreview = new CameraPreview(this, mCamera, previewCb, autoFocusCB);
+//        this.preview = (FrameLayout)findViewById(R.id.cameraPreview);
+//        this.preview.addView(mPreview);
         ImageView iv = new ImageView(this);
         iv.setLayoutParams(new LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
         iv.setImageResource(R.drawable.ic_launcher);
@@ -88,7 +88,7 @@ public class MainActivity extends Activity
     	
         scanText = (TextView)findViewById(R.id.scanText);
 
-        scanButton = (Button)findViewById(R.id.ScanButton);
+//        scanButton = (Button)findViewById(R.id.ScanButton);
 
         scanButton.setOnClickListener(new OnClickListener() {
                 @Override

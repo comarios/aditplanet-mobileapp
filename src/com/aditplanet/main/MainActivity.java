@@ -162,20 +162,7 @@ public class MainActivity extends FragmentActivity implements
 					});
 			
 			
-			// If the last visited page is the camera one
-			// then set the first page in the pager. 
-			// For better user experience.
-			
-			if(lastVisitedPage == 1)
-			{
-				viewPager.setCurrentItem(0);
-			}
-			else
-			{
-				// We are doing that in order to navigate to the third view
-				// when we navigate to a current coupon.
-				viewPager.setCurrentItem(lastVisitedPage);
-			}
+			this.goToInitialViewIfNeeded();
 			
 
 			
@@ -218,12 +205,14 @@ public class MainActivity extends FragmentActivity implements
 
 		super.onPause();
 
+		
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
 
+		this.goToInitialViewIfNeeded();
 		System.out.println("Main Activity : onResume");
 
 	}
@@ -250,7 +239,10 @@ public class MainActivity extends FragmentActivity implements
 		// show respected fragment view
 		// configureCameraElements((tab.getPosition() == VALIDATE_BY_QRCODE));
 
-		updateMyCouponsFragmentIfNeeded();
+		if(tab.getPosition() == 2)
+		{
+			updateMyCouponsFragmentIfNeeded();
+		}
 		openCameraIfNeeded(tab.getPosition());
 		viewPager.setCurrentItem(tab.getPosition());
 
@@ -490,6 +482,26 @@ public class MainActivity extends FragmentActivity implements
 
 				}
 			}
+		}
+	}
+	
+	/**
+	 *	If the last visited page is the camera one
+	 *	then set the first page in the pager. 
+	 *	For better user experience.
+	 */
+	private void goToInitialViewIfNeeded()
+	{
+		
+		if(lastVisitedPage == 1)
+		{
+			viewPager.setCurrentItem(0);
+		}
+		else
+		{
+			// We are doing that in order to navigate to the third view
+			// when we navigate to a current coupon.
+			viewPager.setCurrentItem(lastVisitedPage);
 		}
 	}
 }

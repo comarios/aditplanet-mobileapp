@@ -25,6 +25,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.aditplanet.R;
 import com.aditplanet.model.CouponsManager;
@@ -62,9 +64,14 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 
 	ImageScanner scanner;
 
-	FrameLayout preview;
+//	FrameLayout preview;
+    RelativeLayout preview;
+    private Handler startCameraHandler = new Handler();
+    private Handler stopCameraHandler = new Handler();
+
 	
 	private View rootView;
+	
 	
 
 	private boolean barcodeScanned = false;
@@ -77,11 +84,15 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
+		getActivity().setProgressBarIndeterminateVisibility(false);
 
 		this.rootView = inflater.inflate(R.layout.fragment_qrcode, container,
 				false);
 		getActivity().setRequestedOrientation(
 				ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		
+		this.preview = (RelativeLayout)rootView.findViewById(R.id.fragment_qrcode);
 
 		
 //		this.getOnResumeState();
@@ -122,7 +133,10 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 				
 		scanText = (TextView) rootView.findViewById(R.id.scanText);
 
-		scanButton = (Button) rootView.findViewById(R.id.ScanButton);
+//		scanButton = (Button) rootView.findViewById(R.id.ScanButton);
+		
+		
+		scanButton = new Button(getActivity());
 
 		scanButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -148,7 +162,7 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 		
 		super.onPause();
 		
-		this.releaseCamera();
+		this.stopAsynchCamera();
 		
 		
 	}
@@ -165,6 +179,8 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 
 	public void releaseCamera() {
 		if (mCamera != null) {
+			System.out.println("Camera released");
+//			mPreview = null;
 			previewing = false;
 			mCamera.setPreviewCallback(null);
 			preview.removeView(mPreview);
@@ -317,6 +333,10 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 
 	private void continueCamera()
 	{
+		if(mCamera == null)
+		{
+			return;
+		}
 		barcodeScanned = false;
 		scanText.setText("Please wait. We are scanning...");
 		mCamera.setPreviewCallback(previewCb);
@@ -327,10 +347,32 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 	
 	private void pauseCamera()
 	{
+		if(mCamera == null)
+		{
+			return;
+		}
+		
 		previewing = false;
 		mCamera.setPreviewCallback(null);
 		mCamera.stopPreview();
 	}
+	
+    private final Runnable mLoadCamera = new Runnable()
+    {
+        public void run()
+        {
+            startAsynchCamera();
+        }
+    };
+    
+    private final Runnable mUnloadCamera = new Runnable() {
+		
+		@Override
+		public void run() {
+
+			stopAsynchCamera();
+		}
+	};
 	
 	/**
 	 * Camera managers methods.
@@ -338,19 +380,13 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 	
 	public void startCamera()
 	{
-		// Get a handler that can be used to post to the main thread
-//		Handler mainHandler = new Handler();
-//
-//		Runnable myRunnable = new Runnable() {
-//			
-//			@Override
-//			public void run() {
-				
+		startCameraHandler.postDelayed(mLoadCamera, 1000);
+	}
+	
+	private void startAsynchCamera()
+	{
+		System.out.println("startAsynchCamera mPreview: " + mPreview);
 
-//			}
-//		};
-		
-		
 		if(mPreview != null)
 		{			
 			continueCamera();
@@ -369,27 +405,30 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 			
 			mPreview = new CameraPreview(getActivity().getApplicationContext(),
 					mCamera, previewCb, autoFocusCB);
-			this.preview = (FrameLayout) rootView.findViewById(R.id.cameraPreview);
+
+//			this.preview = (FrameLayout) rootView.findViewById(R.id.cameraPreview);
 			this.preview.addView(mPreview);
+			
+//			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 300);
+//
+//			qrWrapper = new ImageView(mPreview.getContext());
+////			qrWrapper.getLayoutParams().height = this.preview.getLayoutParams().height;
+//			qrWrapper.setLayoutParams(layoutParams);
+			
+			this.configureQrFrameImageView();
+			this.configureScanButton();
+			
 
-			qrWrapper = new ImageView(rootView.getContext());
-			qrWrapper.setImageDrawable(rootView.getResources().getDrawable(
-					R.drawable.qr_wrapper));
-
+			this.preview.addView(scanButton);
+			
 			this.preview.addView(qrWrapper);
 		}
-
-//        new Thread() {
-//            public void run() {
-//            	
-//
-//            }
-//        }.start();
-		
 	}
 	
-	public void stopCamera()
+	private void stopAsynchCamera()
 	{
+		System.out.println("stopAsynchCamera mPreview: " + mPreview);
+		
 		if(mPreview == null)
 		{
 			this.releaseCamera();
@@ -399,9 +438,36 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 
 			pauseCamera();
 		}
+	}
+	
+	public void stopCamera()
+	{
+		stopCameraHandler.postDelayed(mUnloadCamera, 1000);
 		
 	}
 	
+	/**
+	 * UI Configuration.
+	 */
+	
+	private void configureQrFrameImageView()
+	{
+		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(this.preview.getLayoutParams().width, this.preview.getLayoutParams().height);
+
+		qrWrapper = new ImageView(mPreview.getContext());
+//		qrWrapper.getLayoutParams().height = this.preview.getLayoutParams().height;
+		qrWrapper.setLayoutParams(layoutParams);
+		qrWrapper.setImageDrawable(rootView.getResources().getDrawable(
+				R.drawable.qr_wrapper));
+	}
+	
+	private void configureScanButton()
+	{
+		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(this.preview.getLayoutParams().width, 100);
+		layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		scanButton.setLayoutParams(layoutParams);
+		scanButton.setText("Scan");
+	}
 	
 	// @Override
 	// public void update(Observable observable, Object data) {

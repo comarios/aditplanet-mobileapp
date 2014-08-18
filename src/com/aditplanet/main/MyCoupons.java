@@ -134,6 +134,8 @@ public class MyCoupons extends Fragment implements RemoteDataCallback {
 			}
 		});
 		
+		getActivity().setProgressBarIndeterminateVisibility(true);
+		
 		this.reloadDataRemotely();
 
 		fragmentCreated = true;
@@ -201,10 +203,10 @@ public class MyCoupons extends Fragment implements RemoteDataCallback {
 	}
 	
 	public void reloadDataRemotely()
-	{
-		getActivity().setProgressBarIndeterminateVisibility(true);
-
+	{		
 		System.out.println("reloadDataRemotely f created: " + this.filters);
+
+
 		
 		this.reloadData();
 		

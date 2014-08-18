@@ -45,7 +45,8 @@ public class ValidateByCouponNumber extends Fragment implements View.OnClickList
 
 //		final TextView txtCouponCode = (TextView) rootView.findViewById(R.id.txtCouponCode);
 
-		
+		getActivity().setProgressBarIndeterminateVisibility(false);
+
 		
 		View rootView = inflater.inflate(R.layout.fragment_coupon_number, container, false);
 		couponCode = (EditText) rootView.findViewById(R.id.txtCouponCode);
