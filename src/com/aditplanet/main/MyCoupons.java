@@ -11,8 +11,10 @@ import com.aditplanet.model.Coupons;
 import com.aditplanet.model.CouponsManager;
 import com.aditplanet.utils.CouponsFilters;
 
+import android.R.color;
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -71,6 +73,8 @@ public class MyCoupons extends Fragment implements RemoteDataCallback {
 				.findViewById(R.id.btnNotValidatedCoupons);
 		allCoupons = (Button) rootView.findViewById(R.id.btnAllCoupons);
 
+		this.reloadButtonsDesign();
+		
 		validatedCoupons.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -78,6 +82,7 @@ public class MyCoupons extends Fragment implements RemoteDataCallback {
 				//setDataToAdapter(filteredCoupons.get(KEY_VALIDATED));
 				setDataToAdapter(CouponsManager.getInstance().getValidatedCouponsList());
 				filters = CouponsFilters.VALIDATED;
+				reloadButtonsDesign();
 			}
 		});
 
@@ -88,6 +93,7 @@ public class MyCoupons extends Fragment implements RemoteDataCallback {
 				//setDataToAdapter(filteredCoupons.get(KEY_NONVALIDATED));
 				setDataToAdapter(CouponsManager.getInstance().getNonValidatedCouponsList());
 				filters = CouponsFilters.NONVALIDATED;
+				reloadButtonsDesign();
 			}
 		});
 
@@ -98,6 +104,7 @@ public class MyCoupons extends Fragment implements RemoteDataCallback {
 				//setDataToAdapter(filteredCoupons.get(KEY_ALL));
 				setDataToAdapter(CouponsManager.getInstance().getCoupons());
 				filters = CouponsFilters.ALL;
+				reloadButtonsDesign();
 			}
 		});
 
@@ -260,5 +267,49 @@ public class MyCoupons extends Fragment implements RemoteDataCallback {
 			break;
 		}
 	}
+	
+	/**
+	 * UI methods.
+	 */
 
+	private void reloadButtonsDesign()
+	{
+		makeButtonsTextWhite();
+		
+		if(filters == CouponsFilters.ALL)
+		{
+			allCoupons.setTextColor(greenColour());
+
+		}
+		else if(filters == CouponsFilters.VALIDATED)
+		{
+			validatedCoupons.setTextColor(greenColour());
+
+		}
+		else if(filters == CouponsFilters.NONVALIDATED)
+		{
+			nonValidatedCoupons.setTextColor(greenColour());
+
+		}
+	}
+	
+	private void makeButtonsTextWhite()
+	{
+
+		validatedCoupons.setTextColor(whiteColour());
+		nonValidatedCoupons.setTextColor(whiteColour());
+		allCoupons.setTextColor(whiteColour());
+	}
+	
+	
+	private int whiteColour()
+	{
+		return getActivity().getApplication().getResources().getColor(R.color.white);
+	}
+	
+	private int greenColour()
+	{
+		return getActivity().getApplication().getResources().getColor(R.color.green);
+
+	}
 }
