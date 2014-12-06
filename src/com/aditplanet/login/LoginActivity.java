@@ -20,6 +20,7 @@ import com.aditplanet.main.MainActivity;
 import com.aditplanet.model.Coupons;
 import com.aditplanet.model.CouponsManager;
 import com.aditplanet.model.User;
+import com.aditplanet.utils.ActionBarUI;
 import com.aditplanet.utils.AutoLogin;
 import com.aditplanet.utils.Dialogs;
 import com.aditplanet.utils.Messages;
@@ -28,7 +29,7 @@ import com.aditplanet.web.client.RemoteParser;
 import com.aditplanet.web.client.WebClient;
 import com.loopj.android.http.*;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends ActionBarUI {
 
 	private Messages messages;
 	public static final String LOGIN_CREDENTIALS = "LoginCredentials";
