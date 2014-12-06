@@ -3,7 +3,7 @@ package com.aditplanet.web.client;
 import com.loopj.android.http.*;
 
 public class WebClient {
-  private static final String BASE_URL = "http://aditplanet.com/";
+  private static final String BASE_URL = "http://iclickcy.com/";
   private static final int CONNECTION_TIMEOUT = 1000;
   
   private static AsyncHttpClient client = new AsyncHttpClient();

@@ -37,7 +37,7 @@
             android:layout_above="@+id/welcomeScreen_subText_1"
             android:layout_marginTop="50dp"
             android:gravity="center"
-            android:src="@drawable/aditplanet_splash_logo" />
+            android:src="@drawable/aditplanet_splash_logo2" />
 
         <TextView
             android:id="@+id/welcomeScreen_subText_1"
