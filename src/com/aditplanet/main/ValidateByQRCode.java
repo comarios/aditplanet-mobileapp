@@ -18,6 +18,7 @@ import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -173,6 +174,7 @@ public class ValidateByQRCode extends Fragment { // implements Observer {
 		try {
 			c = Camera.open(0);
 		} catch (Exception e) {
+			System.out.println("Can't open camera: " + e.getMessage());
 		}
 		return c;
 	}

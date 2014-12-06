@@ -451,15 +451,20 @@ public class MainActivity extends FragmentActivity implements
 		
 		System.out.println("openCameraIfNeeded: " + tabPos);
 		
+		
+		
 		if(tabPos == 1){
+			
+			System.out.println("before open the camera1");
 			ValidateByQRCode fragment = (ValidateByQRCode) getSupportFragmentManager()
 					.findFragmentByTag("android:switcher:" + R.id.pager + ":1");
 			if (fragment != null) // could be null if not instantiated yet
 			{
+				System.out.println("before open the camera2");
 				if (fragment.getView() != null) {
 					// no need to call if fragment's onDestroyView()
 					// has since been called.
-					
+					System.out.println("before open the camera3");
 					fragment.startCamera();
 					
 //					saveOnResumeState(true);
@@ -469,14 +474,16 @@ public class MainActivity extends FragmentActivity implements
 		}
 		else
 		{
+			System.out.println("stop the camera1");
 			ValidateByQRCode fragment = (ValidateByQRCode) getSupportFragmentManager()
 					.findFragmentByTag("android:switcher:" + R.id.pager + ":1");
 			if (fragment != null) // could be null if not instantiated yet
 			{
+				System.out.println("stop the camera2");
 				if (fragment.getView() != null) {
 					// no need to call if fragment's onDestroyView()
 					// has since been called.
-					
+					System.out.println("stop the camera3");
 					fragment.stopCamera();
 //					saveOnResumeState(false);
 

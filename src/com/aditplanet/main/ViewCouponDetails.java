@@ -26,7 +26,7 @@ public class ViewCouponDetails extends Activity {
 
 	private WebView webView;
 	private String couponURI;
-	private final String couponViewAPI = "http://aditplanet.com/coupon_view.php?id=";
+	private final String couponViewAPI = "http://iclickcy.com/coupon_view.php?id=";
 	private String REDEEM_OFFLINE = "&mobile=1";
 
 	@Override
